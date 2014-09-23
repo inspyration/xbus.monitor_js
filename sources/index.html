@@ -15,8 +15,8 @@
   </div>
 
 
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js" type="text/javascript"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
 
@@ -32,8 +32,8 @@
       <tbody>
         <% _.each(xeventtypes, function(xeventtype) { %>
           <tr>
-            <td><%= htmlEncode(xeventtype.get('name')) %></td>
-            <td><%= htmlEncode(xeventtype.get('description')) %></td>
+            <td><%= htmlEncode(xeventtype.name) %></td>
+            <td><%= htmlEncode(xeventtype.description) %></td>
             <td><a class="btn" href="#/edit/<%= xeventtype.id %>">Edit</a></td>
           </tr>
         <% }); %>
@@ -57,7 +57,7 @@
     </form>
   </script>
 
-  <script>
+  <script type="text/javascript">
     function htmlEncode(value){
       return $('<div/>').text(value).html();
     }
@@ -96,8 +96,8 @@
         var that = this;
         var xeventtypes = new XEventTypes();
         xeventtypes.fetch({
-          success: function (xeventtypes) {
-            var template = _.template($('#xeventtypes-list-template').html(), {xeventtypes: xeventtypes.models});
+          success: function (model, xeventtypes, options) {
+            var template = _.template($('#xeventtypes-list-template').html())({xeventtypes: xeventtypes['event_types']});
             that.$el.html(template);
           }
         })
@@ -137,12 +137,12 @@
           that.xeventtype = new XEventType({id: options.id});
           that.xeventtype.fetch({
             success: function (xeventtype) {    
-              var template = _.template($('#edit-xeventtype-template').html(), {xeventtype: xeventtype});
+              var template = _.template($('#edit-xeventtype-template').html())({xeventtype: xeventtype});
               that.$el.html(template);
             }
           })
         } else {
-          var template = _.template($('#edit-xeventtype-template').html(), {xeventtype: null});
+          var template = _.template($('#edit-xeventtype-template').html())({xeventtype: null});
           that.$el.html(template);
         }
       }
