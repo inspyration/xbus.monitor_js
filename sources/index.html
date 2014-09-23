@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Xbus Monitor</title>
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jquery-ui-bootstrap/0.5pre/assets/css/bootstrap.min.css">
+</head>
+<body>
+
+
+  <div class="container">
+    <h1>Eventtype Manager</h1>
+    <hr />
+    <div class="page"></div>
+  </div>
+
+
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js" type="text/javascript"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+
+  <script type="text/template" id="xeventtypes-list-template">
+    <a href="#/new" class="btn btn-primary">New</a>
+    <hr />
+    <table class="table striped">
+      <thead>
+        <tr>
+          <th>Name</th><th>Description</th><th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% _.each(xeventtypes, function(xeventtype) { %>
+          <tr>
+            <td><%= htmlEncode(xeventtype.get('name')) %></td>
+            <td><%= htmlEncode(xeventtype.get('description')) %></td>
+            <td><a class="btn" href="#/edit/<%= xeventtype.id %>">Edit</a></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </script>
+
+  <script type="text/template" id="edit-xeventtype-template">
+    <form class="edit-xeventtype-form">
+      <legend><%= xeventtype ? 'Edit' : 'New' %> Event Type</legend>
+        <label>Name</label>
+        <input name="name" type="text" value="<%= xeventtype ? xeventtype.get('name') : '' %>">
+        <label>Description</label>
+        <input name="description" type="text" value="<%= xeventtype ? xeventtype.get('description') : '' %>">
+        <hr />
+       <button type="submit" class="btn"><%= xeventtype ? 'Update' : 'Create' %></button>
+       <% if(xeventtype) { %>
+        <input type="hidden" name="id" value="<%= xeventtype.id %>" />
+       <button data-xeventtype-id="<%= xeventtype.id %>" class="btn btn-danger delete">Delete</button>
+       <% }; %>
+    </form>
+  </script>
+
+  <script>
+    function htmlEncode(value){
+      return $('<div/>').text(value).html();
+    }
+    $.fn.serializeObject = function() {
+      var o = {};
+      var a = this.serializeArray();
+      $.each(a, function() {
+          if (o[this.name] !== undefined) {
+              if (!o[this.name].push) {
+                  o[this.name] = [o[this.name]];
+              }
+              o[this.name].push(this.value || '');
+          } else {
+              o[this.name] = this.value || '';
+          }
+      });
+      return o;
+    };
+
+    //$.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
+    //  options.url = 'http://backbonejs-beginner.herokuapp.com' + options.url;
+    //  options.url = 'http://localhost:6543' + options.url;
+    //});
+
+    var XEventTypes = Backbone.Collection.extend({
+      url: '/api/event_type'
+    });
+
+    var XEventType = Backbone.Model.extend({
+      urlRoot: '/api/event_type'
+    });
+
+    var XEventTypeListView = Backbone.View.extend({
+      el: '.page',
+      render: function () {
+        var that = this;
+        var xeventtypes = new XEventTypes();
+        xeventtypes.fetch({
+          success: function (xeventtypes) {
+            var template = _.template($('#xeventtypes-list-template').html(), {xeventtypes: xeventtypes.models});
+            that.$el.html(template);
+          }
+        })
+      }
+    });
+
+    var xeventtypeListView = new XEventTypeListView();
+
+    var XEventTypeEditView = Backbone.View.extend({
+      el: '.page',
+      events: {
+        'submit .edit-xeventtype-form': 'saveXEventType',
+        'click .delete': 'deleteXEventType'
+      },
+      saveXEventType: function (ev) {
+        var xeventtypeDetails = $(ev.currentTarget).serializeObject();
+        var xeventtype = new XEventType();
+        xeventtype.save(xeventtypeDetails, {
+          success: function (xeventtype) {
+            router.navigate('', {trigger:true});
+          }
+        });
+        return false;
+      },
+      deleteXEventType: function (ev) {
+        this.xeventtype.destroy({
+          success: function () {
+            console.log('destroyed');
+            router.navigate('', {trigger:true});
+          }
+        });
+        return false;
+      },
+      render: function (options) {
+        var that = this;
+        if(options.id) {
+          that.xeventtype = new XEventType({id: options.id});
+          that.xeventtype.fetch({
+            success: function (xeventtype) {    
+              var template = _.template($('#edit-xeventtype-template').html(), {xeventtype: xeventtype});
+              that.$el.html(template);
+            }
+          })
+        } else {
+          var template = _.template($('#edit-xeventtype-template').html(), {xeventtype: null});
+          that.$el.html(template);
+        }
+      }
+    });
+
+    var xeventtypeEditView = new XEventTypeEditView();
+
+    var Router = Backbone.Router.extend({
+        routes: {
+          "": "home", 
+          "edit/:id": "edit",
+          "new": "edit",
+        }
+    });
+
+    var router = new Router;
+    router.on('route:home', function() {
+      // render xeventtype list
+      xeventtypeListView.render();
+    })
+    router.on('route:edit', function(id) {
+      xeventtypeEditView.render({id: id});
+    })
+    Backbone.history.start();
+  </script>
+
+
+</body>
+</html> 
