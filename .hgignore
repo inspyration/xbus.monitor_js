@@ -1,0 +1,19 @@
+syntax: glob
+Thumbs.db
+**/*.orig
+**/*.pyc
+**/*.pyo
+**/*.*~
+**/*.so
+*.sqlite
+*.dot
+*.ps
+*.lprof
+*.pstat
+*.calltree
+*.swp
+.tmp_*
+.idea
+.project
+.pydevproject
+.settings
