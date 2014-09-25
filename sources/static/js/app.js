@@ -44,12 +44,18 @@ function setMainView(view_factory) {
 // options.url = 'http://localhost:6543' + options.url;
 // });
 
-var XEventType = Backbone.Model.extend({
+var Models = {}; // model classes.
+var Collections = {}; // collection classes.
+var collections = {}; // collection instances (which contain model instances).
+var Views = {}; // view classes.
+
+Models.event_type = Backbone.Model.extend({
     urlRoot: '/api/event_type'
 });
 
-var XEventTypes = Backbone.Collection.extend({
-    model: XEventType,
+Collections.event_type = Backbone.Collection.extend({
+    model: Models.event_type,
+    name: 'event_type',
 
     parse: function(response) {
         console.log('collection response parse', response);
@@ -59,9 +65,9 @@ var XEventTypes = Backbone.Collection.extend({
     url: '/api/event_type'
 });
 
-var xeventtypes = new XEventTypes();
+collections.event_type = new Collections.event_type();
 
-var ListView = Backbone.View.extend({
+Views.list = Backbone.View.extend({
     el: '.page',
 
     initialize: function(options) {
@@ -75,13 +81,14 @@ var ListView = Backbone.View.extend({
     render: function() {
         console.log('collection view render');
         this.$el.html(this.template({
-            models: this.collection.models
+            models: this.collection.models,
+            name: this.collection.name
         }));
         return this;
     },
 });
 
-var RecordView = Backbone.View.extend({
+Views.record = Backbone.View.extend({
     el: '.page',
     events: {
         'submit .record-form': 'saveRecord',
@@ -112,7 +119,8 @@ var RecordView = Backbone.View.extend({
         console.log('record view render', this.id);
         this.$el.html(this.template({
             editing: this.editing,
-            model: this.model
+            model: this.model,
+            name: this.collection.name
         }));
         return this;
     },
@@ -126,7 +134,7 @@ var RecordView = Backbone.View.extend({
         this.model.save(data, {
             success: function() {
                 console.log('record edited', that.id);
-                router.navigate('', {
+                router.navigate(that.collection.name, {
                     trigger: true
                 });
             }
@@ -140,7 +148,7 @@ var RecordView = Backbone.View.extend({
             success: function() {
                 console.log('record destroyed', that.id);
                 disableView(that);
-                router.navigate('', {
+                router.navigate(that.collection.name, {
                     trigger: true
                 });
             }
@@ -152,42 +160,53 @@ var RecordView = Backbone.View.extend({
 var Router = Backbone.Router.extend({
     routes: {
         '': 'home',
-        'create': 'edit',
-        ':id': 'view',
-        ':id/edit': 'edit',
-    }
+        ':collection': 'list',
+        ':collection/create': 'edit',
+        ':collection/:id': 'view',
+        ':collection/:id/edit': 'edit',
+    },
 });
 
 var router = new Router;
 
 router.on('route:home', function() {
-    console.log('routing to home');
+    var collection = 'event_type'; // TODO Redirect to the list view or some such?
+    console.log('routing to list view', collection);
     setMainView(function() {
-        return new ListView({
-            collection: xeventtypes,
-            template: _.template($('#xeventtypes-list-template').html())
+        return new Views.list({
+            collection: collections[collection],
+            template: _.template($('#' + collection + '_list_template').html())
         });
     });
 });
-router.on('route:edit', function(id) {
-    console.log('routing to edit', id);
+router.on('route:list', function(collection) {
+    console.log('routing to list view', collection);
     setMainView(function() {
-        return new RecordView({
-            collection: xeventtypes,
-            id: id,
-            editing: true,
-            template: _.template($('#xeventtype-form-template').html())
+        return new Views.list({
+            collection: collections[collection],
+            template: _.template($('#' + collection + '_list_template').html())
         });
     });
 });
-router.on('route:view', function(id) {
-    console.log('routing to view', id);
+router.on('route:view', function(collection, id) {
+    console.log('routing to record view', collection, id);
     setMainView(function() {
-        return new RecordView({
-            collection: xeventtypes,
-            id: id,
+        return new Views.record({
+            collection: collections[collection],
             editing: false,
-            template: _.template($('#xeventtype-form-template').html())
+            id: id,
+            template: _.template($('#' + collection + '_form_template').html())
+        });
+    });
+});
+router.on('route:edit', function(collection, id) {
+    console.log('routing to edit record view', collection, id);
+    setMainView(function() {
+        return new Views.record({
+            collection: collections[collection],
+            editing: true,
+            id: id,
+            template: _.template($('#' + collection + '_form_template').html())
         });
     });
 });

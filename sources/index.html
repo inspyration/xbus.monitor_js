@@ -10,7 +10,7 @@
 <body>
 
     <div class="container">
-        <h1>Eventtype Manager</h1>
+        <h1>Xbus Monitor</h1>
         <hr />
         <div class="page"></div>
     </div>
@@ -24,8 +24,8 @@
     <script type="text/javascript"
         src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
 
-    <script type="text/template" id="xeventtypes-list-template">
-    <a href="#/create" class="btn btn-primary">New</a>
+    <script type="text/template" id="event_type_list_template">
+    <a href="#/<%= name %>/create" class="btn btn-primary">New</a>
     <hr />
     <table class="table striped">
         <thead>
@@ -43,15 +43,19 @@
                     <td><%= model.id %></td>
                     <td><%= htmlEncode(model.get('name')) %></td>
                     <td><%= htmlEncode(model.get('description')) %></td>
-                    <td><a class="btn" href="#/<%= model.id %>">View</a></td>
-                    <td><a class="btn" href="#/<%= model.id %>/edit">Edit</a></td>
+                    <td><a class="btn" href="#/<%= name %>/<%= model.id %>">View</a></td>
+                    <td><a class="btn" href="#/<%= name %>/<%= model.id %>/edit">Edit</a></td>
                 </tr>
             <% }); %>
         </tbody>
     </table>
+    <hr/>
+    <p>
+        <a href="/">Home</a>
+    </p>
     </script>
 
-    <script type="text/template" id="xeventtype-form-template">
+    <script type="text/template" id="event_type_form_template">
     <form class="record-form">
         <legend><%= model ? (editing ? 'Edit' : 'View') : 'New' %> Event Type</legend>
         <label>Name</label>
@@ -68,7 +72,17 @@
         <% }; %>
     </form>
     <hr/>
-    <p><a href="/">Home</a></p>
+    <p>
+        <a href="/">Home</a> -
+        <a href="#/<%= name %>">Model list</a>
+        <% if(model) { %>
+            <% if(editing) { %>
+                - <a href="#/<%= name %>/<%= model.id %>">View</a>
+            <% } else { %>
+                - <a href="#/<%= name %>/<%= model.id %>/edit">Edit</a>
+            <% } %>
+        <% } %>
+    </p>
     </script>
 
     <script type="text/javascript" src="static/js/app.js"></script>
