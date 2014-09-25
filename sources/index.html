@@ -26,41 +26,52 @@
     <table class="table striped">
       <thead>
         <tr>
-          <th>Name</th><th>Description</th><th></th>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <% _.each(xeventtypes, function(xeventtype) { %>
+        <% _.each(models, function(model) { %>
           <tr>
-            <td><%= htmlEncode(xeventtype.get('name')) %></td>
-            <td><%= htmlEncode(xeventtype.get('description')) %></td>
-            <td><a class="btn" href="#/<%= xeventtype.id %>/edit">Edit</a></td>
+            <td><%= model.id %></td>
+            <td><%= htmlEncode(model.get('name')) %></td>
+            <td><%= htmlEncode(model.get('description')) %></td>
+            <td><a class="btn" href="#/<%= model.id %>">View</a></td>
+            <td><a class="btn" href="#/<%= model.id %>/edit">Edit</a></td>
           </tr>
         <% }); %>
       </tbody>
     </table>
   </script>
 
-  <script type="text/template" id="edit-xeventtype-template">
-    <form class="edit-xeventtype-form">
-      <legend><%= xeventtype ? 'Edit' : 'New' %> Event Type</legend>
+  <script type="text/template" id="xeventtype-form-template">
+    <form class="record-form">
+      <legend><%= model ? (editing ? 'Edit' : 'View') : 'New' %> Event Type</legend>
         <label>Name</label>
-        <input name="name" type="text" value="<%= xeventtype ? xeventtype.get('name') : '' %>">
+        <input name="name" type="text" value="<%= model ? model.get('name') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
         <label>Description</label>
-        <input name="description" type="text" value="<%= xeventtype ? xeventtype.get('description') : '' %>">
-        <hr />
-       <button type="submit" class="btn"><%= xeventtype ? 'Update' : 'Create' %></button>
-       <% if(xeventtype) { %>
-        <input type="hidden" name="id" value="<%= xeventtype.id %>" />
-       <button data-xeventtype-id="<%= xeventtype.id %>" class="btn btn-danger delete">Delete</button>
-       <% }; %>
+        <input name="description" type="text" value="<%= model ? model.get('description') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
+        <% if(editing) { %>
+            <hr />
+            <button type="submit" class="btn"><%= model ? 'Update' : 'Create' %></button>
+            <% if(model) { %>
+                <input type="hidden" name="id" value="<%= model.id %>" />
+                <button class="btn btn-danger delete">Delete</button>
+            <% }; %>
+        <% }; %>
     </form>
+    <hr/>
+    <p><a href="/">Home</a></p>
   </script>
 
   <script type="text/javascript">
     function htmlEncode(value){
       return $('<div/>').text(value).html();
     }
+    
     $.fn.serializeObject = function() {
       var o = {};
       var a = this.serializeArray();
@@ -76,6 +87,21 @@
       });
       return o;
     };
+    
+    function disableView(view) {
+        /* Avoid calling the "remove" function (creates strange issues) but at least ensure the
+        view no longer catches any event. */
+        view.stopListening();
+        view.undelegateEvents();
+    }
+
+    /* The main view; there can only be one. When a new one is created, the previous one has to be
+    removed. */
+    var main_view = null;
+    function setMainView(view_factory) {
+        if (main_view) { disableView(main_view); }
+        main_view = view_factory();
+    }
 
     //$.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
     //  options.url = 'http://backbonejs-beginner.herokuapp.com' + options.url;
@@ -83,7 +109,7 @@
     //});
 
     var XEventType = Backbone.Model.extend({
-      urlRoot: '/api/event_type' // TODO probably not needed
+      urlRoot: '/api/event_type'
     });
 
     var XEventTypes = Backbone.Collection.extend({
@@ -99,90 +125,116 @@
     
     var xeventtypes = new XEventTypes();
     
-    var XEventTypeListView = Backbone.View.extend({
+    var ListView = Backbone.View.extend({
       el: '.page',
-      template: _.template($('#xeventtypes-list-template').html()),
       
-      initialize: function() {
+      initialize: function(options) {
           console.log('listview initialize');
+          this.template = options.template;
+          this.render(); // Pre-render before refreshing anything.
+          this.listenTo(this.collection, 'sync', this.render);
+          this.collection.fetch();
       },
 
       render: function () {
         console.log('collection view render');
-        this.$el.html(this.template({xeventtypes: xeventtypes.models}));
+        this.$el.html(this.template({models: this.collection.models}));
         return this;
       },
     });
 
-    var XEventTypeEditView = Backbone.View.extend({
+    var RecordView = Backbone.View.extend({
       el: '.page',
       events: {
-        'submit .edit-xeventtype-form': 'saveXEventType',
-        'click .delete': 'deleteXEventType'
+        'submit .record-form': 'saveRecord',
+        'click .delete': 'deleteRecord'
       },
-      template: _.template($('#edit-xeventtype-template').html()),
       
       initialize: function(options) {
-          console.log('record view initialize', options.id);
-          this.record_id = options.id;
-          this.model = this.record_id ? xeventtypes.get(this.record_id) : null;
+          console.log('record view initialize', this.id);
+          this.editing = options.editing;
+          this.template = options.template;
+          this.render();  // Pre-render before refreshing anything.
+
+          if (this.id) {
+              this.model = this.collection.get(this.id);
+              if (!this.model) { this.model = new this.collection.model({id: this.id}); }
+              this.listenTo(this.model, 'sync', this.render);
+              this.model.fetch();
+          } else {
+              this.model = null;
+          }
       },
 
       render: function () {
-          console.log('record view render', this.record_id);
-          this.$el.html(this.template({xeventtype: this.model}));
+          console.log('record view render', this.id);
+          this.$el.html(this.template({editing: this.editing, model: this.model}));
           return this;
       },
       
-      saveXEventType: function (ev) {
-        var xeventtypeDetails = $(ev.currentTarget).serializeObject();
-        if (!this.model) { this.model = new XEventType(); }
-        this.model.save(xeventtypeDetails, {
+      saveRecord: function (ev) {
+          var that = this;
+        var data = $(ev.currentTarget).serializeObject();
+        if (!this.model) { this.model = new this.collection.model(); }
+        this.model.save(data, {
           success: function () {
+              console.log('record edited', that.id);
             router.navigate('', {trigger: true});
           }
         });
         return false;
       },
       
-      deleteXEventType: function (ev) {
-        this.xeventtype.destroy({
+      deleteRecord: function (ev) {
+          var that = this;
+        this.model.destroy({
           success: function () {
-            console.log('destroyed');
+            console.log('record destroyed', that.id);
+            disableView(that);
             router.navigate('', {trigger:true});
           }
         });
         return false;
       }
     });
-
+    
     var Router = Backbone.Router.extend({
         routes: {
-          "": "home", 
-          ":id/edit": "edit",
-          "create": "edit",
+          '': 'home', 
+          'create': 'edit',
+          ':id': 'view',
+          ':id/edit': 'edit',
         }
     });
 
     var router = new Router;
+    
     router.on('route:home', function() {
         console.log('routing to home');
-        var xeventtypeListView = new XEventTypeListView();
-        xeventtypeListView.listenTo(xeventtypes, 'sync', xeventtypeListView.render);
-        xeventtypes.fetch();
-    })
+        setMainView(function() { return new ListView({
+            collection: xeventtypes,
+            template: _.template($('#xeventtypes-list-template').html())
+        }); });
+    });
     router.on('route:edit', function(id) {
-        console.log('routing to edit');
-
-        // TODO Avoid refreshing the whole collection just for one item.
-
-        // TODO read vs edit vs create
-
-        var xeventtypeEditView = new XEventTypeEditView({id: id});
-        xeventtypeEditView.listenTo(xeventtypes, 'sync', xeventtypeEditView.render);
-        xeventtypes.fetch();
-    })
+        console.log('routing to edit', id);
+        setMainView(function() { return new RecordView({
+            collection: xeventtypes, id: id,
+            editing: true,
+            template: _.template($('#xeventtype-form-template').html())
+        }); });
+    });
+    router.on('route:view', function(id) {
+        console.log('routing to view', id);
+        setMainView(function() { return new RecordView({
+            collection: xeventtypes, id: id,
+            editing: false,
+            template: _.template($('#xeventtype-form-template').html())
+        }); });
+    });
+    
     Backbone.history.start();
+    
   </script>
 
 
