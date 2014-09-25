@@ -49,6 +49,8 @@ var Collections = {}; // collection classes.
 var collections = {}; // collection instances (which contain model instances).
 var Views = {}; // view classes.
 
+// TODO Move the following blocks to separate files.
+
 Models.event_type = Backbone.Model.extend({
     urlRoot: '/api/event_type'
 });
@@ -66,6 +68,24 @@ Collections.event_type = Backbone.Collection.extend({
 });
 
 collections.event_type = new Collections.event_type();
+
+Models.service = Backbone.Model.extend({
+    urlRoot: '/api/service'
+});
+
+Collections.service = Backbone.Collection.extend({
+    model: Models.service,
+    name: 'service',
+
+    parse: function(response) {
+        console.log('collection response parse', response);
+        return response.services;
+    },
+
+    url: '/api/service'
+});
+
+collections.service = new Collections.service();
 
 Views.list = Backbone.View.extend({
     el: '.page',
