@@ -1,3 +1,6 @@
+/* Inspired by several sources; the best of which is
+ * <https://github.com/ccoenraets/directory-backbone-bootstrap>. */
+
 function htmlEncode(value) {
     return $('<div/>').text(value).html();
 }
@@ -47,6 +50,8 @@ function setMainView(view_factory) {
 var Models = {}; // model classes.
 var Collections = {}; // collection classes.
 var collections = {}; // collection instances (which contain model instances).
+var Templates = {}; // Template functions, ready to be called with the right
+// parameters.
 var Views = {}; // view classes.
 
 var Router = Backbone.Router.extend({
@@ -55,7 +60,7 @@ var Router = Backbone.Router.extend({
         ':collection': 'list',
         ':collection/create': 'edit',
         ':collection/:id': 'view',
-        ':collection/:id/edit': 'edit',
+        ':collection/:id/edit': 'edit'
     },
 
     'home': function() {
@@ -65,8 +70,7 @@ var Router = Backbone.Router.extend({
         setMainView(function() {
             return new Views.list({
                 collection: collections[collection],
-                template: _.template($('#' + collection + '_list_template')
-                    .html())
+                template: Templates[collection + '_list']
             });
         });
     },
@@ -76,8 +80,7 @@ var Router = Backbone.Router.extend({
         setMainView(function() {
             return new Views.list({
                 collection: collections[collection],
-                template: _.template($('#' + collection + '_list_template')
-                    .html())
+                template: Templates[collection + '_list']
             });
         });
     },
@@ -89,8 +92,7 @@ var Router = Backbone.Router.extend({
                 collection: collections[collection],
                 editing: false,
                 id: id,
-                template: _.template($('#' + collection + '_form_template')
-                    .html())
+                template: Templates[collection + '_form']
             });
         });
     },
@@ -102,14 +104,29 @@ var Router = Backbone.Router.extend({
                 collection: collections[collection],
                 editing: true,
                 id: id,
-                template: _.template($('#' + collection + '_form_template')
-                    .html())
+                template: Templates[collection + '_form']
             });
         });
     }
 });
 
 $(function() {
-    var router = new Router;
-    Backbone.history.start();
+
+    var deferreds = [];
+
+    $.each(Collections, function(collection) {
+        _.each(['form', 'list'], function(view_type) {
+            var view_name = collection + '_' + view_type;
+            deferreds.push($.get('static/templates/' + view_name + '.html', function(
+                data) {
+                Templates[view_name] = _.template(data);
+            }, 'html'));
+        });
+    });
+
+    $.when.apply(null, deferreds).done(function() {
+        console.log('fetched all templates; initializing...');
+        var router = new Router;
+        Backbone.history.start();
+    });
 });

@@ -1,0 +1,28 @@
+<form class="record-form">
+    <legend><%= model ? (editing ? 'Edit' : 'View') : 'New' %> Service</legend>
+    <label>Name</label>
+    <input name="name" type="text" value="<%= model ? model.get('name') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
+    <label>Consumer</label>
+    <input name="consumer" type="checkbox" value="<%= model ? model.get('consumer') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
+    <label>Description</label>
+    <input name="description" type="text" value="<%= model ? model.get('description') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
+    <% if(editing) { %>
+        <hr />
+        <button type="submit" class="btn"><%= model ? 'Update' : 'Create' %></button>
+        <% if(model) { %>
+            <input type="hidden" name="id" value="<%= model.id %>" />
+            <button class="btn btn-danger delete">Delete</button>
+        <% }; %>
+    <% }; %>
+</form>
+<hr />
+<p>
+    <a href="/">Home</a> - <a href="#/<%= name %>">Model list</a>
+    <% if(model) { %>
+        <% if(editing) { %>
+            - <a href="#/<%= name %>/<%= model.id %>">View</a>
+        <% } else { %>
+            - <a href="#/<%= name %>/<%= model.id %>/edit">Edit</a>
+        <% } %>
+    <% } %>
+</p>
