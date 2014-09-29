@@ -41,8 +41,8 @@
                         <% _.each(models, function(model) { %>
                         <tr>
                             <td><%= model.id %></td>
-                            <td><%= htmlEncode(model.get('envelope_uuid')) %></td>
-                            <td><%= htmlEncode(model.get('event_uuid')) %></td>
+                            <td><%= htmlEncode(model.get('envelope_id')) %></td>
+                            <td><%= htmlEncode(model.get('event_id')) %></td>
                             <td><%= htmlEncode(model.get('service_id')) %></td>
                             <td><%= htmlEncode(model.get('items')) %></td>
                             <td><%= htmlEncode(model.get('message')) %></td>
