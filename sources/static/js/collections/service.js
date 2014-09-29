@@ -5,12 +5,6 @@ Models.service = Backbone.Model.extend({
 Collections.service = Backbone.Collection.extend({
     model: Models.service,
     name: 'service',
-
-    parse: function(response) {
-        console.log('collection response parse', response);
-        return response.services;
-    },
-
     url: '/api/service'
 });
 

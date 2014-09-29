@@ -108,7 +108,7 @@
             <div id="sidebar-left" class="col-xs-2 col-sm-2">
                 <ul class="nav main-menu">
 
-                    <li><a href="#/" class="active "> <i class="fa fa-dashboard"></i> <span
+                    <li><a href="#/" class="active"> <i class="fa fa-dashboard"></i> <span
                             class="hidden-xs">Dashboard</span>
                     </a></li>
 
@@ -116,6 +116,80 @@
                             class="fa fa-bar-chart-o"></i> <span class="hidden-xs">Xbus</span>
                     </a>
                         <ul class="dropdown-menu">
+
+                            <li class="dropdown"><a href="#" class="dropdown-toggle"> <i
+                                    class="fa fa-angle-right"></i> <span class="hidden-xs">Emitters</span>
+                            </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#/emitter"> <i class="fa fa-list"></i>
+                                            List
+                                    </a></li>
+                                    <li><a href="#/emitter/create"> <i class="fa fa-plus"></i>
+                                            Add
+                                    </a></li>
+                                </ul></li>
+
+                            <li class="dropdown"><a href="#" class="dropdown-toggle"> <i
+                                    class="fa fa-angle-right"></i> <span class="hidden-xs">Emitter
+                                        profiles</span>
+                            </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#/emitter_profile"> <i class="fa fa-list"></i>
+                                            List
+                                    </a></li>
+                                    <li><a href="#/emitter_profile/create"> <i
+                                            class="fa fa-plus"></i> Add
+                                    </a></li>
+                                </ul></li>
+
+                            <li class="dropdown"><a href="#" class="dropdown-toggle"> <i
+                                    class="fa fa-angle-right"></i> <span class="hidden-xs">Envelopes</span>
+                            </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#/envelope"> <i class="fa fa-list"></i>
+                                            List
+                                    </a></li>
+                                    <li><a href="#/envelope/create"> <i class="fa fa-plus"></i>
+                                            Add
+                                    </a></li>
+                                </ul></li>
+
+                            <li class="dropdown"><a href="#" class="dropdown-toggle"> <i
+                                    class="fa fa-angle-right"></i> <span class="hidden-xs">Events</span>
+                            </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#/event"> <i class="fa fa-list"></i> List
+                                    </a></li>
+                                    <li><a href="#/event/create"> <i class="fa fa-plus"></i>
+                                            Add
+                                    </a></li>
+                                </ul></li>
+
+                            <li class="dropdown"><a href="#" class="dropdown-toggle"> <i
+                                    class="fa fa-angle-right"></i> <span class="hidden-xs">Event
+                                        errors</span>
+                            </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#/event_error"> <i class="fa fa-list"></i>
+                                            List
+                                    </a></li>
+                                    <li><a href="#/event_error/create"> <i
+                                            class="fa fa-plus"></i> Add
+                                    </a></li>
+                                </ul></li>
+
+                            <li class="dropdown"><a href="#" class="dropdown-toggle"> <i
+                                    class="fa fa-angle-right"></i> <span class="hidden-xs">Event
+                                        nodes</span>
+                            </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#/event_node"> <i class="fa fa-list"></i>
+                                            List
+                                    </a></li>
+                                    <li><a href="#/event_node/create"> <i
+                                            class="fa fa-plus"></i> Add
+                                    </a></li>
+                                </ul></li>
 
                             <li class="dropdown"><a href="#" class="dropdown-toggle"> <i
                                     class="fa fa-angle-right"></i> <span class="hidden-xs">Event
@@ -126,6 +200,30 @@
                                             List
                                     </a></li>
                                     <li><a href="#/event_type/create"> <i
+                                            class="fa fa-plus"></i> Add
+                                    </a></li>
+                                </ul></li>
+
+                            <li class="dropdown"><a href="#" class="dropdown-toggle"> <i
+                                    class="fa fa-angle-right"></i> <span class="hidden-xs">Roles</span>
+                            </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#/role"> <i class="fa fa-list"></i> List
+                                    </a></li>
+                                    <li><a href="#/role/create"> <i class="fa fa-plus"></i>
+                                            Add
+                                    </a></li>
+                                </ul></li>
+
+                            <li class="dropdown"><a href="#" class="dropdown-toggle"> <i
+                                    class="fa fa-angle-right"></i> <span class="hidden-xs">Active
+                                        roles</span>
+                            </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#/role_active"> <i class="fa fa-list"></i>
+                                            List
+                                    </a></li>
+                                    <li><a href="#/role_active/create"> <i
                                             class="fa fa-plus"></i> Add
                                     </a></li>
                                 </ul></li>
@@ -170,7 +268,17 @@
 
     <script type="text/javascript" src="static/js/app.js"></script>
 
+    <script type="text/javascript" src="static/js/collections/emitter.js"></script>
+    <script type="text/javascript" src="static/js/collections/emitter_profile.js"></script>
+    <script type="text/javascript" src="static/js/collections/emitter_profile_event_type.js"></script>
+    <script type="text/javascript" src="static/js/collections/envelope.js"></script>
+    <script type="text/javascript" src="static/js/collections/event.js"></script>
+    <script type="text/javascript" src="static/js/collections/event_error.js"></script>
+    <script type="text/javascript" src="static/js/collections/event_node.js"></script>
+    <script type="text/javascript" src="static/js/collections/event_node_link.js"></script>
     <script type="text/javascript" src="static/js/collections/event_type.js"></script>
+    <script type="text/javascript" src="static/js/collections/role.js"></script>
+    <script type="text/javascript" src="static/js/collections/role_active.js"></script>
     <script type="text/javascript" src="static/js/collections/service.js"></script>
 
     <script type="text/javascript" src="static/js/views/list.js"></script>

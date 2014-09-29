@@ -1,0 +1,39 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Xbus</a></li>
+            <li><a href="#/<%= name %>">Events</a></li>
+            <% if(model) { %>
+                <% if(editing) { %>
+                    <li><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></li>
+                <% } else { %>
+                    <li><a href="#/<%= name %>/<%= model.id %>">View</a></li>
+                <% } %>
+            <% } else { %>
+                <li><a href="#/<%= name %>/create">Create</a></li>
+            <% }%>
+        </ol>
+    </div>
+</div>
+<form class="record-form">
+    <legend><%= model ? (editing ? 'Edit' : 'View') : 'New' %> Event</legend>
+    <label>Envelope</label>
+    <input name="envelope_uuid" type="text" value="<%= model ? model.get('envelope_uuid') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
+    <label>Emitter</label>
+    <input name="emitter_id" type="text" value="<%= model ? model.get('emitter_id') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
+    <label>Type</label>
+    <input name="type_id" type="text" value="<%= model ? model.get('type_id') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
+    <label>Started date</label>
+    <input name="started_date" type="text" value="<%= model ? model.get('started_date') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
+    <label>Done date</label>
+    <input name="done_date" type="text" value="<%= model ? model.get('done_date') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
+    <% if(editing) { %>
+        <hr />
+        <button type="submit" class="btn"><%= model ? 'Update' : 'Create' %></button>
+        <% if(model) { %>
+            <input type="hidden" name="id" value="<%= model.id %>" />
+            <button class="btn btn-danger delete">Delete</button>
+        <% }; %>
+    <% }; %>
+</form>

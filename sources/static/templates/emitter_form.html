@@ -1,0 +1,35 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Xbus</a></li>
+            <li><a href="#/<%= name %>">Emitters</a></li>
+            <% if(model) { %>
+                <% if(editing) { %>
+                    <li><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></li>
+                <% } else { %>
+                    <li><a href="#/<%= name %>/<%= model.id %>">View</a></li>
+                <% } %>
+            <% } else { %>
+                <li><a href="#/<%= name %>/create">Create</a></li>
+            <% }%>
+        </ol>
+    </div>
+</div>
+<form class="record-form">
+    <legend><%= model ? (editing ? 'Edit' : 'View') : 'New' %> Emitter</legend>
+    <label>Login</label>
+    <input name="login" type="text" value="<%= model ? model.get('login') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
+    <label>Profile</label>
+    <input name="profile_id" type="text" value="<%= model ? model.get('profile_id') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
+    <label>Last emitted</label>
+    <input name="last_emit" type="date" value="<%= model ? model.get('last_emit') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
+    <% if(editing) { %>
+        <hr />
+        <button type="submit" class="btn"><%= model ? 'Update' : 'Create' %></button>
+        <% if(model) { %>
+            <input type="hidden" name="id" value="<%= model.id %>" />
+            <button class="btn btn-danger delete">Delete</button>
+        <% }; %>
+    <% }; %>
+</form>
