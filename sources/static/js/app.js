@@ -112,15 +112,17 @@ var Router = Backbone.Router.extend({
 
 $(function() {
 
+    // Pre-load templates; start our router once that is done.
+
     var deferreds = [];
 
     $.each(Collections, function(collection) {
         _.each(['form', 'list'], function(view_type) {
             var view_name = collection + '_' + view_type;
-            deferreds.push($.get('static/templates/' + view_name + '.html', function(
-                data) {
-                Templates[view_name] = _.template(data);
-            }, 'html'));
+            deferreds.push($.get('static/templates/' + view_name + '.html',
+                function(data) {
+                    Templates[view_name] = _.template(data);
+                }, 'html'));
         });
     });
 

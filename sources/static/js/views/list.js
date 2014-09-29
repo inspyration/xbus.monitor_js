@@ -1,5 +1,5 @@
 Views.list = Backbone.View.extend({
-    el: '.page',
+    el: '#ajax-content',
 
     initialize: function(options) {
         console.log('listview initialize');

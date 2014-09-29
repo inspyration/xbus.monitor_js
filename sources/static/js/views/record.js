@@ -1,5 +1,5 @@
 Views.record = Backbone.View.extend({
-    el: '.page',
+    el: '#ajax-content',
     events: {
         'submit .record-form': 'saveRecord',
         'click .delete': 'deleteRecord'
