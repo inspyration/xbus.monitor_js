@@ -16,20 +16,61 @@
         </ol>
     </div>
 </div>
-<form class="record-form">
-    <legend><%= model ? (editing ? 'Edit' : 'View') : 'New' %> Service</legend>
-    <label>Name</label>
-    <input name="name" type="text" value="<%= model ? model.get('name') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
-    <label>Consumer</label>
-    <input name="consumer" type="checkbox" value="<%= model ? model.get('consumer') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
-    <label>Description</label>
-    <input name="description" type="text" value="<%= model ? model.get('description') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
-    <% if(editing) { %>
-        <hr />
-        <button type="submit" class="btn"><%= model ? 'Update' : 'Create' %></button>
-        <% if(model) { %>
-            <input type="hidden" name="id" value="<%= model.id %>" />
-            <button class="btn btn-danger delete">Delete</button>
-        <% }; %>
-    <% }; %>
-</form>
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <span><%= model ? (editing ? 'Edit' : 'View') : 'New' %> Service</span>
+                </div>
+                <div class="box-icons">
+                    <a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+                    </a> <a class="expand-link"> <i class="fa fa-expand"></i>
+                    </a> <a class="close-link"> <i class="fa fa-times"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content">
+                <form class="form-inline record-form" role="form">
+                    <fieldset>
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input name="name" type="text"
+                                value="<%= model ? model.get('name') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Consumer</label>
+                            <input name="consumer" type="checkbox"
+                                value="<%= model ? model.get('consumer') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input name="description" type="text"
+                                value="<%= model ? model.get('description') : '' %>"
+                                class="form-control" />
+                        </div>
+                    </fieldset>
+                    <% if(editing) { %>
+                        <hr />
+                        <button type="submit" class="btn"><%= model ? 'Update' : 'Create' %></button>
+                        <% if(model) { %>
+                            <input type="hidden" name="id" value="<%= model.id %>" />
+                            <button class="btn btn-danger delete">Delete</button>
+                        <% }; %>
+                    <% }; %>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // <![CDATA[
+
+    prepareForm('.record-form', <%= editing %>);
+
+    // ]]>
+</script>

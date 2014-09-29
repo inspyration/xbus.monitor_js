@@ -16,22 +16,67 @@
         </ol>
     </div>
 </div>
-<form class="record-form">
-    <legend><%= model ? (editing ? 'Edit' : 'View') : 'New' %> Envelope</legend>
-    <label>Emitter</label>
-    <input name="emitter_id" type="text" value="<%= model ? model.get('emitter_id') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
-    <label>State</label>
-    <input name="state" type="text" value="<%= model ? model.get('state') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
-    <label>Posted date</label>
-    <input name="posted_date" type="date" value="<%= model ? model.get('posted_date') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
-    <label>Done date</label>
-    <input name="done_date" type="date" value="<%= model ? model.get('done_date') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
-    <% if(editing) { %>
-        <hr />
-        <button type="submit" class="btn"><%= model ? 'Update' : 'Create' %></button>
-        <% if(model) { %>
-            <input type="hidden" name="id" value="<%= model.id %>" />
-            <button class="btn btn-danger delete">Delete</button>
-        <% }; %>
-    <% }; %>
-</form>
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <span><%= model ? (editing ? 'Edit' : 'View') : 'New' %> Envelope</span>
+                </div>
+                <div class="box-icons">
+                    <a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+                    </a> <a class="expand-link"> <i class="fa fa-expand"></i>
+                    </a> <a class="close-link"> <i class="fa fa-times"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content">
+                <form class="form-inline record-form" role="form">
+                    <fieldset>
+                        <div class="form-group">
+                            <label>Emitter</label>
+                            <input name="emitter_id" type="text"
+                                value="<%= model ? model.get('emitter_id') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>State</label>
+                            <input name="state" type="text"
+                                value="<%= model ? model.get('state') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Posted date</label>
+                            <input name="posted_date" type="date"
+                                value="<%= model ? model.get('posted_date') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Done date</label>
+                            <input name="done_date" type="date"
+                                value="<%= model ? model.get('done_date') : '' %>"
+                                class="form-control" />
+                        </div>
+                    </fieldset>
+                    <% if(editing) { %>
+                        <hr />
+                        <button type="submit" class="btn"><%= model ? 'Update' : 'Create' %></button>
+                        <% if(model) { %>
+                            <input type="hidden" name="id" value="<%= model.id %>" />
+                            <button class="btn btn-danger delete">Delete</button>
+                        <% }; %>
+                    <% }; %>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // <![CDATA[
+
+    prepareForm('.record-form', <%= editing %>);
+
+    // ]]>
+</script>

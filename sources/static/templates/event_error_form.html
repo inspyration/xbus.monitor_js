@@ -16,26 +16,79 @@
         </ol>
     </div>
 </div>
-<form class="record-form">
-    <legend><%= model ? (editing ? 'Edit' : 'View') : 'New' %> Event error</legend>
-    <label>Envelope</label>
-    <input name="envelope_uuid" type="text" value="<%= model ? model.get('envelope_uuid') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
-    <label>Event</label>
-    <input name="event_uuid" type="text" value="<%= model ? model.get('event_uuid') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
-    <label>Service</label>
-    <input name="service_id" type="text" value="<%= model ? model.get('service_id') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
-    <label>Items</label>
-    <input name="items" type="text" value="<%= model ? model.get('items') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
-    <label>Message</label>
-    <input name="message" type="text" value="<%= model ? model.get('message') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
-    <label>Error date</label>
-    <input name="error_date" type="date" value="<%= model ? model.get('error_date') : '' %>"<%= editing ? '' : ' readonly="readonly"' %>>
-    <% if(editing) { %>
-        <hr />
-        <button type="submit" class="btn"><%= model ? 'Update' : 'Create' %></button>
-        <% if(model) { %>
-            <input type="hidden" name="id" value="<%= model.id %>" />
-            <button class="btn btn-danger delete">Delete</button>
-        <% }; %>
-    <% }; %>
-</form>
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <span><%= model ? (editing ? 'Edit' : 'View') : 'New' %> Event error</span>
+                </div>
+                <div class="box-icons">
+                    <a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+                    </a> <a class="expand-link"> <i class="fa fa-expand"></i>
+                    </a> <a class="close-link"> <i class="fa fa-times"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content">
+                <form class="form-inline record-form" role="form">
+                    <fieldset>
+                        <div class="form-group">
+                            <label>Envelope</label>
+                            <input name="envelope_uuid" type="text"
+                                value="<%= model ? model.get('envelope_uuid') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Event</label>
+                            <input name="event_uuid" type="text"
+                                value="<%= model ? model.get('event_uuid') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Service</label>
+                            <input name="service_id" type="text"
+                                value="<%= model ? model.get('service_id') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Items</label>
+                            <input name="items" type="text"
+                                value="<%= model ? model.get('items') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <input name="message" type="text"
+                                value="<%= model ? model.get('message') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Error date</label>
+                            <input name="error_date" type="date"
+                                value="<%= model ? model.get('error_date') : '' %>"
+                                class="form-control" />
+                        </div>
+                    </fieldset>
+                    <% if(editing) { %>
+                        <hr />
+                        <button type="submit" class="btn"><%= model ? 'Update' : 'Create' %></button>
+                        <% if(model) { %>
+                            <input type="hidden" name="id" value="<%= model.id %>" />
+                            <button class="btn btn-danger delete">Delete</button>
+                        <% }; %>
+                    <% }; %>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // <![CDATA[
+
+    prepareForm('.record-form', <%= editing %>);
+
+    // ]]>
+</script>
