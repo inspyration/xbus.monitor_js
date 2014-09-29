@@ -1,3 +1,22 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Xbus</a></li>
+            <li><a href="#/<%= name %>">Event types</a></li>
+            <% if(model) { %>
+                <% if(editing) { %>
+                    <li><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></li>
+                <% } else { %>
+                    <li><a href="#/<%= name %>/<%= model.id %>">View</a></li>
+                <% } %>
+            <% } else { %>
+                <li><a href="#/<%= name %>/create">Create</a></li>
+            <% }%>
+            <li></li>
+        </ol>
+    </div>
+</div>
 <form class="record-form">
     <legend><%= model ? (editing ? 'Edit' : 'View') : 'New' %> Event Type</legend>
     <label>Name</label>
@@ -13,14 +32,3 @@
         <% }; %>
     <% }; %>
 </form>
-<hr />
-<p>
-    <a href="/">Home</a> - <a href="#/<%= name %>">Model list</a>
-    <% if(model) { %>
-        <% if(editing) { %>
-            - <a href="#/<%= name %>/<%= model.id %>">View</a>
-        <% } else { %>
-            - <a href="#/<%= name %>/<%= model.id %>/edit">Edit</a>
-        <% } %>
-    <% } %>
-</p>

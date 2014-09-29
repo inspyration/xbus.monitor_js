@@ -1,14 +1,17 @@
 /* DevOOPS bootstrap theme script, from <http://devoops.me/handmade/1/>.
  * Modified to fit the needs of our project (in particular, to play well with backbone.js).
  * Changes:
- *      - Removed the AJAX loading logic; backbone.js's router handles that.
- *      - Removed the preloader as we pre-render backbone.js views even before any data has been fetched.
+ *      - Remove the AJAX loading logic; backbone.js's router handles that.
+ *      - Remove the preloader as we pre-render backbone.js views even before any data has been fetched.
+ *      - Accommodate for different URLs.
  */
 
 //
 //    Main script of DevOOPS v1.0 Bootstrap Theme
 //
 "use strict";
+
+var DEVOOPS_BASE = 'static/devoops/'
 
 /*-------------------------------------------
  Dynamically load plugin scripts
@@ -21,7 +24,8 @@
 function LoadCalendarScript(callback) {
     function LoadFullCalendarScript() {
         if (!$.fn.fullCalendar) {
-            $.getScript('plugins/fullcalendar/fullcalendar.js', callback);
+            $.getScript(DEVOOPS_BASE + 'plugins/fullcalendar/fullcalendar.js',
+                callback);
         } else {
             if (callback && typeof (callback) === "function") {
                 callback();
@@ -29,7 +33,8 @@ function LoadCalendarScript(callback) {
         }
     }
     if (!$.fn.moment) {
-        $.getScript('plugins/moment/moment.min.js', LoadFullCalendarScript);
+        $.getScript(DEVOOPS_BASE + 'plugins/moment/moment.min.js',
+            LoadFullCalendarScript);
     } else {
         LoadFullCalendarScript();
     }
@@ -55,7 +60,8 @@ function LoadTimePickerScript(callback) {
     if (!$.fn.timepicker) {
         $
             .getScript(
-                'plugins/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.min.js',
+                DEVOOPS_BASE
+                    + 'plugins/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.min.js',
                 callback);
     } else {
         if (callback && typeof (callback) === "function") {
@@ -69,8 +75,8 @@ function LoadTimePickerScript(callback) {
 //
 function LoadBootstrapValidatorScript(callback) {
     if (!$.fn.bootstrapValidator) {
-        $.getScript('plugins/bootstrapvalidator/bootstrapValidator.min.js',
-            callback);
+        $.getScript(DEVOOPS_BASE
+            + 'plugins/bootstrapvalidator/bootstrapValidator.min.js', callback);
     } else {
         if (callback && typeof (callback) === "function") {
             callback();
@@ -83,7 +89,7 @@ function LoadBootstrapValidatorScript(callback) {
 //
 function LoadSelect2Script(callback) {
     if (!$.fn.select2) {
-        $.getScript('plugins/select2/select2.min.js', callback);
+        $.getScript(DEVOOPS_BASE + 'plugins/select2/select2.min.js', callback);
     } else {
         if (callback && typeof (callback) === "function") {
             callback();
@@ -96,14 +102,18 @@ function LoadSelect2Script(callback) {
 //
 function LoadDataTablesScripts(callback) {
     function LoadDatatables() {
-        $.getScript('plugins/datatables/jquery.dataTables.js', function() {
-            $.getScript('plugins/datatables/ZeroClipboard.js', function() {
-                $.getScript('plugins/datatables/TableTools.js', function() {
-                    $.getScript('plugins/datatables/dataTables.bootstrap.js',
-                        callback);
+        $.getScript(DEVOOPS_BASE + 'plugins/datatables/jquery.dataTables.js',
+            function() {
+                $.getScript(DEVOOPS_BASE
+                    + 'plugins/datatables/ZeroClipboard.js', function() {
+                    $.getScript(DEVOOPS_BASE
+                        + 'plugins/datatables/TableTools.js', function() {
+                        $.getScript(DEVOOPS_BASE
+                            + 'plugins/datatables/dataTables.bootstrap.js',
+                            callback);
+                    });
                 });
             });
-        });
     }
     if (!$.fn.dataTables) {
         LoadDatatables();
@@ -119,8 +129,10 @@ function LoadDataTablesScripts(callback) {
 //
 function LoadFineUploader(callback) {
     if (!$.fn.fineuploader) {
-        $.getScript('plugins/fineuploader/jquery.fineuploader-5.0.1.min.js',
-            callback);
+        $
+            .getScript(DEVOOPS_BASE
+                + 'plugins/fineuploader/jquery.fineuploader-5.0.1.min.js',
+                callback);
     } else {
         if (callback && typeof (callback) === "function") {
             callback();
@@ -134,11 +146,11 @@ function LoadFineUploader(callback) {
 //
 function LoadXChartScript(callback) {
     function LoadXChart() {
-        $.getScript('plugins/xcharts/xcharts.min.js', callback);
+        $.getScript(DEVOOPS_BASE + 'plugins/xcharts/xcharts.min.js', callback);
     }
     function LoadD3Script() {
         if (!$.fn.d3) {
-            $.getScript('plugins/d3/d3.v3.min.js', LoadXChart)
+            $.getScript(DEVOOPS_BASE + 'plugins/d3/d3.v3.min.js', LoadXChart)
         } else {
             LoadXChart();
         }
@@ -157,13 +169,17 @@ function LoadXChartScript(callback) {
 //
 function LoadFlotScripts(callback) {
     function LoadFlotScript() {
-        $.getScript('plugins/flot/jquery.flot.js', LoadFlotResizeScript);
+        $.getScript(DEVOOPS_BASE + 'plugins/flot/jquery.flot.js',
+            LoadFlotResizeScript);
     }
     function LoadFlotResizeScript() {
-        $.getScript('plugins/flot/jquery.flot.resize.js', LoadFlotTimeScript);
+        $.getScript(DEVOOPS_BASE + 'plugins/flot/jquery.flot.resize.js',
+            LoadFlotTimeScript);
     }
     function LoadFlotTimeScript() {
-        $.getScript('plugins/flot/jquery.flot.time.js', callback);
+        $
+            .getScript(DEVOOPS_BASE + 'plugins/flot/jquery.flot.time.js',
+                callback);
     }
     if (!$.fn.flot) {
         LoadFlotScript();
@@ -181,7 +197,9 @@ function LoadFlotScripts(callback) {
 function LoadMorrisScripts(callback) {
     function LoadMorrisScript() {
         if (!$.fn.Morris) {
-            $.getScript('plugins/morris/morris.min.js', callback);
+            $
+                .getScript(DEVOOPS_BASE + 'plugins/morris/morris.min.js',
+                    callback);
         } else {
             if (callback && typeof (callback) === "function") {
                 callback();
@@ -189,7 +207,8 @@ function LoadMorrisScripts(callback) {
         }
     }
     if (!$.fn.raphael) {
-        $.getScript('plugins/raphael/raphael-min.js', LoadMorrisScript);
+        $.getScript(DEVOOPS_BASE + 'plugins/raphael/raphael-min.js',
+            LoadMorrisScript);
     } else {
         LoadMorrisScript();
     }
@@ -200,7 +219,8 @@ function LoadMorrisScripts(callback) {
 //
 function LoadFancyboxScript(callback) {
     if (!$.fn.fancybox) {
-        $.getScript('plugins/fancybox/jquery.fancybox.js', callback);
+        $.getScript(DEVOOPS_BASE + 'plugins/fancybox/jquery.fancybox.js',
+            callback);
     } else {
         if (callback && typeof (callback) === "function") {
             callback();
@@ -213,7 +233,8 @@ function LoadFancyboxScript(callback) {
 //
 function LoadKnobScripts(callback) {
     if (!$.fn.knob) {
-        $.getScript('plugins/jQuery-Knob/jquery.knob.js', callback);
+        $.getScript(DEVOOPS_BASE + 'plugins/jQuery-Knob/jquery.knob.js',
+            callback);
     } else {
         if (callback && typeof (callback) === "function") {
             callback();
@@ -226,7 +247,8 @@ function LoadKnobScripts(callback) {
 //
 function LoadSparkLineScript(callback) {
     if (!$.fn.sparkline) {
-        $.getScript('plugins/sparkline/jquery.sparkline.min.js', callback);
+        $.getScript(DEVOOPS_BASE + 'plugins/sparkline/jquery.sparkline.min.js',
+            callback);
     } else {
         if (callback && typeof (callback) === "function") {
             callback();
@@ -817,25 +839,6 @@ function CloseModalBox() {
         });
     };
 })(jQuery);
-//
-// Function convert values of inputs in table to JSON data
-//
-//
-function Table2Json(table) {
-    var result = {};
-    table.find("tr").each(function() {
-        var oneRow = [];
-        var varname = $(this).index();
-        $("td", this).each(function(index) {
-            if (index != 0) {
-                oneRow.push($("input", this).val());
-            }
-        });
-        result[varname] = oneRow;
-    });
-    var result_json = JSON.stringify(result);
-    OpenModalBox('Table to JSON values', result_json);
-}
 /*-------------------------------------------
  Demo graphs for Flot Chart page (charts_flot.html)
  ---------------------------------------------*/
@@ -1754,85 +1757,6 @@ function DrawCoinDeskGoogleCharts() {
     var google_element = 'coindesk-google-chart';
     var google_type = google.visualization.LineChart;
     drawGoogleChart(google_data, google_options, google_element, google_type);
-}
-/*-------------------------------------------
- Scripts for DataTables page (tables_datatables.html)
- ---------------------------------------------*/
-//
-// Function for table, located in element with id = datatable-1
-//
-function TestTable1() {
-    $('#datatable-1')
-        .dataTable(
-            {
-                "aaSorting": [[0, "asc"]],
-                "sDom": "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>rt<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
-                "sPaginationType": "bootstrap",
-                "oLanguage": {
-                    "sSearch": "",
-                    "sLengthMenu": '_MENU_'
-                }
-            });
-}
-//
-// Function for table, located in element with id = datatable-2
-//
-function TestTable2() {
-    var asInitVals = [];
-    var oTable = $('#datatable-2')
-        .dataTable(
-            {
-                "aaSorting": [[0, "asc"]],
-                "sDom": "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>rt<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
-                "sPaginationType": "bootstrap",
-                "oLanguage": {
-                    "sSearch": "",
-                    "sLengthMenu": '_MENU_'
-                },
-                bAutoWidth: false
-            });
-    var header_inputs = $("#datatable-2 thead input");
-    header_inputs.on('keyup', function() {
-        /* Filter on the column (the index) of this element */
-        oTable.fnFilter(this.value, header_inputs.index(this));
-    }).on('focus', function() {
-        if (this.className == "search_init") {
-            this.className = "";
-            this.value = "";
-        }
-    }).on('blur', function(i) {
-        if (this.value == "") {
-            this.className = "search_init";
-            this.value = asInitVals[header_inputs.index(this)];
-        }
-    });
-    header_inputs.each(function(i) {
-        asInitVals[i] = this.value;
-    });
-}
-//
-// Function for table, located in element with id = datatable-3
-//
-function TestTable3() {
-    $('#datatable-3')
-        .dataTable(
-            {
-                "aaSorting": [[0, "asc"]],
-                "sDom": "T<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>rt<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
-                "sPaginationType": "bootstrap",
-                "oLanguage": {
-                    "sSearch": "",
-                    "sLengthMenu": '_MENU_'
-                },
-                "oTableTools": {
-                    "sSwfPath": "plugins/datatables/copy_csv_xls_pdf.swf",
-                    "aButtons": ["copy", "print", {
-                        "sExtends": "collection",
-                        "sButtonText": 'Save <span class="caret" />',
-                        "aButtons": ["csv", "xls", "pdf"]
-                    }]
-                }
-            });
 }
 /*-------------------------------------------
  Functions for Dashboard page (dashboard.html)

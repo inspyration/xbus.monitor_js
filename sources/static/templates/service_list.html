@@ -1,30 +1,54 @@
-<a href="#/<%= name %>/create" class="btn btn-primary">New</a>
-<hr />
-<table class="table striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Consumer</th>
-            <th>Description</th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <% _.each(models, function(model) { %>
-        <tr>
-            <td><%= model.id %></td>
-            <td><%= htmlEncode(model.get('name')) %></td>
-            <td><%= htmlEncode(model.get('consumer')) %></td>
-            <td><%= htmlEncode(model.get('description')) %></td>
-            <td><a class="btn" href="#/<%= name %>/<%= model.id %>">View</a></td>
-            <td><a class="btn" href="#/<%= name %>/<%= model.id %>/edit">Edit</a></td>
-        </tr>
-        <% }); %>
-    </tbody>
-</table>
-<hr />
-<p>
-    <a href="/">Home</a>
-</p>
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Xbus</a></li>
+            <li><a href="#/services">Services</a></li>
+            <li></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <i class="fa fa-list"></i> <span>Services</span>
+                </div>
+                <div class="box-icons">
+                    <a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+                    </a> <a class="expand-link"> <i class="fa fa-expand"></i>
+                    </a> <a class="close-link"> <i class="fa fa-times"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Consumer</th>
+                            <th>Description</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% _.each(models, function(model) { %>
+                        <tr>
+                            <td><%= model.id %></td>
+                            <td><%= htmlEncode(model.get('name')) %></td>
+                            <td><%= htmlEncode(model.get('consumer')) %></td>
+                            <td><%= htmlEncode(model.get('description')) %></td>
+                            <td><a href="#/<%= name %>/<%= model.id %>">View</a></td>
+                            <td><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -31,8 +31,8 @@ function disableView(view) {
 }
 
 /*
- * The main view; there can only be one. When a new one is created, the previous
- * one has to be removed.
+ * The main view; there can only be one. When a ne1w one is created, the
+ * previous one has to be removed.
  */
 var main_view = null;
 function setMainView(view_factory) {
@@ -50,6 +50,7 @@ function setMainView(view_factory) {
 var Models = {}; // model classes.
 var Collections = {}; // collection classes.
 var collections = {}; // collection instances (which contain model instances).
+var router = null; // backbone.js router; can be used to navigate across pages.
 var Templates = {}; // Template functions, ready to be called with the right
 // parameters.
 var Views = {}; // view classes.
@@ -128,7 +129,7 @@ $(function() {
 
     $.when.apply(null, deferreds).done(function() {
         console.log('fetched all templates; initializing...');
-        var router = new Router;
+        router = new Router();
         Backbone.history.start();
     });
 });
