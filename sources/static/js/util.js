@@ -10,7 +10,19 @@ function formatDataForSelect2(data, text_field) {
     }
 }
 
+function prepareForm(form_selector, editing) {
+    if (!editing) {
+        // Set the form as non-readonly.
+        $(form_selector + ' input').attr('readonly', 'readonly');
+    }
+}
+
 function select2ify(input_name, url, text_field) {
+    /*
+     * Apply Select2 to an input; link it with a collection by the provided URL.
+     * @param text_field The field to use to display the name of the record.
+     */
+
     LoadSelect2Script(function() {
 
         $('input[name="' + input_name + '"]').select2({
