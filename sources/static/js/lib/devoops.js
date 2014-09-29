@@ -2648,6 +2648,7 @@ $(document)
                 $('div#main').toggleClass('sidebar-show');
                 setTimeout(MessagesMenuWidth, 250);
             });
+
             $('.main-menu').on(
                 'click',
                 'a',
@@ -2682,7 +2683,13 @@ $(document)
                             .removeClass('active');
                         $(this).addClass('active')
                     }
+
+                    // TODO This seems shaky...
+                    if ($(this).attr('href') == '#') {
+                        e.preventDefault();
+                    }
                 });
+
             var height = window.innerHeight - 49;
             $('#main').css('min-height', height).on('click', '.expand-link',
                 function(e) {
@@ -2724,16 +2731,19 @@ $(document)
                 var content = $(this).closest('div.box');
                 content.remove();
             });
+
             $('#locked-screen').on('click', function(e) {
                 e.preventDefault();
                 $('body').addClass('body-screensaver');
                 $('#screensaver').addClass("show");
                 ScreenSaver();
             });
+
             $('body').on('click', 'a.close-link', function(e) {
                 e.preventDefault();
                 CloseModalBox();
             });
+
             $('#search').on('keydown', function(e) {
                 if (e.keyCode == 13) {
                     e.preventDefault();
@@ -2742,6 +2752,7 @@ $(document)
                     alert('Searching not implemented yet.');
                 }
             });
+
             $('#screen_unlock')
                 .on(
                     'mouseover',
