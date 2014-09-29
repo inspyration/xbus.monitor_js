@@ -3,7 +3,8 @@
  * Changes:
  *      - Remove the AJAX loading logic; backbone.js's router handles that.
  *      - Remove the preloader as we pre-render backbone.js views even before any data has been fetched.
- *      - Accommodate for different URLs.
+ *      - Accommodate for different URLs (DEVOOPS_BASE).
+ *      - Remove stuff we don't need.
  */
 
 //
@@ -2647,10 +2648,6 @@ $(document)
                 $('div#main').toggleClass('sidebar-show');
                 setTimeout(MessagesMenuWidth, 250);
             });
-            var ajax_url = location.hash.replace(/^#/, '');
-            if (ajax_url.length < 1) {
-                ajax_url = 'ajax/dashboard.html';
-            }
             $('.main-menu').on(
                 'click',
                 'a',
@@ -2684,19 +2681,6 @@ $(document)
                         $(this).parents("ul.dropdown-menu").find('a')
                             .removeClass('active');
                         $(this).addClass('active')
-                    }
-                    if ($(this).hasClass('ajax-link')) {
-                        e.preventDefault();
-                        if ($(this).hasClass('add-full')) {
-                            $('#content').addClass('full-content');
-                        } else {
-                            $('#content').removeClass('full-content');
-                        }
-                        var url = $(this).attr('href');
-                        window.location.hash = url;
-                    }
-                    if ($(this).attr('href') == '#') {
-                        e.preventDefault();
                     }
                 });
             var height = window.innerHeight - 49;
@@ -2750,24 +2734,12 @@ $(document)
                 e.preventDefault();
                 CloseModalBox();
             });
-            $('#top-panel').on('click', 'a', function(e) {
-                if ($(this).hasClass('ajax-link')) {
-                    e.preventDefault();
-                    if ($(this).hasClass('add-full')) {
-                        $('#content').addClass('full-content');
-                    } else {
-                        $('#content').removeClass('full-content');
-                    }
-                    var url = $(this).attr('href');
-                    window.location.hash = url;
-                }
-            });
             $('#search').on('keydown', function(e) {
                 if (e.keyCode == 13) {
                     e.preventDefault();
                     $('#content').removeClass('full-content');
-                    ajax_url = 'ajax/page_search.html';
-                    window.location.hash = ajax_url;
+                    // TODO navigate to the search page.
+                    alert('Searching not implemented yet.');
                 }
             });
             $('#screen_unlock')
