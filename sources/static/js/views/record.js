@@ -37,7 +37,7 @@ Views.record = Backbone.View.extend({
 
     saveRecord: function(ev) {
         var that = this;
-        var data = $(ev.currentTarget).serializeObject();
+        var data = Backbone.Syphon.serialize(this);
         if (!this.model) {
             this.model = new this.collection.model();
         }
