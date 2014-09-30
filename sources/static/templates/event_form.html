@@ -36,19 +36,19 @@
                     <fieldset>
                         <div class="form-group">
                             <label>Envelope</label>
-                            <input name="envelope_id" type="text"
+                            <input name="envelope_id" type="hidden"
                                 value="<%= model ? model.get('envelope_id') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Emitter</label>
-                            <input name="emitter_id" type="text"
+                            <input name="emitter_id" type="hidden"
                                 value="<%= model ? model.get('emitter_id') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Type</label>
-                            <input name="type_id" type="text"
+                            <input name="type_id" type="hidden"
                                 value="<%= model ? model.get('type_id') : '' %>"
                                 class="form-control" />
                         </div>
@@ -83,6 +83,9 @@
     // <![CDATA[
 
     prepareForm('.record-form', <%= editing %>);
+    select2ify('envelope_id', '/api/envelope', 'id');
+    select2ify('emitter_id', '/api/emitter', 'login');
+    select2ify('type_id', '/api/event_type', 'name');
 
     // ]]>
 </script>

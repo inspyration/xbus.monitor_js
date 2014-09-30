@@ -36,13 +36,13 @@
                     <fieldset>
                         <div class="form-group">
                             <label>Envelope</label>
-                            <input name="envelope_id" type="text"
+                            <input name="envelope_id" type="hidden"
                                 value="<%= model ? model.get('envelope_id') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Event</label>
-                            <input name="event_id" type="text"
+                            <input name="event_id" type="hidden"
                                 value="<%= model ? model.get('event_id') : '' %>"
                                 class="form-control" />
                         </div>
@@ -89,6 +89,8 @@
     // <![CDATA[
 
     prepareForm('.record-form', <%= editing %>);
+    select2ify('envelope_id', '/api/envelope', 'id');
+    select2ify('event_id', '/api/event', 'id');
 
     // ]]>
 </script>

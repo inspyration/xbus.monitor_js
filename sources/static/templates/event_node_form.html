@@ -36,13 +36,13 @@
                     <fieldset>
                         <div class="form-group">
                             <label>Service</label>
-                            <input name="service_id" type="text"
+                            <input name="service_id" type="hidden"
                                 value="<%= model ? model.get('service_id') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Type</label>
-                            <input name="type_id" type="text"
+                            <input name="type_id" type="hidden"
                                 value="<%= model ? model.get('type_id') : '' %>"
                                 class="form-control" />
                         </div>
@@ -71,6 +71,8 @@
     // <![CDATA[
 
     prepareForm('.record-form', <%= editing %>);
+    select2ify('service_id', '/api/service', 'name');
+    select2ify('type_id', '/api/event_type', 'name');
 
     // ]]>
 </script>

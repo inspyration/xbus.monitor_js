@@ -36,7 +36,7 @@
                     <fieldset>
                         <div class="form-group">
                             <label>Emitter</label>
-                            <input name="emitter_id" type="text"
+                            <input name="emitter_id" type="hidden"
                                 value="<%= model ? model.get('emitter_id') : '' %>"
                                 class="form-control" />
                         </div>
@@ -77,6 +77,7 @@
     // <![CDATA[
 
     prepareForm('.record-form', <%= editing %>);
+    select2ify('emitter_id', '/api/emitter', 'login');
 
     // ]]>
 </script>
