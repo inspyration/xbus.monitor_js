@@ -30,7 +30,7 @@ function formatDataForSelect2(data, text_field) {
 
 function prepareForm(form_selector, editing) {
     if (!editing) {
-        // Set the form as non-readonly.
+        // Set the form as readonly.
         $(form_selector + ' input').attr('readonly', 'readonly');
     }
 }
