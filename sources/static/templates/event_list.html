@@ -33,7 +33,6 @@
                             <th>Started date</th>
                             <th>Done date</th>
                             <th></th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,7 +45,6 @@
                             <td><%= htmlEncode(model.get('started_date')) %></td>
                             <td><%= htmlEncode(model.get('done_date')) %></td>
                             <td><a href="#/<%= name %>/<%= model.id %>">View</a></td>
-                            <td><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></td>
                         </tr>
                         <% }); %>
                     </tbody>
