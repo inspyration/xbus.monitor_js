@@ -1,11 +1,11 @@
 Models.envelope = Backbone.Model.extend({
-    urlRoot: '/api/envelope'
+    urlRoot: API_PREFIX + 'envelope'
 });
 
 Collections.envelope = Backbone.Collection.extend({
     model: Models.envelope,
     name: 'envelope',
-    url: '/api/envelope'
+    url: API_PREFIX + 'envelope'
 });
 
 collections.envelope = new Collections.envelope();

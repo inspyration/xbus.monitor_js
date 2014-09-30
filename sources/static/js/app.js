@@ -1,6 +1,9 @@
 /* Inspired by several sources; the best of which is
  * <https://github.com/ccoenraets/directory-backbone-bootstrap>. */
 
+// Where the REST API is located.
+var API_PREFIX = '/api/'
+
 function disableView(view) {
     /*
      * Avoid calling the "remove" function (creates strange issues) but at least

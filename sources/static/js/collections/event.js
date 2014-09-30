@@ -1,11 +1,11 @@
 Models.event = Backbone.Model.extend({
-    urlRoot: '/api/event'
+    urlRoot: API_PREFIX + 'event'
 });
 
 Collections.event = Backbone.Collection.extend({
     model: Models.event,
     name: 'event',
-    url: '/api/event'
+    url: API_PREFIX + 'event'
 });
 
 collections.event = new Collections.event();

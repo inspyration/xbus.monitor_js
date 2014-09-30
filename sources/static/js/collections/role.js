@@ -1,11 +1,11 @@
 Models.role = Backbone.Model.extend({
-    urlRoot: '/api/role'
+    urlRoot: API_PREFIX + 'role'
 });
 
 Collections.role = Backbone.Collection.extend({
     model: Models.role,
     name: 'role',
-    url: '/api/role'
+    url: API_PREFIX + 'role'
 });
 
 collections.role = new Collections.role();

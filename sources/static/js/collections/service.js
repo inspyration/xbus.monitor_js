@@ -1,11 +1,11 @@
 Models.service = Backbone.Model.extend({
-    urlRoot: '/api/service'
+    urlRoot: API_PREFIX + 'service'
 });
 
 Collections.service = Backbone.Collection.extend({
     model: Models.service,
     name: 'service',
-    url: '/api/service'
+    url: API_PREFIX + 'service'
 });
 
 collections.service = new Collections.service();
