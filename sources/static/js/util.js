@@ -3,6 +3,24 @@
  * last.
  */
 
+function fillRelNames(field, collection_name, text_field) {
+    /*
+     * Fetch names of relational fields and fill them into tags with the "field"
+     * parameter as their data.
+     */
+
+    var collection = collections[collection_name];
+    collection.fetch({
+        success: function() {
+            $('[data-' + field + ']').each(function() {
+                var el = $(this);
+                var id = el.data(field);
+                el.text(collection.get(id).get(text_field));
+            });
+        }
+    });
+}
+
 function formatDataForSelect2(data, text_field) {
     return {
         id: data.id,

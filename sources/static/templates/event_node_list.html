@@ -38,8 +38,8 @@
                         <% _.each(models, function(model) { %>
                         <tr>
                             <td><%= model.id %></td>
-                            <td><%= model.escape('service') %></td>
-                            <td><%= model.escape('type') %></td>
+                            <td data-service_id="<%= model.escape('service_id') %>"></td>
+                            <td data-type_id="<%= model.escape('type_id') %>"></td>
                             <td><%= model.escape('start') %></td>
                             <td><a href="#/<%= name %>/<%= model.id %>">View</a></td>
                             <td><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></td>
@@ -51,3 +51,12 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    // <![CDATA[
+
+    fillRelNames('service_id', 'service', 'name');
+    fillRelNames('type_id', 'event_type', 'name');
+
+    // ]]>
+</script>

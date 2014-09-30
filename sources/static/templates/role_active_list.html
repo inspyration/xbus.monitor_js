@@ -39,7 +39,7 @@
                         <% _.each(models, function(model) { %>
                         <tr>
                             <td><%= model.id %></td>
-                            <td><%= model.escape('role') %></td>
+                            <td data-role_id="<%= model.escape('role_id') %>"></td>
                             <td><%= model.escape('zmqid') %></td>
                             <td><%= model.escape('ready') %></td>
                             <td><%= model.escape('last_act_date') %></td>
@@ -53,3 +53,11 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    // <![CDATA[
+
+    fillRelNames('role_id', 'role', 'login');
+
+    // ]]>
+</script>
