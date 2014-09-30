@@ -83,9 +83,9 @@
     // <![CDATA[
 
     prepareForm('.record-form', <%= editing %>);
-    select2ify('envelope_id', '/api/envelope', 'id');
-    select2ify('emitter_id', '/api/emitter', 'login');
-    select2ify('type_id', '/api/event_type', 'name');
+    select2ify('envelope_id', 'envelope', 'id');
+    select2ify('emitter_id', 'emitter', 'login');
+    select2ify('type_id', 'event_type', 'name');
 
     // ]]>
 </script>

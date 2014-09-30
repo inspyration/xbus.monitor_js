@@ -7,6 +7,8 @@ function fillRelNames(field, collection_name, text_field) {
     /*
      * Fetch names of relational fields and fill them into tags with the "field"
      * parameter as their data.
+     * 
+     * @param text_field The field to use to display the name of records.
      */
 
     var collection = collections[collection_name];
@@ -35,15 +37,18 @@ function prepareForm(form_selector, editing) {
     }
 }
 
-function select2ify(input_name, url, text_field) {
+function select2ify(field, collection_name, text_field) {
     /*
-     * Apply Select2 to an input; link it with a collection by the provided URL.
-     * @param text_field The field to use to display the name of the record.
+     * Apply Select2 to an input; link it with a collection.
+     * 
+     * @param text_field The field to use to display the name of records.
      */
+
+    var url = collections[collection_name].url;
 
     LoadSelect2Script(function() {
 
-        $('input[name="' + input_name + '"]').select2({
+        $('input[name="' + field + '"]').select2({
             ajax: {
                 dataType: 'json',
                 results: function(data, page) {
