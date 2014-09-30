@@ -49,7 +49,7 @@
                         <div class="form-group">
                             <label>Ready</label>
                             <input name="ready" type="checkbox"
-                                value="<%= model ? model.get('ready') : '' %>"
+                                <%= (model && model.get('ready')) ? 'checked="checked"' : '' %>
                                 class="form-control" />
                         </div>
                         <div class="form-group">
