@@ -37,13 +37,13 @@
                         <div class="form-group">
                             <label>Role</label>
                             <input name="role_id" type="hidden"
-                                value="<%= model ? model.get('role_id') : '' %>"
+                                value="<%= model ? model.escape('role_id') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>ZeroMQ ID</label>
                             <input name="zmqid" type="text"
-                                value="<%= model ? model.get('zmqid') : '' %>"
+                                value="<%= model ? model.escape('zmqid') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
@@ -55,7 +55,7 @@
                         <div class="form-group">
                             <label>Last action date</label>
                             <input name="last_act_date" type="date"
-                                value="<%= model ? model.get('last_act_date') : '' %>"
+                                value="<%= model ? model.escape('last_act_date') : '' %>"
                                 class="form-control" />
                         </div>
                     </fieldset>

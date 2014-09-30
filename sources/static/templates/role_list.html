@@ -38,9 +38,9 @@
                         <% _.each(models, function(model) { %>
                         <tr>
                             <td><%= model.id %></td>
-                            <td><%= htmlEncode(model.get('login')) %></td>
-                            <td><%= htmlEncode(model.get('service_id')) %></td>
-                            <td><%= htmlEncode(model.get('last_logged')) %></td>
+                            <td><%= model.escape('login') %></td>
+                            <td><%= model.escape('service_id') %></td>
+                            <td><%= model.escape('last_logged') %></td>
                             <td><a href="#/<%= name %>/<%= model.id %>">View</a></td>
                             <td><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></td>
                         </tr>

@@ -37,37 +37,37 @@
                         <div class="form-group">
                             <label>Envelope</label>
                             <input name="envelope_id" type="hidden"
-                                value="<%= model ? model.get('envelope_id') : '' %>"
+                                value="<%= model ? model.escape('envelope_id') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Event</label>
                             <input name="event_id" type="hidden"
-                                value="<%= model ? model.get('event_id') : '' %>"
+                                value="<%= model ? model.escape('event_id') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Service</label>
                             <input name="service_id" type="text"
-                                value="<%= model ? model.get('service_id') : '' %>"
+                                value="<%= model ? model.escape('service_id') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Items</label>
                             <input name="items" type="text"
-                                value="<%= model ? model.get('items') : '' %>"
+                                value="<%= model ? model.escape('items') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Message</label>
                             <input name="message" type="text"
-                                value="<%= model ? model.get('message') : '' %>"
+                                value="<%= model ? model.escape('message') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Error date</label>
                             <input name="error_date" type="date"
-                                value="<%= model ? model.get('error_date') : '' %>"
+                                value="<%= model ? model.escape('error_date') : '' %>"
                                 class="form-control" />
                         </div>
                     </fieldset>

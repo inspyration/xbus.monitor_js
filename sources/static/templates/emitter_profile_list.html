@@ -37,8 +37,8 @@
                         <% _.each(models, function(model) { %>
                         <tr>
                             <td><%= model.id %></td>
-                            <td><%= htmlEncode(model.get('name')) %></td>
-                            <td><%= htmlEncode(model.get('description')) %></td>
+                            <td><%= model.escape('name') %></td>
+                            <td><%= model.escape('description') %></td>
                             <td><a href="#/<%= name %>/<%= model.id %>">View</a></td>
                             <td><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></td>
                         </tr>

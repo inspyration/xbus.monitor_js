@@ -37,31 +37,31 @@
                         <div class="form-group">
                             <label>Envelope</label>
                             <input name="envelope_id" type="hidden"
-                                value="<%= model ? model.get('envelope_id') : '' %>"
+                                value="<%= model ? model.escape('envelope_id') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Emitter</label>
                             <input name="emitter_id" type="hidden"
-                                value="<%= model ? model.get('emitter_id') : '' %>"
+                                value="<%= model ? model.escape('emitter_id') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Type</label>
                             <input name="type_id" type="hidden"
-                                value="<%= model ? model.get('type_id') : '' %>"
+                                value="<%= model ? model.escape('type_id') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Started date</label>
                             <input name="started_date" type="text"
-                                value="<%= model ? model.get('started_date') : '' %>"
+                                value="<%= model ? model.escape('started_date') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Done date</label>
                             <input name="done_date" type="text"
-                                value="<%= model ? model.get('done_date') : '' %>"
+                                value="<%= model ? model.escape('done_date') : '' %>"
                                 class="form-control" />
                         </div>
                     </fieldset>

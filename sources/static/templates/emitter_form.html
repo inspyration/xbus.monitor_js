@@ -37,19 +37,19 @@
                         <div class="form-group">
                             <label>Login</label>
                             <input name="login" type="text"
-                                value="<%= model ? model.get('login') : '' %>"
+                                value="<%= model ? model.escape('login') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Profile</label>
                             <input name="profile_id" type="hidden"
-                                value="<%= model ? model.get('profile_id') : '' %>"
+                                value="<%= model ? model.escape('profile_id') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Last emitted</label>
                             <input name="last_emit" type="date"
-                                value="<%= model ? model.get('last_emit') : '' %>"
+                                value="<%= model ? model.escape('last_emit') : '' %>"
                                 class="form-control" />
                         </div>
                     </fieldset>

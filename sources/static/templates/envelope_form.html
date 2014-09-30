@@ -37,25 +37,25 @@
                         <div class="form-group">
                             <label>Emitter</label>
                             <input name="emitter_id" type="hidden"
-                                value="<%= model ? model.get('emitter_id') : '' %>"
+                                value="<%= model ? model.escape('emitter_id') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>State</label>
                             <input name="state" type="text"
-                                value="<%= model ? model.get('state') : '' %>"
+                                value="<%= model ? model.escape('state') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Posted date</label>
                             <input name="posted_date" type="date"
-                                value="<%= model ? model.get('posted_date') : '' %>"
+                                value="<%= model ? model.escape('posted_date') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Done date</label>
                             <input name="done_date" type="date"
-                                value="<%= model ? model.get('done_date') : '' %>"
+                                value="<%= model ? model.escape('done_date') : '' %>"
                                 class="form-control" />
                         </div>
                     </fieldset>

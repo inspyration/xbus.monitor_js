@@ -39,10 +39,10 @@
                         <% _.each(models, function(model) { %>
                         <tr>
                             <td><%= model.id %></td>
-                            <td><%= htmlEncode(model.get('emitter_id')) %></td>
-                            <td><%= htmlEncode(model.get('state')) %></td>
-                            <td><%= htmlEncode(model.get('posted_date')) %></td>
-                            <td><%= htmlEncode(model.get('done_date')) %></td>
+                            <td><%= model.escape('emitter_id') %></td>
+                            <td><%= model.escape('state') %></td>
+                            <td><%= model.escape('posted_date') %></td>
+                            <td><%= model.escape('done_date') %></td>
                             <td><a href="#/<%= name %>/<%= model.id %>">View</a></td>
                             <td><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></td>
                         </tr>

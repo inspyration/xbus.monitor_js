@@ -40,12 +40,12 @@
                         <% _.each(models, function(model) { %>
                         <tr>
                             <td><%= model.id %></td>
-                            <td><%= htmlEncode(model.get('envelope_id')) %></td>
-                            <td><%= htmlEncode(model.get('event_id')) %></td>
-                            <td><%= htmlEncode(model.get('service_id')) %></td>
-                            <td><%= htmlEncode(model.get('items')) %></td>
-                            <td><%= htmlEncode(model.get('message')) %></td>
-                            <td><%= htmlEncode(model.get('error_date')) %></td>
+                            <td><%= model.escape('envelope_id') %></td>
+                            <td><%= model.escape('event_id') %></td>
+                            <td><%= model.escape('service_id') %></td>
+                            <td><%= model.escape('items') %></td>
+                            <td><%= model.escape('message') %></td>
+                            <td><%= model.escape('error_date') %></td>
                             <td><a href="#/<%= name %>/<%= model.id %>">View</a></td>
                         </tr>
                         <% }); %>

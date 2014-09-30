@@ -39,10 +39,10 @@
                         <% _.each(models, function(model) { %>
                         <tr>
                             <td><%= model.id %></td>
-                            <td><%= htmlEncode(model.get('role')) %></td>
-                            <td><%= htmlEncode(model.get('zmqid')) %></td>
-                            <td><%= htmlEncode(model.get('ready')) %></td>
-                            <td><%= htmlEncode(model.get('last_act_date')) %></td>
+                            <td><%= model.escape('role') %></td>
+                            <td><%= model.escape('zmqid') %></td>
+                            <td><%= model.escape('ready') %></td>
+                            <td><%= model.escape('last_act_date') %></td>
                             <td><a href="#/<%= name %>/<%= model.id %>">View</a></td>
                             <td><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></td>
                         </tr>

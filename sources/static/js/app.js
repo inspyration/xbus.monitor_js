@@ -1,10 +1,6 @@
 /* Inspired by several sources; the best of which is
  * <https://github.com/ccoenraets/directory-backbone-bootstrap>. */
 
-function htmlEncode(value) {
-    return $('<div/>').text(value).html();
-}
-
 function disableView(view) {
     /*
      * Avoid calling the "remove" function (creates strange issues) but at least
