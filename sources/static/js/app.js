@@ -25,6 +25,25 @@ function setMainView(view_factory) {
     main_view = view_factory();
 }
 
+function setMenuLink(link) {
+    /* Highlight the selected menu item. */
+
+    $('.main-menu a[href="' + link + '"]').each(
+        function() {
+            var node = $(this);
+            // Found a link; simulate clicks on its parents, from top to
+            // bottom.
+            $.each(node.parents('li').children('a').toArray().reverse(),
+                function() {
+                    var menu_node = $(this);
+                    if (!menu_node.hasClass('active')
+                        && !menu_node.hasClass('active-parent')) {
+                        menu_node.trigger('click');
+                    }
+                });
+        });
+}
+
 // $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
 // options.url = 'http://backbonejs-beginner.herokuapp.com' + options.url;
 // options.url = 'http://localhost:6543' + options.url;
@@ -38,61 +57,67 @@ var Templates = {}; // Template functions, ready to be called with the right
 // parameters.
 var Views = {}; // view classes.
 
-var Router = Backbone.Router.extend({
-    routes: {
-        '': 'home',
-        ':collection': 'list',
-        ':collection/create': 'edit',
-        ':collection/:id': 'view',
-        ':collection/:id/edit': 'edit'
-    },
+var Router = Backbone.Router
+    .extend({
+        routes: {
+            '': 'home',
+            ':collection': 'list',
+            ':collection/create': 'edit',
+            ':collection/:id': 'view',
+            ':collection/:id/edit': 'edit'
+        },
 
-    'home': function() {
-        // TODO Redirect to the list view or some such?
-        var collection = 'event_type';
-        console.log('routing to list view', collection);
-        setMainView(function() {
-            return new Views.list({
-                collection: collections[collection],
-                template: Templates[collection + '_list']
+        'home': function() {
+            // TODO Redirect to the list view or some such?
+            var collection = 'event_type';
+            console.log('routing to list view', collection);
+            setMainView(function() {
+                return new Views.list({
+                    collection: collections[collection],
+                    template: Templates[collection + '_list']
+                });
             });
-        });
-    },
+            setMenuLink('#/');
+        },
 
-    'list': function(collection) {
-        console.log('routing to list view', collection);
-        setMainView(function() {
-            return new Views.list({
-                collection: collections[collection],
-                template: Templates[collection + '_list']
+        'list': function(collection) {
+            console.log('routing to list view', collection);
+            setMainView(function() {
+                return new Views.list({
+                    collection: collections[collection],
+                    template: Templates[collection + '_list']
+                });
             });
-        });
-    },
+            setMenuLink('#/' + collection);
+        },
 
-    'view': function(collection, id) {
-        console.log('routing to record view', collection, id);
-        setMainView(function() {
-            return new Views.record({
-                collection: collections[collection],
-                editing: false,
-                id: id,
-                template: Templates[collection + '_form']
+        'view': function(collection, id) {
+            console.log('routing to record view', collection, id);
+            setMainView(function() {
+                return new Views.record({
+                    collection: collections[collection],
+                    editing: false,
+                    id: id,
+                    template: Templates[collection + '_form']
+                });
             });
-        });
-    },
+            setMenuLink('#/' + collection + '/' + id);
+        },
 
-    'edit': function(collection, id) {
-        console.log('routing to edit record view', collection, id);
-        setMainView(function() {
-            return new Views.record({
-                collection: collections[collection],
-                editing: true,
-                id: id,
-                template: Templates[collection + '_form']
+        'edit': function(collection, id) {
+            console.log('routing to edit record view', collection, id);
+            setMainView(function() {
+                return new Views.record({
+                    collection: collections[collection],
+                    editing: true,
+                    id: id,
+                    template: Templates[collection + '_form']
+                });
             });
-        });
-    }
-});
+            setMenuLink('#/' + collection + '/'
+                + (id ? (id + '/edit') : 'create'));
+        }
+    });
 
 $(function() {
 
