@@ -32,6 +32,8 @@
                             <th>Type</th>
                             <th>Started date</th>
                             <th>Done date</th>
+                            <th>Estimated items</th>
+                            <th>Sent items</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -44,6 +46,8 @@
                             <td data-type_id="<%= model.escape('type_id') %>"></td>
                             <td><%= model.escape('started_date') %></td>
                             <td><%= model.escape('done_date') %></td>
+                            <td><%= model.escape('estimated_items') %></td>
+                            <td><%= model.escape('sent_items') %></td>
                             <td><a href="#/<%= name %>/<%= model.id %>">View</a></td>
                         </tr>
                         <% }); %>

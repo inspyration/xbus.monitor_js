@@ -54,14 +54,26 @@
                         </div>
                         <div class="form-group">
                             <label>Started date</label>
-                            <input name="started_date" type="text"
+                            <input name="started_date" type="datetime"
                                 value="<%= model ? model.escape('started_date') : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Done date</label>
-                            <input name="done_date" type="text"
+                            <input name="done_date" type="datetime"
                                 value="<%= model ? model.escape('done_date') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Estimated items</label>
+                            <input name="estimated_items" type="text"
+                                value="<%= model ? model.escape('estimated_items') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Sent items</label>
+                            <input name="sent_items" type="text"
+                                value="<%= model ? model.escape('sent_items') : '' %>"
                                 class="form-control" />
                         </div>
                     </fieldset>
