@@ -52,7 +52,8 @@ function createRelModel(collection, id, rel, rel_collection) {
     });
     var rel_collection_class = Backbone.Collection.extend({
         model: rel_model,
-        name: rel_collection,
+        name: collection,
+        rel_name: rel_collection,
         url: API_PREFIX + url
     });
     return new rel_collection_class();

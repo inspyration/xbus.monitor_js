@@ -43,8 +43,8 @@
                             <td><%= model.escape('state') %></td>
                             <td><%= model.escape('posted_date') %></td>
                             <td><%= model.escape('done_date') %></td>
-                            <td><a href="#/<%= name %>/<%= model.id %>">View</a></td>
-                            <td><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></td>
+                            <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
+                            <td><a href="#/<%= rel_name %>/<%= model.id %>/edit">Edit</a></td>
                         </tr>
                         <% }); %>
                     </tbody>

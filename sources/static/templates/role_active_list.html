@@ -42,9 +42,9 @@
                             <td><%= model.escape('zmqid') %></td>
                             <td><%= model.escape('ready') %></td>
                             <td><%= model.escape('last_act_date') %></td>
-                            <td><a href="#/<%= name %>/<%= model.id %>">View</a></td>
-                            <td><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></td>
-                            <td><a href="#/<%= name %>" class="delete" value="<%= model.id %>">Delete</a></td>
+                            <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
+                            <td><a href="#/<%= rel_name %>/<%= model.id %>/edit">Edit</a></td>
+                            <td><a href="#/<%= rel_name %>" class="delete" value="<%= model.id %>">Delete</a></td>
                         </tr>
                         <% }); %>
                     </tbody>

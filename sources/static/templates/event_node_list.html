@@ -44,8 +44,8 @@
                             <td data-service_id="<%= model.escape('service_id') %>"></td>
                             <td data-type_id="<%= model.escape('type_id') %>"></td>
                             <td><%= model.escape('start') %></td>
-                            <td><a href="#/<%= name %>/<%= model.id %>">View</a></td>
-                            <td><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></td>
+                            <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
+                            <td><a href="#/<%= rel_name %>/<%= model.id %>/edit">Edit</a></td>
                             <% if(rel !== undefined) { %>
                                 <td><a href="#/<%= name %>/<%= id %>/<%= rel %>" class="delete" value="<%= model.id %>">Remove</a></td>
                             <% } else { %>
@@ -59,7 +59,7 @@
                     <form class="form-inline add-select" role="form">
                         <div class="form-group">
                             <label>Add <%= rel %></label>
-                            <input name="new_parent_id" type="hidden" class="form-control" />
+                            <input name="new_rel_id" type="hidden" class="form-control" />
                             <button type="submit" class="btn btn-primary">Add</button>
                             <a href="#/<%= name %>/<%= id %>/<%= rel %>/create">Create</a>
                         </div>

@@ -9,6 +9,7 @@ Views.record = Backbone.View.extend({
         console.log('record view initialize', this.id);
         this.editing = options.editing;
         this.template = options.template;
+        this.rel = options.rel;
         this.render(); // Pre-render before refreshing anything.
 
         if (this.id && options.rel === undefined) {
@@ -30,7 +31,8 @@ Views.record = Backbone.View.extend({
         this.$el.html(this.template({
             editing: this.editing,
             model: this.model,
-            name: this.collection.name
+            name: this.collection.name,
+            rel_name: this.rel ? this.collection.rel_name : this.collection.name
         }));
         return this;
     },
@@ -44,7 +46,8 @@ Views.record = Backbone.View.extend({
         this.model.save(data, {
             success: function() {
                 console.log('record edited', that.id);
-                router.navigate(that.collection.name, {
+                var target = that.rel ? that.collection.name + '/' + that.id + '/' + that.rel : that.collection.name;
+                router.navigate(target, {
                     trigger: true
                 });
             }
@@ -56,9 +59,10 @@ Views.record = Backbone.View.extend({
         var that = this;
         this.model.destroy({
             success: function() {
-                console.log('record destroyed', that.id);
+                console.log('record removed/destroyed', that.id);
                 disableView(that);
-                router.navigate(that.collection.name, {
+                var target = that.rel ? that.collection.name + '/' + that.id + '/' + that.rel : that.collection.name;
+                router.navigate(target, {
                     trigger: true
                 });
             }

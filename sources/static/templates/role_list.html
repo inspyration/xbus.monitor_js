@@ -40,9 +40,9 @@
                             <td><%= model.escape('login') %></td>
                             <td data-service_id="<%= model.escape('service_id') %>"></td>
                             <td><%= model.escape('last_logged') %></td>
-                            <td><a href="#/<%= name %>/<%= model.id %>">View</a></td>
-                            <td><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></td>
-                            <td><a href="#/<%= name %>" class="delete" value="<%= model.id %>">Delete</a></td>
+                            <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
+                            <td><a href="#/<%= rel_name %>/<%= model.id %>/edit">Edit</a></td>
+                            <td><a href="#/<%= rel_name %>" class="delete" value="<%= model.id %>">Delete</a></td>
                         </tr>
                         <% }); %>
                     </tbody>

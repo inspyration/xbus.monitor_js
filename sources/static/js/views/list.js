@@ -27,6 +27,7 @@ Views.list = Backbone.View.extend({
         this.$el.html(this.template({
             models: this.collection.models,
             name: this.collection.name,
+            rel_name: this.rel ? this.collection.rel_name : this.collection.name,
             id: this.id,
             rel: this.rel
         }));

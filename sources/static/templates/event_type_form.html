@@ -56,6 +56,18 @@
                     <% }; %>
                 <% }; %>
                 </form>
+                <% if(model) { %>
+                    <div>
+                        <a href="#/<%= name %>/<%= model.id %>/nodes">
+                                View/Edit Nodes
+                        </a>
+                    </div>
+                    <div>
+                        <a href="#/<%= name %>/<%= model.id %>/emitter_profiles">
+                                View/Edit Allowed Emitter Profiles
+                        </a>
+                    </div>
+                <% } %>
             </div>
         </div>
     </div>
