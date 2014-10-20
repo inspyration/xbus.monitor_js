@@ -4,6 +4,10 @@
             <li><a href="#">Home</a></li>
             <li><a href="#">Xbus</a></li>
             <li><a href="#/<%= name %>">Event nodes</a></li>
+            <% if(rel !== undefined) { %>
+                <li><a href="#/<%= name %>/<%= id %>">View</a></li>
+                <li><a href="#/<%= name %>/<%= id %>/<%= rel %>">rel</a></li>
+            <% } %>
         </ol>
     </div>
 </div>
@@ -43,10 +47,24 @@
                             <td><%= model.escape('start') %></td>
                             <td><a href="#/<%= name %>/<%= model.id %>">View</a></td>
                             <td><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></td>
+                            <% if(rel !== undefined) { %>
+                                <td><a href="#/<%= name %>/<%= id %>/<%= rel %>" class="delete" value="<%= model.id %>">Remove</a></td>
+                            <% } else { %>
+                                <td><a href="#/<%= name %>" class="delete" value="<%= model.id %>">Delete</a></td>
+                            <% } %>
                         </tr>
                         <% }); %>
                     </tbody>
                 </table>
+                <% if(rel !== undefined) { %>
+                    <form class="form-inline add-select" role="form">
+                        <div class="form-group">
+                            <label>Add parent</label>
+                            <input name="new_parent_id" type="hidden" class="form-control" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </form>
+                <% } %>
             </div>
         </div>
     </div>
@@ -55,6 +73,7 @@
 <script type="text/javascript">
     // <![CDATA[
 
+    select2ify('new_parent_id', 'event_node', 'id');
     fillRelNames('service_id', 'service', 'name');
     fillRelNames('type_id', 'event_type', 'name');
 

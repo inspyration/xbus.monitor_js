@@ -2,7 +2,7 @@
  * <https://github.com/ccoenraets/directory-backbone-bootstrap>. */
 
 // Where the REST API is located.
-var API_PREFIX = '/api/'
+var API_PREFIX = '/api/';
 
 function disableView(view) {
     /*
@@ -14,7 +14,7 @@ function disableView(view) {
 }
 
 /*
- * The main view; there can only be one. When a ne1w one is created, the
+ * The main view; there can only be one. When a new one is created, the
  * previous one has to be removed.
  */
 var main_view = null;
@@ -44,6 +44,20 @@ function setMenuLink(link) {
         });
 }
 
+function createRelModel(collection, id, rel, rel_collection) {
+
+	var url = collection + '/' + id + '/' + rel;
+    var rel_model = Backbone.Model.extend({
+        urlRoot: API_PREFIX + url
+    });
+    var rel_collection_class = Backbone.Collection.extend({
+        model: rel_model,
+        name: rel_collection,
+        url: API_PREFIX + url
+    });
+    return new rel_collection_class();
+}
+
 // $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
 // options.url = 'http://backbonejs-beginner.herokuapp.com' + options.url;
 // options.url = 'http://localhost:6543' + options.url;
@@ -61,10 +75,11 @@ var Router = Backbone.Router
     .extend({
         routes: {
             '': 'home',
-            ':collection': 'list',
+            ':collection(?:params)': 'list',
             ':collection/create': 'edit',
             ':collection/:id': 'view',
-            ':collection/:id/edit': 'edit'
+            ':collection/:id/edit': 'edit',
+            ':collection/:id/:rel(?:params)': 'rel_list',
         },
 
         'home': function() {
@@ -80,12 +95,17 @@ var Router = Backbone.Router
             setMenuLink('#/');
         },
 
-        'list': function(collection) {
-            console.log('routing to list view', collection);
+        'list': function(collection, params) {
+        	if(params) {
+        		console.log('routing to list view', collection, 'with params', params);
+        	} else {
+        		console.log('routing to list view', collection);
+        	}
             setMainView(function() {
                 return new Views.list({
                     collection: collections[collection],
-                    template: Templates[collection + '_list']
+                    template: Templates[collection + '_list'],
+                	params: params
                 });
             });
             setMenuLink('#/' + collection);
@@ -101,7 +121,7 @@ var Router = Backbone.Router
                     template: Templates[collection + '_form']
                 });
             });
-            setMenuLink('#/' + collection + '/' + id);
+            setMenuLink('#/' + collection);
         },
 
         'edit': function(collection, id) {
@@ -114,8 +134,31 @@ var Router = Backbone.Router
                     template: Templates[collection + '_form']
                 });
             });
-            setMenuLink('#/' + collection + '/'
-                + (id ? (id + '/edit') : 'create'));
+            setMenuLink('#/' + collection + (id ? '' : '/create'));
+        },
+
+        'rel_list': function(collection, id, rel, params) {
+
+        	if(params) {
+        		console.log('routing to list view', collection, 'with params', params);
+        	} else {
+        		console.log('routing to list view', collection);
+        	}
+        	
+            console.log('routing to relationship view', collection, id, rel);
+            var collection_obj = collections[collection];
+            var rel_collection = collection_obj.relationships[rel];
+            
+            setMainView(function() {
+                return new Views.list({
+                    collection: createRelModel(collection, id, rel, rel_collection),
+                    id: id,
+                    rel: rel,
+                    template: Templates[rel_collection + '_list'],
+            		params: params
+                });
+            });
+            setMenuLink('#/' + collection);
         }
     });
 

@@ -62,6 +62,18 @@
                         <% }; %>
                     <% }; %>
                 </form>
+                <% if(model) { %>
+                    <div>
+                        <a href="#/<%= name %>/<%= model.id %>/parents">
+                                View/Edit Parent Nodes
+                        </a>
+                    </div>
+                    <div>
+                        <a href="#/<%= name %>/<%= model.id %>/children">
+                                View/Edit Child Nodes
+                        </a>
+                    </div>
+                <% } %>
             </div>
         </div>
     </div>
