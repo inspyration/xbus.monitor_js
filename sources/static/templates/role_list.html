@@ -30,8 +30,7 @@
                             <th>Login</th>
                             <th>Service</th>
                             <th>Last logged</th>
-                            <th></th>
-                            <th></th>
+                            <th colspan="3"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,6 +42,7 @@
                             <td><%= model.escape('last_logged') %></td>
                             <td><a href="#/<%= name %>/<%= model.id %>">View</a></td>
                             <td><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></td>
+                            <td><a href="#/<%= name %>" class="delete" value="<%= model.id %>">Delete</a></td>
                         </tr>
                         <% }); %>
                     </tbody>
