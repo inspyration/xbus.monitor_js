@@ -11,7 +11,7 @@ Views.record = Backbone.View.extend({
         this.template = options.template;
         this.render(); // Pre-render before refreshing anything.
 
-        if (this.id) {
+        if (this.id && options.rel === undefined) {
             this.model = this.collection.get(this.id);
             if (!this.model) {
                 this.model = new this.collection.model({

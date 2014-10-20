@@ -37,7 +37,7 @@ Views.list = Backbone.View.extend({
         var that = this;
         var data = Backbone.Syphon.serialize(this);
         var model = new this.collection.model();
-        model.set('id', data['new_parent_id']);
+        model.set('id', data['new_rel_id']);
         model.save({}, {
             success: function() {
                 console.log('record edited', that.id);

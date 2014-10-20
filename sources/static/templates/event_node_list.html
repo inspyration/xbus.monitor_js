@@ -6,7 +6,7 @@
             <li><a href="#/<%= name %>">Event nodes</a></li>
             <% if(rel !== undefined) { %>
                 <li><a href="#/<%= name %>/<%= id %>">View</a></li>
-                <li><a href="#/<%= name %>/<%= id %>/<%= rel %>">rel</a></li>
+                <li><a href="#/<%= name %>/<%= id %>/<%= rel %>"><%= rel %></a></li>
             <% } %>
         </ol>
     </div>
@@ -58,10 +58,11 @@
                 <% if(rel !== undefined) { %>
                     <form class="form-inline add-select" role="form">
                         <div class="form-group">
-                            <label>Add parent</label>
+                            <label>Add <%= rel %></label>
                             <input name="new_parent_id" type="hidden" class="form-control" />
+                            <button type="submit" class="btn btn-primary">Add</button>
+                            <a href="#/<%= name %>/<%= id %>/<%= rel %>/create">Create</a>
                         </div>
-                        <button type="submit" class="btn btn-primary">Add</button>
                     </form>
                 <% } %>
             </div>
@@ -72,7 +73,7 @@
 <script type="text/javascript">
     // <![CDATA[
 
-    select2ify('new_parent_id', 'event_node', 'id');
+    select2ify('new_rel_id', 'event_node', 'id');
     fillRelNames('service_id', 'service', 'name');
     fillRelNames('type_id', 'event_type', 'name');
 
