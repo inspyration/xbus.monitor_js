@@ -35,9 +35,12 @@ function prepareForm(form_selector, editing) {
         // Set the form as readonly.
         $(form_selector + ' input').attr('readonly', 'readonly');
     }
+    else {
+    	
+    }
 }
 
-function select2ify(field, collection_name, text_field) {
+function select2ify(field, collection_name, text_field, query_string) {
     /*
      * Apply Select2 to an input; link it with a collection.
      * 
@@ -58,7 +61,7 @@ function select2ify(field, collection_name, text_field) {
                         })
                     };
                 },
-                url: url
+                url: query_string !== undefined ? url + '?' + query_string : url
             },
             containerCssClass: 'form-control',
             initSelection: function(element, callback) {

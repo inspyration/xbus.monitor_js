@@ -81,7 +81,8 @@ var Router = Backbone.Router
             ':collection/:id': 'view',
             ':collection/:id/edit': 'edit',
             ':collection/:id/:rel(?:params)': 'rel_list',
-            ':collection/:id/:rel/create': 'rel_create'
+            ':collection/:id/:rel/create': 'rel_create',
+            ':collection/:id/graph': 'graph'
         },
 
         'home': function() {

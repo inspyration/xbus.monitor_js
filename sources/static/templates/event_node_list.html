@@ -30,20 +30,34 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
+                            <% if(rel == "nodes") { %>
+                                <th>Level</th>
+                                <th>Reference</th>
+                            <% } %>
                             <th>ID</th>
                             <th>Service</th>
                             <th>Type</th>
                             <th>Start</th>
+                            <% if(rel == "nodes") { %>
+                                <th>Parents</th>
+                            <% } %>
                             <th colspan="3"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <% _.each(models, function(model) { %>
                         <tr>
+                            <% if(rel == "nodes") { %>
+                                <td><%= model.escape('depth') %></td>
+                                <td><%= model.escape('ref') %></td>
+                            <% } %>
                             <td><%= model.id %></td>
                             <td data-service_id="<%= model.escape('service_id') %>"></td>
                             <td data-type_id="<%= model.escape('type_id') %>"></td>
                             <td><%= model.escape('start') %></td>
+                            <% if(rel == "nodes") { %>
+                                <td><%= model.escape('parent_refs') %></td>
+                            <% } %>
                             <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
                             <td><a href="#/<%= rel_name %>/<%= model.id %>/edit">Edit</a></td>
                             <% if(rel !== undefined) { %>
@@ -73,7 +87,9 @@
 <script type="text/javascript">
     // <![CDATA[
 
-    select2ify('new_rel_id', 'event_node', 'id');
+    <% if (rel !== undefined) { %>
+        select2ify('new_rel_id', 'event_node', 'id', '<%= 'id:ne=' + id %>');
+    <% } %>
     fillRelNames('service_id', 'service', 'name');
     fillRelNames('type_id', 'event_type', 'name');
 
