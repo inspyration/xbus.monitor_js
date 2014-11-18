@@ -54,7 +54,7 @@
                             <td><%= model.id %></td>
                             <td data-service_id="<%= model.escape('service_id') %>"></td>
                             <td data-type_id="<%= model.escape('type_id') %>"></td>
-                            <td><%= model.escape('start') %></td>
+                            <td><%= model.escape('is_start') %></td>
                             <% if(rel == "nodes") { %>
                                 <td><%= model.escape('parent_refs') %></td>
                             <% } %>
