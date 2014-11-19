@@ -1,5 +1,7 @@
 {
     "app": {
-        "dashboard": "Dashboard"
+        "dashboard": "Dashboard",
+        "header_title": "Xbus Monitor",
+        "title": "Xbus Monitor"
     }
 }
