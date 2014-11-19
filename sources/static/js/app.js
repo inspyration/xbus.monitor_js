@@ -206,8 +206,28 @@ $(function() {
     });
 
     $.when.apply(null, deferreds).done(function() {
-        console.log('fetched all templates; initializing...');
-        router = new Router();
-        Backbone.history.start();
+        console.log('fetched all templates; initializing i18n...');
+
+        /* Use i18next <http://i18next.com/> to handle translations. */
+        $.i18n.init({
+            fallbackLng: 'en-US',
+            lng: 'fr-FR', // TODO Better lang settings.
+            load: 'current',
+            ns: {
+                defaultNs: 'app',
+                namespaces: ['app']
+            },
+            resGetPath: 'static/locale/__lng__/__ns__.json',
+            useCookie: false
+        }, function() {
+            console.log('i18n ready; initializing the app...');
+
+            // Translate all strings.
+            $('html').i18n();
+
+            // Ready! Start the app.
+            router = new Router();
+            Backbone.history.start();
+        });
     });
 });
