@@ -1,5 +1,7 @@
 {
     "app": {
-        "dashboard": "Tableau de bord"
+        "dashboard": "Tableau de bord",
+        "header_title": "Moniteur Xbus",
+        "title": "Moniteur Xbus"
     }
 }
