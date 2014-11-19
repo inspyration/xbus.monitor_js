@@ -14,8 +14,8 @@ function disableView(view) {
 }
 
 /*
- * The main view; there can only be one. When a new one is created, the
- * previous one has to be removed.
+ * The main view; there can only be one. When a new one is created, the previous
+ * one has to be removed.
  */
 var main_view = null;
 function setMainView(view_factory) {
@@ -46,7 +46,7 @@ function setMenuLink(link) {
 
 function createRelModel(collection, id, rel, rel_collection) {
 
-	var url = collection + '/' + id + '/' + rel;
+    var url = collection + '/' + id + '/' + rel;
     var rel_model = Backbone.Model.extend({
         urlRoot: API_PREFIX + url
     });
@@ -99,16 +99,17 @@ var Router = Backbone.Router
         },
 
         'list': function(collection, params) {
-        	if(params) {
-        		console.log('routing to list view', collection, 'with params', params);
-        	} else {
-        		console.log('routing to list view', collection);
-        	}
+            if (params) {
+                console.log('routing to list view', collection, 'with params',
+                    params);
+            } else {
+                console.log('routing to list view', collection);
+            }
             setMainView(function() {
                 return new Views.list({
                     collection: collections[collection],
                     template: Templates[collection + '_list'],
-                	params: params
+                    params: params
                 });
             });
             setMenuLink('#/' + collection);
@@ -142,22 +143,25 @@ var Router = Backbone.Router
 
         'rel_list': function(collection, id, rel, params) {
 
-        	if(params) {
-        		console.log('routing to relationship list view', collection, id, rel, 'with params', params);
-        	} else {
-        		console.log('routing to relationship list view', collection, id, rel);
-        	}
+            if (params) {
+                console.log('routing to relationship list view', collection,
+                    id, rel, 'with params', params);
+            } else {
+                console.log('routing to relationship list view', collection,
+                    id, rel);
+            }
 
             var collection_obj = collections[collection];
             var rel_collection = collection_obj.relationships[rel];
-            
+
             setMainView(function() {
                 return new Views.list({
-                    collection: createRelModel(collection, id, rel, rel_collection),
+                    collection: createRelModel(collection, id, rel,
+                        rel_collection),
                     id: id,
                     rel: rel,
                     template: Templates[rel_collection + '_list'],
-            		params: params
+                    params: params
                 });
             });
             setMenuLink('#/' + collection);
@@ -165,14 +169,16 @@ var Router = Backbone.Router
 
         'rel_create': function(collection, id, rel) {
 
-    		console.log('routing to relationship record view', collection, id, rel);
+            console.log('routing to relationship record view', collection, id,
+                rel);
 
             var collection_obj = collections[collection];
             var rel_collection = collection_obj.relationships[rel];
-            
+
             setMainView(function() {
                 return new Views.record({
-                    collection: createRelModel(collection, id, rel, rel_collection),
+                    collection: createRelModel(collection, id, rel,
+                        rel_collection),
                     id: id,
                     rel: rel,
                     template: Templates[rel_collection + '_form'],
