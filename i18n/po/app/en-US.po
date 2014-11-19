@@ -1,0 +1,23 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Xbus Monitor JS\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Houzéfa Abbasbhay <houzefa.abba@xcg-consulting.fr>\n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.5.4\n"
+"Language: en_US\n"
+
+msgid "app##dashboard"
+msgstr "Dashboard"
+
+msgid "app##title"
+msgstr "Xbus Monitor"
+
+msgctxt "_title"
+msgid "app##header_title"
+msgstr "Xbus Monitor"
