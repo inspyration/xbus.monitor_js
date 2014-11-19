@@ -40,6 +40,12 @@
                                 value="<%= model ? model.escape('login') : '' %>"
                                 class="form-control" />
                         </div>
+                        <% if(!model) { %>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input name="password" type="password" value="" class="form-control" />
+                            </div>
+                        <% } %>
                         <div class="form-group">
                             <label class="control-label">Service</label>
                             <input name="service_id" type="hidden"
@@ -48,7 +54,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Last logged</label>
-                            <input name="last_logged" type="date"
+                            <input name="last_logged" type="date" readonly="readonly"
                                 value="<%= model ? model.escape('last_logged') : '' %>"
                                 class="form-control" />
                         </div>
