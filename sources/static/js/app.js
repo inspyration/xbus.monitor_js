@@ -4,6 +4,22 @@
 // Where the REST API is located.
 var API_PREFIX = '/api/';
 
+function createRelModel(collection, id, rel, rel_collection) {
+    /* Helper for collections related to other collections. */
+
+    var url = collection + '/' + id + '/' + rel;
+    var rel_model = Backbone.Model.extend({
+        urlRoot: API_PREFIX + url
+    });
+    var rel_collection_class = Backbone.Collection.extend({
+        model: rel_model,
+        name: collection,
+        rel_name: rel_collection,
+        url: API_PREFIX + url
+    });
+    return new rel_collection_class();
+}
+
 function disableView(view) {
     /*
      * Avoid calling the "remove" function (creates strange issues) but at least
@@ -42,21 +58,6 @@ function setMenuLink(link) {
                     }
                 });
         });
-}
-
-function createRelModel(collection, id, rel, rel_collection) {
-
-    var url = collection + '/' + id + '/' + rel;
-    var rel_model = Backbone.Model.extend({
-        urlRoot: API_PREFIX + url
-    });
-    var rel_collection_class = Backbone.Collection.extend({
-        model: rel_model,
-        name: collection,
-        rel_name: rel_collection,
-        url: API_PREFIX + url
-    });
-    return new rel_collection_class();
 }
 
 // $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
