@@ -45,7 +45,8 @@
                             <input name="descriptor" type="file"
                                 class="form-control" />
                             <% if (model) { %>
-                                <a href="data:<%= model.get('descriptor_mimetype') %>;base64,<%= model.get('descriptor') %>" target="_blank">Download</a>
+                                <a href="data:<%= model.get('descriptor_mimetype') %>;base64,<%= model.get('descriptor') %>"
+                                    target="_blank"><i class="fa fa-download"></i> Download</a>
                             <% } %>
                         </div>
                     </fieldset>
