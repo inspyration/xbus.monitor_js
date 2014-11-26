@@ -1,0 +1,72 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Xbus</a></li>
+            <li><a href="#/<%= name %>">Input descriptors</a></li>
+            <% if(model) { %>
+                <% if(editing) { %>
+                    <li><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></li>
+                <% } else { %>
+                    <li><a href="#/<%= name %>/<%= model.id %>">View</a></li>
+                <% } %>
+            <% } else { %>
+                <li><a href="#/<%= name %>/create">Create</a></li>
+            <% }%>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <span><%= model ? (editing ? 'Edit' : 'View') : 'New' %> Input descriptor</span>
+                </div>
+                <div class="box-icons">
+                    <a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+                    </a> <a class="expand-link"> <i class="fa fa-expand"></i>
+                    </a> <a class="close-link"> <i class="fa fa-times"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content">
+                <form class="form-inline record-form" role="form">
+                    <fieldset>
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input name="name" type="text"
+                                value="<%= model ? model.escape('name') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Descriptor</label>
+                            <input name="descriptor" type="file"
+                                class="form-control" />
+                            <% if (model) { %>
+                                <a href="data:<%= model.get('descriptor_mimetype') %>;base64,<%= model.get('descriptor') %>" target="_blank">Download</a>
+                            <% } %>
+                        </div>
+                    </fieldset>
+                    <% if (editing) { %>
+                        <hr />
+                        <button type="submit" class="btn btn-primary"><%= model ? 'Update' : 'Create' %></button>
+                        <% if (model) { %>
+                            <input type="hidden" name="id" value="<%= model.id %>" />
+                            <button class="btn btn-danger delete">Delete</button>
+                        <% } %>
+                    <% } %>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // <![CDATA[
+
+    prepareForm('.record-form', <%= editing %>);
+
+    // ]]>
+</script>
