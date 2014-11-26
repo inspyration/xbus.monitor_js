@@ -93,6 +93,7 @@ var Router = Backbone.Router
     .extend({
         routes: {
             '': 'home',
+            'upload': 'upload',
             ':collection(?:params)': 'list',
             ':collection/create': 'edit',
             ':collection/:id': 'view',
@@ -113,6 +114,16 @@ var Router = Backbone.Router
                 });
             });
             setMenuLink('#/');
+        },
+
+        'upload': function() {
+            console.log('routing to the upload view');
+            setMainView(function() {
+                return new Views.upload({
+                    template: Templates['upload']
+                });
+            });
+            setMenuLink('#/upload');
         },
 
         'list': function(collection, params) {
@@ -210,16 +221,21 @@ $(function() {
 
     // Pre-load templates; start our router once that is done.
 
-    var deferreds = [];
+    var template_views = ['upload'];
 
     $.each(Collections, function(collection) {
         _.each(['form', 'list'], function(view_type) {
-            var view_name = collection + '_' + view_type;
-            deferreds.push($.get('static/templates/' + view_name + '.html',
-                function(data) {
-                    Templates[view_name] = _.template(data);
-                }, 'html'));
+            template_views.push(collection + '_' + view_type);
         });
+    });
+
+    var deferreds = [];
+
+    _.each(template_views, function(view_name) {
+        deferreds.push($.get('static/templates/' + view_name + '.html',
+            function(data) {
+                Templates[view_name] = _.template(data);
+            }, 'html'));
     });
 
     // In the meantime, do other setup work.
