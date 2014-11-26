@@ -35,6 +35,75 @@ function prepareForm(form_selector, editing) {
         // Set the form as readonly.
         $(form_selector + ' input').attr('readonly', 'readonly');
     }
+
+    if (editing) {
+
+        // When forms contain binary data, delay submitting until our
+        // FileReaders are done.
+        var binary_nodes = $(form_selector + ' input[type="file"]');
+        if (binary_nodes.length > 0) {
+            binary_form_data = {};
+
+            $(form_selector).on('submit', function() {
+                if (_.size(binary_form_data) == _.size(binary_nodes)) {
+                    // Already read the data; the form is being re-submitted.
+                    return true;
+                }
+
+                // Read files with FIleReaders and store their result in
+                // "binary_form_data".
+                binary_nodes.each(function() {
+                    var node = $(this);
+                    var files = node[0].files;
+                    var name = node.attr('name');
+                    if (files.length === 0) {
+                        // No file selected.
+                        binary_form_data[name] = null;
+                        return;
+                    }
+                    var multi = node.attr('multiple');
+                    if (multi) {
+                        binary_form_data[name] = [];
+                    }
+
+                    // Launch a FileReader for each selected file.
+                    _.each(files, function(file) {
+                        var file_reader = new FileReader();
+                        file_reader.onload = function(ev) {
+                            // Base64-encode the data; store its MIME type.
+                            var data = [file.type, btoa(ev.target.result)];
+                            if (multi) {
+                                binary_form_data[name].push(data);
+                            } else {
+                                binary_form_data[name] = data;
+                            }
+                        }
+                        file_reader.onabort = file_reader.onerror = function() {
+                            alert('Error reading the file: ' + file.name);
+                            binary_form_data[name] = null;
+                        };
+                        file_reader.readAsBinaryString(file);
+                    });
+                });
+
+                // TODO Better way of waiting...
+                function check_read_done() {
+                    if (_.size(binary_form_data) === _.size(binary_nodes)) {
+                        // Done reading the binary data! Now submit the form.
+                        $(form_selector).submit();
+                    } else {
+                        // Keep waiting.
+                        setTimeout(check_read_done, 500);
+                    }
+                }
+                check_read_done();
+
+                // Ignore this submit event; the form will be submitted after
+                // all files are read.
+                return false;
+            })
+        }
+    }
 }
 
 function select2ify(field, collection_name, text_field, query_string) {

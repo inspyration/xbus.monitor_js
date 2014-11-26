@@ -4,6 +4,9 @@
 // Where the REST API is located.
 var API_PREFIX = '/api/';
 
+// Used to propagate binary data across callbacks at form validation.
+var binary_form_data = null;
+
 function createRelModel(collection, id, rel, rel_collection) {
     /* Helper for collections related to other collections. */
 
@@ -27,6 +30,19 @@ function disableView(view) {
      */
     view.stopListening();
     view.undelegateEvents();
+}
+
+function registerCustomSerializers() {
+    /*
+     * Register Backbone.Syphon input readers for types it can't handle.
+     * <https://github.com/marionettejs/backbone.syphon/blob/master/apidoc.md>
+     */
+
+    // Files are pre-read before submitting forms; their result is stored in
+    // "binary_form_data".
+    Backbone.Syphon.InputReaders.register('file', function(node) {
+        return binary_form_data[node.attr('name')];
+    });
 }
 
 /*
@@ -205,6 +221,9 @@ $(function() {
                 }, 'html'));
         });
     });
+
+    // In the meantime, do other setup work.
+    registerCustomSerializers();
 
     $.when.apply(null, deferreds).done(function() {
         console.log('fetched all templates; initializing i18n...');
