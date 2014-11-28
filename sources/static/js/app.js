@@ -7,6 +7,9 @@ var API_PREFIX = '/api/';
 // Used to propagate binary data across callbacks at form validation.
 var binary_form_data = null;
 
+// Used to get back to the previous page after logging in.
+var login_referrer = null;
+
 function createRelModel(collection, id, rel, rel_collection) {
     /* Helper for collections related to other collections. */
 
@@ -43,6 +46,32 @@ function registerCustomSerializers() {
     Backbone.Syphon.InputReaders.register('file', function(node) {
         return binary_form_data[node.attr('name')];
     });
+}
+
+function registerErrorHandlers() {
+    /*
+     * Register error handling mechanisms for all requests initiated by
+     * Backbone. These can be overridden per collection / model when needed.
+     */
+
+    function error_handler(backbone_obj, xhr) {
+        switch (xhr.status) {
+        case 401:
+            login_referrer = location.hash;
+            if (_.size(login_referrer) > 1) {
+                login_referrer = login_referrer.substring(1);
+            }
+            router.navigate('login', {
+                trigger: true
+            });
+            break;
+        case 403:
+            console.log('403 denied - TODO');
+            break;
+        }
+    }
+    Backbone.Collection.prototype.on('error', error_handler);
+    Backbone.Model.prototype.on('error', error_handler);
 }
 
 /*
@@ -93,6 +122,7 @@ var Router = Backbone.Router
     .extend({
         routes: {
             '': 'home',
+            'login': 'login',
             'upload': 'upload',
             ':collection(?:params)': 'list',
             ':collection/create': 'edit',
@@ -114,6 +144,16 @@ var Router = Backbone.Router
                 });
             });
             setMenuLink('#/');
+        },
+
+        'login': function() {
+            console.log('routing to the login view');
+            setMainView(function() {
+                return new Views.login({
+                    template: Templates['login']
+                });
+            });
+            setMenuLink('#/login');
         },
 
         'upload': function() {
@@ -221,7 +261,7 @@ $(function() {
 
     // Pre-load templates; start our router once that is done.
 
-    var template_views = ['upload'];
+    var template_views = ['login', 'upload'];
 
     $.each(Collections, function(collection) {
         _.each(['form', 'list'], function(view_type) {
@@ -240,6 +280,7 @@ $(function() {
 
     // In the meantime, do other setup work.
     registerCustomSerializers();
+    registerErrorHandlers();
 
     $.when.apply(null, deferreds).done(function() {
         console.log('fetched all templates; initializing i18n...');

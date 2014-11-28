@@ -11,6 +11,10 @@ function fillRelNames(field, collection_name, text_field) {
      * @param text_field The field to use to display the name of records.
      */
 
+    // TODO Besides being wrong in its design (the DOM shouldn't store data),
+    // this function creates issues with authentication. Rework later.
+    return;
+
     var collection = collections[collection_name];
     collection.fetch({
         success: function() {
