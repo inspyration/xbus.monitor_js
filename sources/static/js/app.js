@@ -4,6 +4,10 @@
 // Where the REST API is located.
 var API_PREFIX = '/api/';
 
+// Where login URLs are located.
+var LOGIN_URL = '/login';
+var LOGOUT_URL = '/logout';
+
 // Used to propagate binary data across callbacks at form validation.
 var binary_form_data = null;
 
@@ -35,6 +39,11 @@ function disableView(view) {
     view.undelegateEvents();
 }
 
+function logout() {
+    location = LOGOUT_URL + '?login_referrer='
+        + encodeURIComponent(location.href);
+}
+
 function registerCustomSerializers() {
     /*
      * Register Backbone.Syphon input readers for types it can't handle.
@@ -56,7 +65,10 @@ function registerErrorHandlers() {
 
     function error_handler(backbone_obj, xhr) {
         switch (xhr.status) {
+
         case 401:
+            // 401 errors are sent by the HTTP auth system. Show a login form
+            // then redirect back to the current page.
             login_referrer = location.hash;
             if (_.size(login_referrer) > 1) {
                 login_referrer = login_referrer.substring(1);
@@ -65,11 +77,35 @@ function registerErrorHandlers() {
                 trigger: true
             });
             break;
+
         case 403:
-            console.log('403 denied - TODO');
+            // 403 errors are assumed to contain JSON data with an "auth_kind"
+            // key describing how to handle it.
+            var response = xhr.responseJSON;
+            if (!response) {
+                console.log('Invalid 403 response', xhr);
+                break;
+            }
+            var auth_kind = response['auth_kind'];
+            if (!auth_kind) {
+                console.log('Invalid 403 response', xhr);
+                break;
+            }
+
+            if (auth_kind === 'saml2') {
+                // Redirect to the authentic login page.
+                if (confirm('Authentication required. Open the login page?')) {
+                    location = LOGIN_URL + '?login_referrer='
+                        + encodeURIComponent(location.href);
+                }
+
+            } else {
+                console.log('Unhandled 403 response', xhr);
+            }
             break;
         }
     }
+
     Backbone.Collection.prototype.on('error', error_handler);
     Backbone.Model.prototype.on('error', error_handler);
 }
