@@ -79,16 +79,23 @@ function registerErrorHandlers() {
             break;
 
         case 403:
-            // 403 errors are assumed to contain JSON data with an "auth_kind"
-            // key describing how to handle it.
+            // 403 errors are assumed to contain JSON data with "auth_kind" and
+            // "logged_in" keys. They may concern authentication or
+            // authorization.
             var response = xhr.responseJSON;
-            if (!response) {
+            if (response === null) {
                 console.log('Invalid 403 response', xhr);
                 break;
             }
             var auth_kind = response['auth_kind'];
-            if (!auth_kind) {
+            var logged_in = response['logged_in'];
+            if (auth_kind === null || logged_in === null) {
                 console.log('Invalid 403 response', xhr);
+                break;
+            }
+
+            if (logged_in) {
+                alert('Unauthorized.');
                 break;
             }
 
