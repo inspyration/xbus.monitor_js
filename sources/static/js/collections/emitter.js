@@ -1,4 +1,9 @@
 Models.emitter = Backbone.RelationalModel.extend({
+    relations: [{
+        key: 'profile_id',
+        relatedModel: 'Models.emitter_profile',
+        type: Backbone.HasOne
+    }],
     urlRoot: API_PREFIX + 'emitter'
 });
 

@@ -38,6 +38,7 @@
                         <tr>
                             <td><%= model.id %></td>
                             <td><%= model.escape('login') %></td>
+                            <td><%= model.get('profile_id') && model.get('profile_id').escape('name') %></td>
                             <td data-profile_id="<%= model.escape('profile_id') %>"></td>
                             <td><%= model.escape('last_emit') %></td>
                             <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
@@ -51,11 +52,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    // <![CDATA[
-
-    fillRelNames('profile_id', 'emitter_profile', 'name');
-
-    // ]]>
-</script>
