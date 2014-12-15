@@ -37,7 +37,7 @@
                         <tr>
                             <td><%= model.id %></td>
                             <td><%= model.escape('name') %></td>
-                            <td data-input_descriptor_id="<%= model.escape('input_descriptor_id') %>"></td>
+                            <td><%= model.get('input_descriptor_id') && model.get('input_descriptor_id').escape('name') %></td>
                             <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
                             <td><a href="#/<%= rel_name %>/<%= model.id %>/edit">Edit</a></td>
                             <td><a href="#/<%= rel_name %>" class="delete" value="<%= model.id %>">Delete</a></td>
@@ -49,11 +49,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    // <![CDATA[
-
-    fillRelNames('input_descriptor_id', 'input_descriptor', 'name');
-
-    // ]]>
-</script>
