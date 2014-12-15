@@ -2,5 +2,5 @@
   font-family: 'Righteous';
   font-style: normal;
   font-weight: 400;
-  src: local('Righteous'), local('Righteous-Regular'), url(http://fonts.gstatic.com/s/righteous/v5/w5P-SI7QJQSDqB3GziL8XaCWcynf_cDxXwCLxiixG1c.ttf) format('truetype');
+  src: local('Righteous'), local('Righteous-Regular'), url(../fonts/righteous_regulart.ttf) format('truetype');
 }
