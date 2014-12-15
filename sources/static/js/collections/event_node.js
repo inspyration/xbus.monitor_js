@@ -1,4 +1,13 @@
 Models.event_node = Backbone.RelationalModel.extend({
+    relations: [{
+        key: 'service_id',
+        relatedModel: 'Models.service',
+        type: Backbone.HasOne
+    }, {
+        key: 'type_id',
+        relatedModel: 'Models.event_type',
+        type: Backbone.HasOne
+    }],
     urlRoot: API_PREFIX + 'event_node'
 });
 
