@@ -39,7 +39,7 @@
                         <% _.each(models, function(model) { %>
                         <tr>
                             <td><%= model.id %></td>
-                            <td data-emitter_id="<%= model.escape('emitter_id') %>"></td>
+                            <td><%= model.get('emitter_id') && model.get('emitter_id').escape('login') %></td>
                             <td><%= model.escape('state') %></td>
                             <td><%= model.escape('posted_date') %></td>
                             <td><%= model.escape('done_date') %></td>
@@ -53,11 +53,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    // <![CDATA[
-
-    fillRelNames('emitter_id', 'emitter', 'login');
-
-    // ]]>
-</script>

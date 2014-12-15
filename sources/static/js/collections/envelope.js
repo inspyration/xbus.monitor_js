@@ -1,4 +1,9 @@
 Models.envelope = Backbone.RelationalModel.extend({
+    relations: [{
+        key: 'emitter_id',
+        relatedModel: 'Models.emitter',
+        type: Backbone.HasOne
+    }],
     urlRoot: API_PREFIX + 'envelope'
 });
 
