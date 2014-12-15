@@ -3,30 +3,6 @@
  * last.
  */
 
-function fillRelNames(field, collection_name, text_field) {
-    /*
-     * Fetch names of relational fields and fill them into tags with the "field"
-     * parameter as their data.
-     * 
-     * @param text_field The field to use to display the name of records.
-     */
-
-    // TODO Besides being wrong in its design (the DOM shouldn't store data),
-    // this function creates issues with authentication. Rework later.
-    return;
-
-    var collection = collections[collection_name];
-    collection.fetch({
-        success: function() {
-            $('[data-' + field + ']').each(function() {
-                var el = $(this);
-                var id = el.data(field);
-                el.text(collection.get(id).get(text_field));
-            });
-        }
-    });
-}
-
 function formatDataForSelect2(data, text_field) {
     return {
         id: data.id,
