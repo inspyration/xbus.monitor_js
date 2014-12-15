@@ -1,4 +1,4 @@
-Models.event = Backbone.Model.extend({
+Models.event = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'event'
 });
 

@@ -1,4 +1,4 @@
-Models.role = Backbone.Model.extend({
+Models.role = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'role'
 });
 

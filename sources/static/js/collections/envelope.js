@@ -1,4 +1,4 @@
-Models.envelope = Backbone.Model.extend({
+Models.envelope = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'envelope'
 });
 

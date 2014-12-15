@@ -1,4 +1,4 @@
-Models.emission_profile = Backbone.Model.extend({
+Models.emission_profile = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'emission_profile'
 });
 

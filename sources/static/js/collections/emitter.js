@@ -1,4 +1,4 @@
-Models.emitter = Backbone.Model.extend({
+Models.emitter = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'emitter'
 });
 

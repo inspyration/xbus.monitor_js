@@ -1,4 +1,4 @@
-Models.event_error = Backbone.Model.extend({
+Models.event_error = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'event_error'
 });
 

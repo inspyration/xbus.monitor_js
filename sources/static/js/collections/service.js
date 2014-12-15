@@ -1,4 +1,4 @@
-Models.service = Backbone.Model.extend({
+Models.service = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'service'
 });
 

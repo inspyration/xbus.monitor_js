@@ -1,4 +1,4 @@
-Models.event_type = Backbone.Model.extend({
+Models.event_type = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'event_type'
 });
 

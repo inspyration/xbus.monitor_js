@@ -1,4 +1,4 @@
-Models.input_descriptor = Backbone.Model.extend({
+Models.input_descriptor = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'input_descriptor'
 });
 
