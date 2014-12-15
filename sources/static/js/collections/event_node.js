@@ -7,8 +7,8 @@ Collections.event_node = Backbone.Collection.extend({
     name: 'event_node',
     url: API_PREFIX + 'event_node',
     relationships: {
-    	"parents": "event_node",
-    	"children": "event_node"
+        "parents": "event_node",
+        "children": "event_node"
     }
 });
 
