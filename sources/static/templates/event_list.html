@@ -42,8 +42,8 @@
                         <tr>
                             <td><%= model.id %></td>
                             <td><%= model.escape('envelope_id') %></td>
-                            <td data-emitter_id="<%= model.escape('emitter_id') %>"></td>
-                            <td data-type_id="<%= model.escape('type_id') %>"></td>
+                            <td><%= model.get('emitter_id') && model.get('emitter_id').escape('login') %></td>
+                            <td><%= model.get('type_id') && model.get('type_id').escape('name') %></td>
                             <td><%= model.escape('started_date') %></td>
                             <td><%= model.escape('done_date') %></td>
                             <td><%= model.escape('estimated_items') %></td>
@@ -57,12 +57,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    // <![CDATA[
-
-    fillRelNames('emitter_id', 'emitter', 'login');
-    fillRelNames('type_id', 'event_type', 'name');
-
-    // ]]>
-</script>
