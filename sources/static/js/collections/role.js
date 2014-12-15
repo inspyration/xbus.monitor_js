@@ -1,4 +1,9 @@
 Models.role = Backbone.RelationalModel.extend({
+    relations: [{
+        key: 'service_id',
+        relatedModel: 'Models.service',
+        type: Backbone.HasOne
+    }],
     urlRoot: API_PREFIX + 'role'
 });
 
