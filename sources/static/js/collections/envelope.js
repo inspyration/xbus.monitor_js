@@ -1,5 +1,6 @@
 Models.envelope = Backbone.RelationalModel.extend({
     relations: [{
+        includeInJSON: Backbone.Model.prototype.idAttribute,
         key: 'emitter_id',
         relatedModel: 'Models.emitter',
         type: Backbone.HasOne
