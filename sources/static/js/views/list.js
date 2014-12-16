@@ -58,6 +58,8 @@ Views.list = Backbone.View.extend({
 
         // A counter to know when rel models have been fetched.
         // TODO Improve (with deferreds / promises)...
+        // TODO Less requests using "collectionType" and different URLs (see
+        // <http://backbonerelational.org/>).
         var rel_sync_count = 1;
 
         // Use the "getAsync" method of backbone-relational to ensure the data
