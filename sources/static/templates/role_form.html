@@ -49,7 +49,7 @@
                         <div class="form-group">
                             <label class="control-label">Service</label>
                             <input name="service_id" type="hidden"
-                                value="<%= model ? model.escape('service_id') : '' %>"
+                                value="<%= model ? model.getRelation('service_id').keyContents : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">

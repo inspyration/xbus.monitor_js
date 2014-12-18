@@ -49,7 +49,7 @@
                         <div class="form-group">
                             <label>Profile</label>
                             <input name="profile_id" type="hidden"
-                                value="<%= model ? model.escape('profile_id') : '' %>"
+                                value="<%= model ? model.getRelation('profile_id').keyContents : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">

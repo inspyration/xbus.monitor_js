@@ -37,7 +37,7 @@
                         <div class="form-group">
                             <label>Emitter</label>
                             <input name="emitter_id" type="hidden"
-                                value="<%= model ? model.escape('emitter_id') : '' %>"
+                                value="<%= model ? model.getRelation('emitter_id').keyContents : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">

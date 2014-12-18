@@ -43,7 +43,7 @@
                         <div class="form-group">
                             <label class="control-label">Input descriptor</label>
                             <input name="input_descriptor_id" type="hidden"
-                                value="<%= model ? model.escape('input_descriptor_id') : '' %>"
+                                value="<%= model ? model.getRelation('input_descriptor_id').keyContents : '' %>"
                                 class="form-control" />
                         </div>
                     </fieldset>

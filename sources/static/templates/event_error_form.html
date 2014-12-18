@@ -37,19 +37,19 @@
                         <div class="form-group">
                             <label>Envelope</label>
                             <input name="envelope_id" type="hidden"
-                                value="<%= model ? model.escape('envelope_id') : '' %>"
+                                value="<%= model ? model.getRelation('envelope_id').keyContents : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Event</label>
                             <input name="event_id" type="hidden"
-                                value="<%= model ? model.escape('event_id') : '' %>"
+                                value="<%= model ? model.getRelation('event_id').keyContents : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Service</label>
                             <input name="service_id" type="text"
-                                value="<%= model ? model.escape('service_id') : '' %>"
+                                value="<%= model ? model.getRelation('service_id').keyContents : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
@@ -91,6 +91,7 @@
     prepareForm('.record-form', <%= editing %>);
     select2ify('envelope_id', 'envelope', 'id');
     select2ify('event_id', 'event', 'id');
+    select2ify('service_id', 'service', 'name');
 
     // ]]>
 </script>

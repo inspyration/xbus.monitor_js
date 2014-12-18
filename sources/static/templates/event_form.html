@@ -37,19 +37,19 @@
                         <div class="form-group">
                             <label>Envelope</label>
                             <input name="envelope_id" type="hidden"
-                                value="<%= model ? model.escape('envelope_id') : '' %>"
+                                value="<%= model ? model.getRelation('envelope_id').keyContents : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Emitter</label>
                             <input name="emitter_id" type="hidden"
-                                value="<%= model ? model.escape('emitter_id') : '' %>"
+                                value="<%= model ? model.getRelation('emitter_id').keyContents : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Type</label>
                             <input name="type_id" type="hidden"
-                                value="<%= model ? model.escape('type_id') : '' %>"
+                                value="<%= model ? model.getRelation('type_id').keyContents : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
