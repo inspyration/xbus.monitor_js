@@ -39,6 +39,9 @@ Views.login = Backbone.View.extend({
             trigger: true
         });
 
+        // Update login bars.
+        updateLoginInfo();
+
         // Ignore this event.
         return false;
     }

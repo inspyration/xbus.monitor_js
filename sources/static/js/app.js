@@ -6,6 +6,7 @@ var API_PREFIX = '/api/';
 
 // Where login URLs are located.
 var LOGIN_URL = '/login';
+var LOGIN_INFO_URL = '/login_info'
 var LOGOUT_URL = '/logout';
 
 // Used to propagate binary data across callbacks at form validation.
@@ -37,6 +38,11 @@ function disableView(view) {
      */
     view.stopListening();
     view.undelegateEvents();
+}
+
+function login() {
+    location = LOGIN_URL + '?login_referrer='
+        + encodeURIComponent(location.href);
 }
 
 function logout() {
@@ -146,6 +152,28 @@ function setMenuLink(link) {
                     }
                 });
         });
+}
+
+function updateLoginInfo() {
+    /*
+     * Call the server to retrieve information about the connected user; show /
+     * hide login bars accordingly.
+     */
+    $.ajax(LOGIN_INFO_URL, {
+        dataType: 'json',
+        success: function(data) {
+            var login = data.login;
+            if (login) {
+                $('#account_login_bar').hide();
+                $('#account_login').text(data.display_name);
+                $('#avatar').attr('src', data.avatar_url);
+                $('#account_bar').show();
+            } else {
+                $('#account_bar').hide();
+                $('#account_login_bar').show();
+            }
+        }
+    });
 }
 
 // $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
@@ -324,6 +352,7 @@ $(function() {
     // In the meantime, do other setup work.
     registerCustomSerializers();
     registerErrorHandlers();
+    updateLoginInfo();
 
     $.when.apply(null, deferreds).done(function() {
         console.log('fetched all templates; initializing i18n...');
