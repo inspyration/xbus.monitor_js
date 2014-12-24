@@ -36,18 +36,61 @@ function disableView(view) {
      * Avoid calling the "remove" function (creates strange issues) but at least
      * ensure the view no longer catches any event.
      */
+
     view.stopListening();
     view.undelegateEvents();
 }
 
 function login() {
-    location = LOGIN_URL + '?login_referrer='
-        + encodeURIComponent(location.href);
+    /*
+     * Call the login URL then either show the login form or redirect to the
+     * provided URL.
+     */
+
+    $.ajax(LOGIN_URL + '?login_referrer=' + encodeURIComponent(location.href),
+        {
+            dataType: 'json',
+            success: function(data) {
+                login_url = data['login_url'];
+                if (login_url) {
+                    location = login_url;
+                } else {
+                    openLoginForm();
+                }
+            }
+        });
 }
 
 function logout() {
-    location = LOGOUT_URL + '?login_referrer='
-        + encodeURIComponent(location.href);
+    /* Call the logout URL then update the login bar. */
+
+    $.ajax(LOGOUT_URL, {
+        dataType: 'json',
+        success: function(data) {
+
+            if (data['auth_kind'] == 'http') {
+                $.ajaxSetup({
+                    beforeSend: function(xhr) {
+                        // Empty on purpose. Don't add auth headers.
+                    }
+                });
+            }
+
+            updateLoginInfo();
+        }
+    });
+}
+
+function openLoginForm() {
+    /* Show a login form then redirect back to the current page. */
+
+    login_referrer = location.hash;
+    if (_.size(login_referrer) > 1) {
+        login_referrer = login_referrer.substring(1);
+    }
+    router.navigate('login', {
+        trigger: true
+    });
 }
 
 function registerCustomSerializers() {
@@ -75,13 +118,7 @@ function registerErrorHandlers() {
         case 401:
             // 401 errors are sent by the HTTP auth system. Show a login form
             // then redirect back to the current page.
-            login_referrer = location.hash;
-            if (_.size(login_referrer) > 1) {
-                login_referrer = login_referrer.substring(1);
-            }
-            router.navigate('login', {
-                trigger: true
-            });
+            openLoginForm();
             break;
 
         case 403:
@@ -108,8 +145,7 @@ function registerErrorHandlers() {
             if (auth_kind === 'saml2') {
                 // Redirect to the authentic login page.
                 if (confirm('Authentication required. Open the login page?')) {
-                    location = LOGIN_URL + '?login_referrer='
-                        + encodeURIComponent(location.href);
+                    login();
                 }
 
             } else {
