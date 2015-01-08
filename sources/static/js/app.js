@@ -242,7 +242,7 @@ var Router = Backbone.Router
 
         'home': function() {
             // TODO Redirect to the list view or some such?
-            var collection = 'event_type';
+            var collection = 'envelope';
             console.log('routing to list view', collection);
             setMainView(function() {
                 return new Views.list({
