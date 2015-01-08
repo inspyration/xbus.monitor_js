@@ -41,7 +41,7 @@
                         <% _.each(models, function(model) { %>
                         <tr>
                             <td><%= model.id %></td>
-                            <td><%= model.escape('envelope_id') %></td>
+                            <td><%= model.get('envelope_id') && model.get('envelope_id').escape('id') %></td>
                             <td><%= model.get('emitter_id') && model.get('emitter_id').escape('login') %></td>
                             <td><%= model.get('type_id') && model.get('type_id').escape('name') %></td>
                             <td><%= model.escape('started_date') %></td>
