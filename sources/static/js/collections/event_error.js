@@ -8,6 +8,10 @@ Models.event_error = Backbone.RelationalModel.extend({
         includeInJSON: Backbone.Model.prototype.idAttribute,
         key: 'envelope_id',
         relatedModel: 'Models.envelope',
+        reverseRelation: {
+            includeInJSON: false,
+            key: 'errors'
+        },
         type: Backbone.HasOne
     }, {
         includeInJSON: Backbone.Model.prototype.idAttribute,

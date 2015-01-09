@@ -59,6 +59,41 @@
                                 class="form-control" />
                         </div>
                     </fieldset>
+                    <% if (model) { %>
+                        <h3>Errors</h3>
+                        <% if (_.size(model.get('errors').models) > 0) { %>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Event</th>
+                                        <th>Node</th>
+                                        <th>Role</th>
+                                        <th>Items</th>
+                                        <th>Message</th>
+                                        <th>Error date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% _.each(model.get('errors').models, function(error) { %>
+                                    <tr>
+                                        <td><%= error.id %></td>
+                                        <td><%= error.get('event_id') && error.get('event_id').escape('id') %></td>
+                                        <td><%= error.get('node_id') && error.get('node_id').escape('id') %></td>
+                                        <td><%= error.get('role_id') && error.get('role_id').escape('login') %></td>
+                                        <td><%= error.escape('items') %></td>
+                                        <td><%= error.escape('message') %></td>
+                                        <td><%= error.escape('error_date') %></td>
+                                        <td><a href="#/event_error/<%= error.id %>">View</a></td>
+                                    </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table>
+                        <% } else { %>
+                            <p>No error.</p>
+                        <% } %>
+                    <% } %>
                     <% if(editing) { %>
                         <hr />
                         <button type="submit" class="btn btn-primary"><%= model ? 'Update' : 'Create' %></button>
