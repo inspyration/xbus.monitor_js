@@ -33,7 +33,8 @@ Views.record = Backbone.View.extend({
             editing: this.editing,
             model: this.model,
             name: this.collection.name,
-            rel_name: this.rel ? this.collection.rel_name : this.collection.name
+            rel_name: this.rel ? this.collection.rel_name
+                : this.collection.name
         }));
         return this;
     },
@@ -47,7 +48,8 @@ Views.record = Backbone.View.extend({
         this.model.save(data, {
             success: function() {
                 console.log('record edited', that.id);
-                var target = that.rel ? that.collection.name + '/' + that.id + '/' + that.rel : that.collection.name;
+                var target = that.rel ? that.collection.name + '/' + that.id
+                    + '/' + that.rel : that.collection.name;
                 router.navigate(target, {
                     trigger: true
                 });
@@ -62,7 +64,8 @@ Views.record = Backbone.View.extend({
             success: function() {
                 console.log('record removed/destroyed', that.id);
                 disableView(that);
-                var target = that.rel ? that.collection.name + '/' + that.id + '/' + that.rel : that.collection.name;
+                var target = that.rel ? that.collection.name + '/' + that.id
+                    + '/' + that.rel : that.collection.name;
                 router.navigate(target, {
                     trigger: true
                 });
