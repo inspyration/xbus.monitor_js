@@ -47,9 +47,15 @@
                                 class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label>Service</label>
-                            <input name="service_id" type="text"
-                                value="<%= model ? model.getRelation('service_id').keyContents : '' %>"
+                            <label>Node</label>
+                            <input name="node_id" type="hidden"
+                                value="<%= model ? model.getRelation('node_id').keyContents : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Role</label>
+                            <input name="role_id" type="hidden"
+                                value="<%= model ? model.getRelation('role_id').keyContents : '' %>"
                                 class="form-control" />
                         </div>
                         <div class="form-group">
@@ -91,7 +97,8 @@
     prepareForm('.record-form', <%= editing %>);
     select2ify('envelope_id', 'envelope', 'id');
     select2ify('event_id', 'event', 'id');
-    select2ify('service_id', 'service', 'name');
+    select2ify('node_id', 'event_node', 'id');
+    select2ify('role_id', 'role', 'login');
 
     // ]]>
 </script>
