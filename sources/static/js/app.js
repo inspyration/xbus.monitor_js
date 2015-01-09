@@ -159,6 +159,20 @@ function registerErrorHandlers() {
     Backbone.Model.prototype.on('error', error_handler);
 }
 
+function replay_envelope(envelope_id) {
+    /* Attempt to send failed envelopes into Xbus again. */
+
+    $.ajax(API_PREFIX + 'replay_envelope', {
+        data: {
+            'envelope_id': envelope_id
+        },
+        dataType: 'json',
+        success: function() {
+            collections.envelope.get(envelope_id).fetch();
+        }
+    });
+}
+
 /*
  * The main view; there can only be one. When a new one is created, the previous
  * one has to be removed.
