@@ -18,6 +18,7 @@ Views.record = Backbone.View.extend({
                 this.model = new this.collection.model({
                     id: this.id
                 });
+                this.collection.add([this.model]);
             }
             this.listenTo(this.model, 'sync', this.render);
             this.model.fetch();
