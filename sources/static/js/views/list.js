@@ -6,14 +6,12 @@ Views.list = Backbone.View.extend({
     },
 
     initialize: function(options) {
-        console.log('listview initialize');
-        if (this.collection) {
-            var url = this.collection.model.prototype.urlRoot;
-            if (options.params) {
-                url = url + "?" + options.params;
-            }
-            this.collection.url = url;
+        console.log('listview initialize', this.collection);
+        var url = this.collection.model.prototype.urlRoot;
+        if (options.params) {
+            url += '?' + options.params;
         }
+        this.collection.url = url;
         this.id = options.id;
         this.rel = options.rel;
         this.template = options.template;
