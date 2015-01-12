@@ -15,10 +15,9 @@ Views.record = Backbone.View.extend({
         if (this.id && options.rel === undefined) {
             this.model = this.collection.get(this.id);
             if (!this.model) {
-                this.model = new this.collection.model({
+                this.model = this.collection.add([{
                     id: this.id
-                });
-                this.collection.add([this.model]);
+                }])[0];
             }
             this.listenTo(this.model, 'sync', this.sync);
             this.model.fetch();
@@ -81,7 +80,9 @@ Views.record = Backbone.View.extend({
 
         // Wait for 1 run to avoid rendering too often if the data was already
         // fetched.
-        --rel_sync_count;
+        if (--rel_sync_count <= 0) {
+            that.render();
+        }
     },
 
     saveRecord: function(ev) {

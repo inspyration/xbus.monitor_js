@@ -9,6 +9,7 @@ Models.event_error = Backbone.RelationalModel.extend({
         key: 'envelope_id',
         relatedModel: 'Models.envelope',
         reverseRelation: {
+            collectionType: 'Collections.event_error',
             includeInJSON: false,
             key: 'errors'
         },
