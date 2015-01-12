@@ -28,6 +28,7 @@
                         <tr>
                             <th>Envelope</th>
                             <th>Role</th>
+                            <th>State</th>
                             <th>Items</th>
                             <th>Message</th>
                             <th>Error date</th>
@@ -36,8 +37,12 @@
                     </thead>
                     <tbody>
                         <% _.each(models, function(model) { %>
-                        <tr>
+                        <tr <%=
+                            model.get('state') === 'corrected' ? 'class="success"' :
+                            model.get('state') === 'won_t_fix' ? 'class="danger"' :
+                        '' %>>
                             <td><%= model.get('envelope_id') && model.get('envelope_id').escape('id') %></td>
+                            <td><%= model.escape('state') %></td>
                             <td><%= model.get('role_id') && model.get('role_id').escape('login') %></td>
                             <td><%= model.escape('items') %></td>
                             <td><%= model.escape('message') %></td>

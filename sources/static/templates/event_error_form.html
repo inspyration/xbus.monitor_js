@@ -41,6 +41,12 @@
                                 class="form-control" />
                         </div>
                         <div class="form-group">
+                            <label>State</label>
+                            <input name="state" type="text"
+                                value="<%= model ? model.escape('state') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
                             <label>Event</label>
                             <input name="event_id" type="hidden"
                                 value="<%= model ? model.getRelation('event_id').keyContents : '' %>"
