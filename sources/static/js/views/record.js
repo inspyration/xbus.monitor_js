@@ -20,7 +20,7 @@ Views.record = Backbone.View.extend({
                 });
                 this.collection.add([this.model]);
             }
-            this.listenTo(this.model, 'sync', this.render);
+            this.listenTo(this.model, 'sync', this.sync);
             this.model.fetch();
         } else {
             this.model = null;
@@ -37,6 +37,51 @@ Views.record = Backbone.View.extend({
                 : this.collection.name
         }));
         return this;
+    },
+
+    sync: function() {
+        /*
+         * Called when the "sync" event is fired (when data has been fetched
+         * from the server). Before updating the view, also fetch related models
+         * we might need.
+         */
+
+        var that = this;
+
+        // First gather relational fields.
+        var rel_keys = [];
+        _.each(this.collection.model.prototype.relations, function(relation) {
+            if (relation.type === Backbone.HasMany) {
+                rel_keys.push(relation.key);
+            }
+        });
+
+        // Render immediately when there are no relational elements.
+        if (_.size(rel_keys) == 0) {
+            this.render();
+            return;
+        }
+
+        // A counter to know when rel models have been fetched.
+        // TODO Improve (with deferreds / promises)...
+        // TODO Less requests using "collectionType" and different URLs (see
+        // <http://backbonerelational.org/>).
+        var rel_sync_count = 1;
+
+        // Use the "getAsync" method of backbone-relational to ensure the data
+        // is available.
+        _.each(rel_keys, function(rel_key) {
+            ++rel_sync_count;
+            that.model.getAsync(rel_key).done(function() {
+                if (--rel_sync_count <= 0) {
+                    that.render();
+                }
+            });
+        });
+
+        // Wait for 1 run to avoid rendering too often if the data was already
+        // fetched.
+        --rel_sync_count;
     },
 
     saveRecord: function(ev) {
