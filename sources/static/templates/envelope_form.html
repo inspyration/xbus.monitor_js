@@ -70,9 +70,6 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Event</th>
-                                        <th>Node</th>
-                                        <th>Role</th>
                                         <th>Items</th>
                                         <th>Message</th>
                                         <th>Error date</th>
@@ -83,9 +80,6 @@
                                     <% _.each(model.get('errors').models, function(error) { %>
                                     <tr>
                                         <td><%= error.id %></td>
-                                        <td><%= error.get('event_id') && error.get('event_id').escape('id') %></td>
-                                        <td><%= error.get('node_id') && error.get('node_id').escape('id') %></td>
-                                        <td><%= error.get('role_id') && error.get('role_id').escape('login') %></td>
                                         <td><%= error.escape('items') %></td>
                                         <td><%= error.escape('message') %></td>
                                         <td><%= error.escape('error_date') %></td>
