@@ -19,6 +19,12 @@ Models.event_error = Backbone.RelationalModel.extend({
         key: 'role_id',
         relatedModel: 'Models.role',
         type: Backbone.HasOne
+    }, {
+        collectionType: 'Collections.event_error_tracking',
+        includeInJSON: false,
+        key: 'tracking',
+        relatedModel: 'Models.event_error_tracking',
+        type: Backbone.HasMany
     }],
     urlRoot: API_PREFIX + 'event_error'
 });
