@@ -26,7 +26,6 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Login</th>
                             <th>Service</th>
                             <th>Last logged</th>
@@ -36,7 +35,6 @@
                     <tbody>
                         <% _.each(models, function(model) { %>
                         <tr>
-                            <td><%= model.id %></td>
                             <td><%= model.escape('login') %></td>
                             <td><%= model.get('service_id') && model.get('service_id').escape('name') %></td>
                             <td><%= model.escape('last_logged') %></td>

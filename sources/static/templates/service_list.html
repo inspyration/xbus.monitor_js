@@ -26,7 +26,6 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Name</th>
                             <th>Consumer</th>
                             <th>Description</th>
@@ -36,7 +35,6 @@
                     <tbody>
                         <% _.each(models, function(model) { %>
                         <tr>
-                            <td><%= model.id %></td>
                             <td><%= model.escape('name') %></td>
                             <td><%= model.escape('is_consumer') %></td>
                             <td><%= model.escape('description') %></td>

@@ -26,10 +26,7 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Envelope</th>
-                            <th>Event</th>
-                            <th>Node</th>
                             <th>Role</th>
                             <th>Items</th>
                             <th>Message</th>
@@ -40,10 +37,7 @@
                     <tbody>
                         <% _.each(models, function(model) { %>
                         <tr>
-                            <td><%= model.id %></td>
                             <td><%= model.get('envelope_id') && model.get('envelope_id').escape('id') %></td>
-                            <td><%= model.get('event_id') && model.get('event_id').escape('id') %></td>
-                            <td><%= model.get('node_id') && model.get('node_id').escape('id') %></td>
                             <td><%= model.get('role_id') && model.get('role_id').escape('login') %></td>
                             <td><%= model.escape('items') %></td>
                             <td><%= model.escape('message') %></td>

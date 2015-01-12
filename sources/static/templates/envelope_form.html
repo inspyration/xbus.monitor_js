@@ -69,7 +69,6 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Items</th>
                                         <th>Message</th>
                                         <th>Error date</th>
@@ -79,7 +78,6 @@
                                 <tbody>
                                     <% _.each(model.get('errors').models, function(error) { %>
                                     <tr>
-                                        <td><%= error.id %></td>
                                         <td><%= error.escape('items') %></td>
                                         <td><%= error.escape('message') %></td>
                                         <td><%= error.escape('error_date') %></td>

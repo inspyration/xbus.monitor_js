@@ -34,7 +34,6 @@
                                 <th>Level</th>
                                 <th>Reference</th>
                             <% } %>
-                            <th>ID</th>
                             <th>Service</th>
                             <th>Type</th>
                             <th>Start</th>
@@ -51,7 +50,6 @@
                                 <td><%= model.escape('depth') %></td>
                                 <td><%= model.escape('ref') %></td>
                             <% } %>
-                            <td><%= model.id %></td>
                             <td><%= model.get('service_id') && model.get('service_id').escape('name') %></td>
                             <td><%= model.get('type_id') && model.get('type_id').escape('name') %></td>
                             <td><%= model.escape('is_start') %></td>
