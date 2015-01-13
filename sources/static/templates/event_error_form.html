@@ -102,7 +102,7 @@
                                         item.get('state') === 'corrected' ? 'class="success"' :
                                         item.get('state') === 'won_t_fix' ? 'class="danger"' :
                                     '' %>>
-                                        <td><%= item.get('user).escape('display_name') %></td>
+                                        <td><%= item.get('user').escape('display_name') %></td>
                                         <td><%= item.escape('date') %></td>
                                         <td><%= item.escape('state') %></td>
                                         <td><%= item.escape('comment') %></td>
