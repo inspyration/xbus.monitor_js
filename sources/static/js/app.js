@@ -246,7 +246,7 @@ var Router = Backbone.Router
             'login': 'login',
             'upload': 'upload',
             ':collection(?:params)': 'list',
-            ':collection/create': 'edit',
+            ':collection/create(?:params)': 'create',
             ':collection/:id': 'view',
             ':collection/:id/edit': 'edit',
             ':collection/:id/:rel(?:params)': 'rel_list',
@@ -315,6 +315,19 @@ var Router = Backbone.Router
                 });
             });
             setMenuLink('#/' + collection);
+        },
+
+        'create': function(collection, params) {
+            console.log('routing to record creation view', collection, params);
+            setMainView(function() {
+                return new Views.record({
+                    collection: collections[collection],
+                    editing: true,
+                    params: params,
+                    template: Templates[collection + '_form']
+                });
+            });
+            setMenuLink('#/' + collection + '/create');
         },
 
         'edit': function(collection, id) {

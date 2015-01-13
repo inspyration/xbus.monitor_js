@@ -7,9 +7,20 @@ Views.record = Backbone.View.extend({
 
     initialize: function(options) {
         console.log('record view initialize', this.id);
+
         this.editing = options.editing;
-        this.template = options.template;
+
+        this.params = options.params;
+        if (this.params) {
+            // Use URI.js to parse default parameters.
+            // <http://medialize.github.io/URI.js/>
+            this.params = URI.parseQuery(this.params);
+        }
+
         this.rel = options.rel;
+
+        this.template = options.template;
+
         this.render(); // Pre-render before refreshing anything.
 
         if (this.id && options.rel === undefined) {
@@ -32,6 +43,7 @@ Views.record = Backbone.View.extend({
             editing: this.editing,
             model: this.model,
             name: this.collection.name,
+            params: this.params,
             rel_name: this.rel ? this.collection.rel_name
                 : this.collection.name
         }));
