@@ -34,35 +34,62 @@
             <div class="box-content">
                 <form class="form-inline record-form" role="form">
                     <fieldset>
-                        <div class="form-group">
+                        <div class="form-group" <%= model ? '' : 'style="display: none;"' %>>
                             <label>Event error</label>
                             <input name="event_error_id" type="hidden"
-                                value="<%= model ? model.getRelation('event_error_id').keyContents : '' %>"
+                                value="<%=
+                                    model ? model.getRelation('event_error_id').keyContents :
+                                    (params && params['event_error_id']) ? params['event_error_id'] :
+                                    ''
+                                %>"
                                 class="form-control" />
                         </div>
-                        <div class="form-group">
-                            <label>User</label>
-                            <input name="user_id" type="hidden"
-                                value="<%= model ? model.getRelation('user_id').keyContents : '' %>"
-                                class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label>Date</label>
-                            <input name="date" type="date"
-                                value="<%= model ? model.escape('date') : '' %>"
-                                class="form-control" />
-                        </div>
+                        <% if (model) { %>
+                            <div class="form-group">
+                                <label>User</label>
+                                <input name="user_id" type="hidden"
+                                    value="<%= model.getRelation('user_id').keyContents %>"
+                                    class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input name="date" type="date"
+                                    value="<%= model.escape('date') %>"
+                                    class="form-control" />
+                            </div>
+                        <% } %>
                         <div class="form-group">
                             <label>Comment</label>
-                            <input name="comment" type="text"
-                                value="<%= model ? model.escape('comment') : '' %>"
-                                class="form-control" />
+                            <textarea name="comment" cols="60" rows="6" class="form-control">
+                                <%= model ? model.escape('comment') : '' %>
+                            </textarea>
                         </div>
                         <div class="form-group">
                             <label>State change</label>
-                            <input name="new_state" type="text"
-                                value="<%= model ? model.escape('new_state') : '' %>"
-                                class="form-control" />
+                            <select name="new_state" class="form-control">
+                                <!-- TODO Loop... -->
+                                <option value="" />
+                                <option value="unprocessed"
+                                    <%= (model && model.get('new_state') === 'unprocessed') ? 'selected="selected"' : '' %>>
+                                    Unprocessed
+                                </option>
+                                <option value="processing"
+                                    <%= (model && model.get('new_state') === 'unprocessed') ? 'selected="selected"' : '' %>>
+                                    Processing
+                                </option>
+                                <option value="on_hold"
+                                    <%= (model && model.get('new_state') === 'unprocessed') ? 'selected="selected"' : '' %>>
+                                    On hold
+                                </option>
+                                <option value="corrected"
+                                    <%= (model && model.get('new_state') === 'unprocessed') ? 'selected="selected"' : '' %>>
+                                    Corrected
+                                </option>
+                                <option value="won_t_fix"
+                                    <%= (model && model.get('new_state') === 'unprocessed') ? 'selected="selected"' : '' %>>
+                                    Won't fix
+                                </option>
+                            </select>
                         </div>
                     </fieldset>
                     <% if (editing) { %>
@@ -83,8 +110,11 @@
     // <![CDATA[
 
     prepareForm('.record-form', <%= editing %>);
-    select2ify('event_error_id', 'event_error', 'id');
-    select2ify('user_id', 'user', 'display_name');
+
+    <% if (model) { %>
+        select2ify('event_error_id', 'event_error', 'id');
+        select2ify('user_id', 'user', 'display_name');
+    <% } %>
 
     // ]]>
 </script>
