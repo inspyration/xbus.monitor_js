@@ -99,12 +99,12 @@
                                 <tbody>
                                     <% _.each(model.get('tracking').models, function(item) { %>
                                     <tr <%=
-                                        item.get('state') === 'corrected' ? 'class="success"' :
-                                        item.get('state') === 'won_t_fix' ? 'class="danger"' :
+                                        item.get('new_state') === 'corrected' ? 'class="success"' :
+                                        item.get('new_state') === 'won_t_fix' ? 'class="danger"' :
                                     '' %>>
                                         <td><%= item.get('user').escape('display_name') %></td>
                                         <td><%= item.escape('date') %></td>
-                                        <td><%= item.escape('state') %></td>
+                                        <td><%= item.escape('new_state') %></td>
                                         <td><%= item.escape('comment') %></td>
                                         <td><a href="#/event_error_tracking/<%= item.id %>">View</a></td>
                                     </tr>
