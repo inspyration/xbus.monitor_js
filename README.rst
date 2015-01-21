@@ -29,3 +29,19 @@ And the helpers scripts provided in the "i18n" directory::
 
 Gettext translation files are available in the "i18n/po" directory; they are to be updated via
 i18next-conv.
+
+
+Thanks
+------
+
+xbus_monitor_js uses the following projects; thanks a lot to their respective authors:
+- backbone <http://backbonejs.org/>
+- backbone.paginator <https://github.com/backbone-paginator/backbone.paginator>
+- backbone-relational <http://backbonerelational.org/>
+- backbone.syphon <https://github.com/marionettejs/backbone.syphon>
+- bootstrap <http://getbootstrap.com/>
+- devoops <http://devoops.me/handmade/1/>
+- i18next <http://i18next.com/>
+- jquery <http://jquery.com/>
+- underscore <http://underscorejs.org>  # TODO Use lo-dash
+- uri <http://medialize.github.io/URI.js/>
