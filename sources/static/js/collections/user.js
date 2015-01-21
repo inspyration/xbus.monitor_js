@@ -3,9 +3,12 @@ Models.user = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'user'
 });
 
-Collections.user = Backbone.Collection.extend({
+Collections.user = Backbone.PageableCollection.extend({
     model: Models.user,
     name: 'user',
+    state: {
+        firstPage: 0
+    },
     url: API_PREFIX + 'user'
 });
 

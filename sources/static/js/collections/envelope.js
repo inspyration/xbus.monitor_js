@@ -14,9 +14,12 @@ Models.envelope = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'envelope'
 });
 
-Collections.envelope = Backbone.Collection.extend({
+Collections.envelope = Backbone.PageableCollection.extend({
     model: Models.envelope,
     name: 'envelope',
+    state: {
+        firstPage: 0
+    },
     url: API_PREFIX + 'envelope'
 });
 

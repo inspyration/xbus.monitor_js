@@ -8,9 +8,12 @@ Models.role = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'role'
 });
 
-Collections.role = Backbone.Collection.extend({
+Collections.role = Backbone.PageableCollection.extend({
     model: Models.role,
     name: 'role',
+    state: {
+        firstPage: 0
+    },
     url: API_PREFIX + 'role'
 });
 

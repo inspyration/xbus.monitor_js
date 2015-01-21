@@ -29,9 +29,12 @@ Models.event_error = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'event_error'
 });
 
-Collections.event_error = Backbone.Collection.extend({
+Collections.event_error = Backbone.PageableCollection.extend({
     model: Models.event_error,
     name: 'event_error',
+    state: {
+        firstPage: 0
+    },
     url: API_PREFIX + 'event_error'
 });
 

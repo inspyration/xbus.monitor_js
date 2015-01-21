@@ -1,0 +1,23 @@
+<% if (collection.state.totalPages !== null && collection.state.totalPages > 1) { %>
+
+<div class="pagination">
+
+<% if (collection.hasPreviousPage()) { %>
+    <a href="#" onclick="switchToPrevPage(); return false;">&lt;</a>
+<% } %>
+
+<% for (var page_index = 0; page_index < collection.state.totalPages; ++page_index) { %>
+    <a href="#"
+        <% if (page_index === collection.state.currentPage) { %>
+            class="active"
+        <% } %>
+        onclick="switchPage(<%= page_index %>); return false;"><%= page_index %></a>
+<% } %>
+
+<% if (collection.hasNextPage()) { %>
+    <a href="#" onclick="switchToNextPage(); return false;">&gt;</a>
+<% } %>
+
+</div>
+
+<% } %>

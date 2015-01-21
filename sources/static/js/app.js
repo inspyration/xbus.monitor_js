@@ -395,7 +395,7 @@ $(function() {
 
     // Pre-load templates; start our router once that is done.
 
-    var template_views = ['login', 'upload'];
+    var template_views = ['login', 'pagination', 'upload'];
 
     $.each(Collections, function(collection) {
         _.each(['form', 'list'], function(view_type) {

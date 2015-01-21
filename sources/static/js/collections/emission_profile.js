@@ -8,9 +8,12 @@ Models.emission_profile = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'emission_profile'
 });
 
-Collections.emission_profile = Backbone.Collection.extend({
+Collections.emission_profile = Backbone.PageableCollection.extend({
     model: Models.emission_profile,
     name: 'emission_profile',
+    state: {
+        firstPage: 0
+    },
     url: API_PREFIX + 'emission_profile'
 });
 

@@ -25,12 +25,24 @@ Views.list = Backbone.View.extend({
         this.$el.html(this.template({
             models: this.collection.models,
             name: this.collection.name,
+            pagination: this.render_pagination(),
             rel_name: this.rel ? this.collection.rel_name
                 : this.collection.name,
             id: this.id,
             rel: this.rel
         }));
         return this;
+    },
+
+    render_pagination: function() {
+        /*
+         * Fill the "pagination" template to add pagination controls below the
+         * list.
+         */
+
+        return Templates['pagination']({
+            collection: this.collection
+        });
     },
 
     sync: function() {
@@ -104,3 +116,42 @@ Views.list = Backbone.View.extend({
         });
     }
 });
+
+function switchPage(page_index) {
+    /*
+     * Load results in the specified page; render the view once they have been
+     * retrieved.
+     */
+
+    main_view.collection.getPage(page_index, {
+        success: function() {
+            main_view.render();
+        }
+    });
+}
+
+function switchToNextPage() {
+    /*
+     * Load results in the next page; render the view once they have been
+     * retrieved.
+     */
+
+    main_view.collection.getNextPage({
+        success: function() {
+            main_view.render();
+        }
+    });
+}
+
+function switchToPrevPage() {
+    /*
+     * Load results in the previous page; render the view once they have been
+     * retrieved.
+     */
+
+    main_view.collection.getPreviousPage({
+        success: function() {
+            main_view.render();
+        }
+    });
+}

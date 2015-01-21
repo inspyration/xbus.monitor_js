@@ -8,9 +8,12 @@ Models.emitter = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'emitter'
 });
 
-Collections.emitter = Backbone.Collection.extend({
+Collections.emitter = Backbone.PageableCollection.extend({
     model: Models.emitter,
     name: 'emitter',
+    state: {
+        firstPage: 0
+    },
     url: API_PREFIX + 'emitter'
 });
 

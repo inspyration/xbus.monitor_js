@@ -30,3 +30,23 @@ Taken from Deform <https://github.com/Pylons/deform/blob/master/deform/templates
     border: 0 !important;
     border-radius: 3px;
 }
+
+/* Pagination */
+
+.pagination {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.pagination a {
+    background: #E0E0E0;
+    padding: 10px 15px 10px 15px;
+}
+
+.pagination a.active {
+    border: 3px solid #000000;
+}
+
+.pagination a + a {
+    margin-left: 10px;
+}

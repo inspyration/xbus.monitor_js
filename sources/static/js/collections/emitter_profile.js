@@ -2,9 +2,12 @@ Models.emitter_profile = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'emitter_profile'
 });
 
-Collections.emitter_profile = Backbone.Collection.extend({
+Collections.emitter_profile = Backbone.PageableCollection.extend({
     model: Models.emitter_profile,
     name: 'emitter_profile',
+    state: {
+        firstPage: 0
+    },
     url: API_PREFIX + 'emitter_profile',
     relationships: {
     	"event_types": "event_type"

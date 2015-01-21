@@ -13,9 +13,12 @@ Models.event_node = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'event_node'
 });
 
-Collections.event_node = Backbone.Collection.extend({
+Collections.event_node = Backbone.PageableCollection.extend({
     model: Models.event_node,
     name: 'event_node',
+    state: {
+        firstPage: 0
+    },
     url: API_PREFIX + 'event_node',
     relationships: {
         "parents": "event_node",

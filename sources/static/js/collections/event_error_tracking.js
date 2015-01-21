@@ -13,9 +13,12 @@ Models.event_error_tracking = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'event_error_tracking'
 });
 
-Collections.event_error_tracking = Backbone.Collection.extend({
+Collections.event_error_tracking = Backbone.PageableCollection.extend({
     model: Models.event_error_tracking,
     name: 'event_error_tracking',
+    state: {
+        firstPage: 0
+    },
     url: API_PREFIX + 'event_error_tracking'
 });
 
