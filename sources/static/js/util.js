@@ -121,3 +121,11 @@ function select2ify(field, collection_name, text_field, query_string) {
         },
     });
 }
+
+function select2ifyFilter(field) {
+    /* Apply Select2 to a filtering control. */
+
+    $('select[name="' + field + '"]').select2({
+        containerCssClass: 'form-control',
+    });
+}

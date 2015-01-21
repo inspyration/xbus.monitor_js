@@ -31,6 +31,13 @@ Taken from Deform <https://github.com/Pylons/deform/blob/master/deform/templates
     border-radius: 3px;
 }
 
+/* List filters. */
+
+.list_filter {
+    text-align: center;
+    width: 50%;
+}
+
 /* Pagination */
 
 .pagination {

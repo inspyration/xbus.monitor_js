@@ -15,6 +15,7 @@ Models.envelope = Backbone.RelationalModel.extend({
 });
 
 Collections.envelope = Backbone.PageableCollection.extend({
+    default_filters: [['state', 'in', ['emit', 'exec', 'fail']]],
     model: Models.envelope,
     name: 'envelope',
     state: {

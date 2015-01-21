@@ -7,11 +7,11 @@ Views.list = Backbone.View.extend({
 
     initialize: function(options) {
         console.log('listview initialize', this.collection);
-        var url = this.collection.model.prototype.urlRoot;
-        if (options.params) {
-            url += '?' + options.params;
-        }
-        this.collection.url = url;
+
+        this.url_params = options.params;
+        this.filters = this.collection.default_filters;
+        this.updateCollectionUrl();
+
         this.id = options.id;
         this.rel = options.rel;
         this.template = options.template;
@@ -90,6 +90,25 @@ Views.list = Backbone.View.extend({
         --rel_sync_count;
     },
 
+    updateCollectionUrl: function() {
+        /* Make the collection's URL aware of custom settings. */
+
+        var url_params = this.url_params;
+        if (url_params === null) {
+            url_params = [];
+        }
+        if (this.filters) {
+            // TODO
+            url_params.push('state:in=' + encodeURIComponent('["exec", "fail"]'));
+        }
+
+        var url = this.collection.model.prototype.urlRoot;
+        if (url_params) {
+            url += '?' + url_params.join('&');
+        }
+        this.collection.url = url;
+    },
+
     addRecord: function(ev) {
         var that = this;
         var data = Backbone.Syphon.serialize(this);
@@ -116,6 +135,12 @@ Views.list = Backbone.View.extend({
         });
     }
 });
+
+function applyFilter(el, field) {
+    console.log(main_view.filters);
+    main_view.updateCollectionUrl();
+    main_view.collection.fetch();
+}
 
 function switchPage(page_index) {
     /*
