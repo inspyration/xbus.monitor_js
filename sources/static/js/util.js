@@ -95,34 +95,29 @@ function select2ify(field, collection_name, text_field, query_string) {
 
     var url = collections[collection_name].url;
 
-    LoadSelect2Script(function() {
-
-        $('input[name="' + field + '"]').select2(
-            {
-                ajax: {
-                    dataType: 'json',
-                    results: function(data, page) {
-                        return {
-                            results: _.map(data[1], function(row) {
-                                return formatDataForSelect2(row, text_field);
-                            })
-                        };
-                    },
-                    url: query_string !== undefined ? url + '?' + query_string
-                        : url
-                },
-                containerCssClass: 'form-control',
-                initSelection: function(element, callback) {
-                    var id = $(element).val();
-                    if (id !== '') {
-                        // Request information about the default selection.
-                        $.ajax(url + '/' + id, {
-                            dataType: 'json'
-                        }).done(function(data) {
-                            callback(formatDataForSelect2(data[1], text_field));
-                        });
-                    }
-                },
-            });
+    $('input[name="' + field + '"]').select2({
+        ajax: {
+            dataType: 'json',
+            results: function(data, page) {
+                return {
+                    results: _.map(data[1], function(row) {
+                        return formatDataForSelect2(row, text_field);
+                    })
+                };
+            },
+            url: query_string !== undefined ? url + '?' + query_string : url
+        },
+        containerCssClass: 'form-control',
+        initSelection: function(element, callback) {
+            var id = $(element).val();
+            if (id !== '') {
+                // Request information about the default selection.
+                $.ajax(url + '/' + id, {
+                    dataType: 'json'
+                }).done(function(data) {
+                    callback(formatDataForSelect2(data[1], text_field));
+                });
+            }
+        },
     });
 }
