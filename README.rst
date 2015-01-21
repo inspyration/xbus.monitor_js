@@ -43,5 +43,6 @@ xbus_monitor_js uses the following projects; thanks a lot to their respective au
 - devoops <http://devoops.me/handmade/1/>
 - i18next <http://i18next.com/>
 - jquery <http://jquery.com/>
+- select2 <https://select2.github.io/>
 - underscore <http://underscorejs.org>  # TODO Use lo-dash
 - uri <http://medialize.github.io/URI.js/>
