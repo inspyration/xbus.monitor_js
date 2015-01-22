@@ -108,6 +108,7 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <th>State</th>
                                         <th>Started date</th>
                                         <th>Done date</th>
                                         <th>Estimated items</th>
@@ -117,7 +118,11 @@
                                 </thead>
                                 <tbody>
                                     <% _.each(model.get('events').models, function(event) { %>
-                                    <tr>
+                                    <tr <%=
+                                        event.get('state') === 'corrected' ? 'class="success"' :
+                                        event.get('state') === 'won_t_fix' ? 'class="danger"' :
+                                    '' %>>
+                                        <td><%= event.escape('state') %></td>
                                         <td><%= event.escape('started_date') %></td>
                                         <td><%= event.escape('done_date') %></td>
                                         <td><%= event.escape('estimated_items') %></td>

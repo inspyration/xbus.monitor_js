@@ -30,6 +30,7 @@
                             <th>Envelope</th>
                             <th>Emitter</th>
                             <th>Type</th>
+                            <th>State</th>
                             <th>Started date</th>
                             <th>Done date</th>
                             <th>Estimated items</th>
@@ -39,10 +40,14 @@
                     </thead>
                     <tbody>
                         <% _.each(models, function(model) { %>
-                        <tr title="Event ID: <%= model.escape('id') %>">
+                        <tr title="Event ID: <%= model.escape('id') %>" <%=
+                            model.get('state') === 'corrected' ? 'class="success"' :
+                            model.get('state') === 'won_t_fix' ? 'class="danger"' :
+                        '' %>>
                             <td><%= model.get('envelope_id') && model.get('envelope_id').escape('id') %></td>
                             <td><%= model.get('emitter_id') && model.get('emitter_id').escape('login') %></td>
                             <td><%= model.get('type_id') && model.get('type_id').escape('name') %></td>
+                            <td><%= model.escape('state') %></td>
                             <td><%= model.escape('started_date') %></td>
                             <td><%= model.escape('done_date') %></td>
                             <td><%= model.escape('estimated_items') %></td>

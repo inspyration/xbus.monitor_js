@@ -41,6 +41,12 @@
                                 class="form-control" />
                         </div>
                         <div class="form-group">
+                            <label>State</label>
+                            <input name="state" type="text"
+                                value="<%= model ? model.escape('state') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
                             <label>Emitter</label>
                             <input name="emitter_id" type="hidden"
                                 value="<%= model ? model.getRelation('emitter_id').keyContents : '' %>"
@@ -86,6 +92,47 @@
                         <% }; %>
                     <% }; %>
                 </form>
+
+                <% if (model) { %>
+                    <hr />
+                    <h3>Tracking</h3>
+                    <p>
+                        <a href="#/event_tracking/create?event_id=<%= model.escape('id') %>">
+                            <i class="fa fa-plus"></i>
+                            Add a comment / Change the state
+                        </a>
+                    </p>
+                    <% if (_.size(model.get('tracking').models) > 0) { %>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Date</th>
+                                    <th>State change</th>
+                                    <th>Comment</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% _.each(model.get('tracking').models, function(item) { %>
+                                <tr <%=
+                                    item.get('new_state') === 'corrected' ? 'class="success"' :
+                                    item.get('new_state') === 'won_t_fix' ? 'class="danger"' :
+                                '' %>>
+                                    <td><%= item.escape('user_name') %></td>
+                                    <td><%= item.escape('date') %></td>
+                                    <td><%= item.escape('new_state') %></td>
+                                    <td><%= item.escape('comment') %></td>
+                                    <td><a href="#/event_tracking/<%= item.id %>">View</a></td>
+                                </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    <% } else { %>
+                        <p>No change yet.</p>
+                    <% } %>
+                <% } %>
+
             </div>
         </div>
     </div>

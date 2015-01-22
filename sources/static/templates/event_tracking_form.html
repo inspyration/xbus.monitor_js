@@ -1,0 +1,120 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Xbus</a></li>
+            <li><a href="#/<%= name %>">Event tracking item</a></li>
+            <% if(model) { %>
+                <% if(editing) { %>
+                    <li><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></li>
+                <% } else { %>
+                    <li><a href="#/<%= name %>/<%= model.id %>">View</a></li>
+                <% } %>
+            <% } else { %>
+                <li><a href="#/<%= name %>/create">Create</a></li>
+            <% }%>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <span><%= model ? (editing ? 'Edit' : 'View') : 'New' %> Event tracking item</span>
+                </div>
+                <div class="box-icons">
+                    <a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+                    </a> <a class="expand-link"> <i class="fa fa-expand"></i>
+                    </a> <a class="close-link"> <i class="fa fa-times"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content">
+                <form class="form-inline record-form" role="form">
+                    <fieldset>
+                        <div class="form-group" <%= model ? '' : 'style="display: none;"' %>>
+                            <label>Event</label>
+                            <input name="event_id" type="hidden"
+                                value="<%=
+                                    model ? model.getRelation('event_id').keyContents :
+                                    (params && params['event_id']) ? params['event_id'] :
+                                    ''
+                                %>"
+                                class="form-control" />
+                        </div>
+                        <% if (model) { %>
+                            <div class="form-group">
+                                <label>User</label>
+                                <input name="user_id" type="hidden"
+                                    value="<%= model.getRelation('user_id').keyContents %>"
+                                    class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input name="date" type="date"
+                                    value="<%= model.escape('date') %>"
+                                    class="form-control" />
+                            </div>
+                        <% } %>
+                        <div class="form-group">
+                            <label>Comment</label>
+                            <textarea name="comment" cols="60" rows="6" class="form-control">
+                                <%= model ? model.escape('comment') : '' %>
+                            </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>State change</label>
+                            <select name="new_state" class="form-control">
+                                <!-- TODO Loop... -->
+                                <option value="" />
+                                <option value="unprocessed"
+                                    <%= (model && model.get('new_state') === 'unprocessed') ? 'selected="selected"' : '' %>>
+                                    Unprocessed
+                                </option>
+                                <option value="processing"
+                                    <%= (model && model.get('new_state') === 'unprocessed') ? 'selected="selected"' : '' %>>
+                                    Processing
+                                </option>
+                                <option value="on_hold"
+                                    <%= (model && model.get('new_state') === 'unprocessed') ? 'selected="selected"' : '' %>>
+                                    On hold
+                                </option>
+                                <option value="corrected"
+                                    <%= (model && model.get('new_state') === 'unprocessed') ? 'selected="selected"' : '' %>>
+                                    Corrected
+                                </option>
+                                <option value="won_t_fix"
+                                    <%= (model && model.get('new_state') === 'unprocessed') ? 'selected="selected"' : '' %>>
+                                    Won't fix
+                                </option>
+                            </select>
+                        </div>
+                    </fieldset>
+                    <% if (editing) { %>
+                        <hr />
+                        <button type="submit" class="btn btn-primary"><%= model ? 'Update' : 'Create' %></button>
+                        <% if (model) { %>
+                            <input type="hidden" name="id" value="<%= model.id %>" />
+                            <button class="btn btn-danger delete">Delete</button>
+                        <% } %>
+                    <% } %>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // <![CDATA[
+
+    prepareForm('.record-form', <%= editing %>);
+
+    <% if (model) { %>
+        select2ify('event_id', 'event', 'id');
+        select2ify('user_id', 'user', 'display_name');
+    <% } %>
+
+    // ]]>
+</script>
