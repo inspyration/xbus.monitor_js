@@ -40,12 +40,22 @@
                                 value="<%= model ? model.getRelation('envelope_id').keyContents : '' %>"
                                 class="form-control" />
                         </div>
-                        <div class="form-group">
-                            <label>State</label>
-                            <input name="state" type="text"
-                                value="<%= model ? model.escape('state') : '' %>"
-                                class="form-control" />
-                        </div>
+                        <% if (model) { %>
+                            <div class="form-group">
+                                <label>State</label>
+                                <input name="state" type="text"
+                                    value="<%= model.escape('state') %>"
+                                    class="form-control" />
+                            </div>
+                            <% if (model.getRelation('responsible_id').keyContents) { %>
+                                <div class="form-group">
+                                    <label>Responsible</label>
+                                    <input name="responsible_id" type="hidden"
+                                        value="<%= model.getRelation('responsible_id').keyContents %>"
+                                        class="form-control" />
+                                </div>
+                            <% } %>
+                        <% } %>
                         <div class="form-group">
                             <label>Emitter</label>
                             <input name="emitter_id" type="hidden"
@@ -144,7 +154,10 @@
     prepareForm('.record-form', <%= editing %>);
     select2ify('envelope_id', 'envelope', 'id');
     select2ify('emitter_id', 'emitter', 'login');
-    select2ify('type_id', 'event_type', 'name');
+    select2ify('responsible_id', 'user', 'display_name');
+    <% if (model) { %>
+        select2ify('responsible_id', 'user', 'display_name');
+    <% } %>
 
     // ]]>
 </script>

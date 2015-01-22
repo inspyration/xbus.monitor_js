@@ -10,6 +10,11 @@ Models.event = Backbone.RelationalModel.extend({
         relatedModel: 'Models.envelope',
         type: Backbone.HasOne
     }, {
+        includeInJSON: Backbone.Model.prototype.idAttribute,
+        key: 'responsible_id',
+        relatedModel: 'Models.user',
+        type: Backbone.HasOne
+    }, {
         collectionType: 'Collections.event_tracking',
         includeInJSON: false,
         key: 'tracking',
