@@ -33,6 +33,12 @@
             </div>
             <div class="box-content">
                 <form class="form-inline record-form" role="form">
+                    <% if (model) { %>
+                        <div style="margin-bottom: 12px;">
+                            <label>ID</label>
+                            <%= model.escape('id') %>
+                        </div>
+                    <% } %>
                     <% if (model && model.get('state') === 'fail') { %>
                         <a href="#" class="btn btn-primary"
                             onclick="replay_envelope('<%= model.id %>'); return false;">Replay this envelope</a>
