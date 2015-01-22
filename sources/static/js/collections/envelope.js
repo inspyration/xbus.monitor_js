@@ -5,6 +5,12 @@ Models.envelope = Backbone.RelationalModel.extend({
         relatedModel: 'Models.emitter',
         type: Backbone.HasOne
     }, {
+        collectionType: 'Collections.event',
+        includeInJSON: false,
+        key: 'events',
+        relatedModel: 'Models.event',
+        type: Backbone.HasMany
+    }, {
         collectionType: 'Collections.event_error',
         includeInJSON: false,
         key: 'errors',
