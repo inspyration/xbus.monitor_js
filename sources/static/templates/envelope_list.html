@@ -45,7 +45,6 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Emitter</th>
                             <th>State</th>
                             <th>Posted date</th>
@@ -56,11 +55,10 @@
                     </thead>
                     <tbody>
                         <% _.each(models, function(model) { %>
-                        <tr <%=
+                        <tr title="Envelope ID: <%= model.escape('id') %>" <%=
                             model.get('state') === 'done' ? 'class="success"' :
                             model.get('state') === 'fail' ? 'class="danger"' :
                         '' %>>
-                            <td><%= model.id %></td>
                             <td><%= model.get('emitter_id') && model.get('emitter_id').escape('login') %></td>
                             <td><%= model.escape('state') %></td>
                             <td><%= model.escape('posted_date') %></td>
