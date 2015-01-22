@@ -8,6 +8,8 @@ Views.list = Backbone.View.extend({
     initialize: function(options) {
         console.log('listview initialize', this.collection);
 
+        var that = this;
+
         this.url_params = options.params;
         this.filters = this.collection.default_filters;
         this.updateCollectionUrl();
@@ -16,8 +18,65 @@ Views.list = Backbone.View.extend({
         this.rel = options.rel;
         this.template = options.template;
         this.render(); // Pre-render before refreshing anything.
-        this.listenTo(this.collection, 'sync', this.sync);
-        this.collection.fetch();
+        this.collection.fetch({
+            success: function() {
+                that.initSync(that);
+            }
+        });
+    },
+
+    initSync: function(that) {
+        /*
+         * Called when the collection has been initially fetched. Before
+         * updating the view, also fetch related models we might need.
+         */
+
+        function initDone() {
+            /*
+             * Ready to render! Before exiting this function, also register an
+             * event listener for changes.
+             */
+
+            that.listenTo(that.collection, 'sync', that.render);
+            that.render();
+        }
+
+        // First gather relational fields.
+        var rel_keys = [];
+        _.each(this.collection.model.prototype.relations, function(relation) {
+            rel_keys.push(relation.key);
+        });
+
+        // Render immediately when there are no relational elements.
+        if (_.size(rel_keys) == 0) {
+            initDone();
+            return;
+        }
+
+        // A counter to know when rel models have been fetched.
+        // TODO Improve (with deferreds / promises)...
+        // TODO Less requests using "collectionType" and different URLs (see
+        // <http://backbonerelational.org/>).
+        var rel_sync_count = 1;
+
+        // Use the "getAsync" method of backbone-relational to ensure the data
+        // is available.
+        _.each(this.collection.models, function(model) {
+            _.each(rel_keys, function(rel_key) {
+                ++rel_sync_count;
+                model.getAsync(rel_key).done(function() {
+                    if (--rel_sync_count <= 0) {
+                        initDone();
+                    }
+                });
+            });
+        });
+
+        // Wait for 1 run to avoid rendering too often if the data was already
+        // fetched.
+        if (--rel_sync_count <= 0) {
+            initDone();
+        }
     },
 
     render: function() {
@@ -44,53 +103,6 @@ Views.list = Backbone.View.extend({
         return Templates['pagination']({
             collection: this.collection
         });
-    },
-
-    sync: function() {
-        /*
-         * Called when the "sync" event is fired (when data has been fetched
-         * from the server). Before updating the view, also fetch related models
-         * we might need.
-         */
-
-        var that = this;
-
-        // First gather relational fields.
-        var rel_keys = [];
-        _.each(this.collection.model.prototype.relations, function(relation) {
-            rel_keys.push(relation.key);
-        });
-
-        // Render immediately when there are no relational elements.
-        if (_.size(rel_keys) == 0) {
-            this.render();
-            return;
-        }
-
-        // A counter to know when rel models have been fetched.
-        // TODO Improve (with deferreds / promises)...
-        // TODO Less requests using "collectionType" and different URLs (see
-        // <http://backbonerelational.org/>).
-        var rel_sync_count = 1;
-
-        // Use the "getAsync" method of backbone-relational to ensure the data
-        // is available.
-        _.each(this.collection.models, function(model) {
-            _.each(rel_keys, function(rel_key) {
-                ++rel_sync_count;
-                model.getAsync(rel_key).done(function() {
-                    if (--rel_sync_count <= 0) {
-                        that.render();
-                    }
-                });
-            });
-        });
-
-        // Wait for 1 run to avoid rendering too often if the data was already
-        // fetched.
-        if (--rel_sync_count <= 0) {
-            that.render();
-        }
     },
 
     updateCollectionUrl: function() {
