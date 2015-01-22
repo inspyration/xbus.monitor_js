@@ -23,6 +23,7 @@ Views.list = Backbone.View.extend({
     render: function() {
         console.log('collection view render');
         this.$el.html(this.template({
+            filters: this.filters,
             models: this.collection.models,
             name: this.collection.name,
             pagination: this.render_pagination(),
@@ -87,19 +88,21 @@ Views.list = Backbone.View.extend({
 
         // Wait for 1 run to avoid rendering too often if the data was already
         // fetched.
-        --rel_sync_count;
+        if (--rel_sync_count <= 0) {
+            that.render();
+        }
     },
 
     updateCollectionUrl: function() {
         /* Make the collection's URL aware of custom settings. */
 
-        var url_params = this.url_params;
-        if (url_params === null) {
-            url_params = [];
-        }
+        var url_params = this.url_params || [];
         if (this.filters) {
-            // TODO
-            url_params.push('state:in=' + encodeURIComponent('["exec", "fail"]'));
+            _.each(this.filters, function(filter) {
+                var field = filter[0], operator = filter[1], value = filter[2];
+                url_params.push(field + ':' + operator + '='
+                    + encodeURIComponent(JSON.stringify(value)));
+            })
         }
 
         var url = this.collection.model.prototype.urlRoot;
@@ -137,7 +140,19 @@ Views.list = Backbone.View.extend({
 });
 
 function applyFilter(el, field) {
-    console.log(main_view.filters);
+    /* Update the filter the view is using and reload its contents. */
+
+    var node = $(el);
+    switch (el.tagName) {
+    case 'SELECT':
+        var operator = el.multiple ? 'in' : 'eq';
+        main_view.filters[el.name] = [field, operator, node.val()];
+        break;
+    default:
+        alert(el.tagName + ' controls are not supported yet.');
+        break;
+    }
+
     main_view.updateCollectionUrl();
     main_view.collection.fetch();
 }

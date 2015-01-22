@@ -29,13 +29,14 @@
                     <label for="state_filter">States</label>
                     <select name="state_filter" multiple="multiple"
                         onchange="applyFilter(this, 'state')">
-                        <option selected="selected">emit</option>
-                        <option>canc</option>
-                        <option>wait</option>
-                        <option selected="selected">exec</option>
-                        <option>done</option>
-                        <option>stop</option>
-                        <option selected="selected">fail</option>
+                        <% _.each([
+                            'emit', 'canc', 'wait', 'exec', 'done', 'stop', 'fail'
+                        ], function(state_value) { %>
+                            <option
+                            <% if (filters && filters.state_filter && _.contains(filters.state_filter[2], state_value)) { %>
+                                selected="selected"
+                            <% } %>><%= state_value %></option>
+                        <% }); %>
                     </select>
                 </div>
 
