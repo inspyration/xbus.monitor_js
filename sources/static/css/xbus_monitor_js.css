@@ -35,8 +35,10 @@ Taken from Deform <https://github.com/Pylons/deform/blob/master/deform/templates
 
 .list_filter {
     margin-bottom: 20px;
-    text-align: center;
-    width: 50%;
+}
+
+.list_filter .select2-container {
+    max-width: 300px;
 }
 
 /* Pagination */
