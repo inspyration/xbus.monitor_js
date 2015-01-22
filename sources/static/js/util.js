@@ -115,7 +115,7 @@ function select2ify(field, collection_name, text_field, query_string) {
                 $.ajax(url + '/' + id, {
                     dataType: 'json'
                 }).done(function(data) {
-                    callback(formatDataForSelect2(data[1], text_field));
+                    callback(formatDataForSelect2(data, text_field));
                 });
             }
         },
