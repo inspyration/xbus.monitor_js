@@ -34,6 +34,7 @@ Taken from Deform <https://github.com/Pylons/deform/blob/master/deform/templates
 /* List filters. */
 
 .list_filter {
+    margin-bottom: 20px;
     text-align: center;
     width: 50%;
 }
@@ -41,13 +42,13 @@ Taken from Deform <https://github.com/Pylons/deform/blob/master/deform/templates
 /* Pagination */
 
 .pagination {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 600;
 }
 
 .pagination a {
     background: #E0E0E0;
-    padding: 10px 15px 10px 15px;
+    padding: 8px 14px 8px 14px;
 }
 
 .pagination a.active {
