@@ -110,7 +110,15 @@ function registerCollection(options) {
     options['state'] = {
         firstPage: 0
     }
-    options['url'] = API_PREFIX + name
+    options['url'] = function() {
+        /* Apply custom URL parameters provided by the view, when needed. */
+        var url = API_PREFIX + name
+        var url_params = main_view ? main_view.url_params : null;
+        if (url_params) {
+            url += '?' + url_params.join('&')
+        }
+        return url;
+    }
 
     Collections[name] = Backbone.PageableCollection.extend(options);
     collections[name] = new Collections[name]();

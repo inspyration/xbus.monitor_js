@@ -10,8 +10,13 @@ Views.list = Backbone.View.extend({
 
         var that = this;
 
-        this.url_params = options.params;
+        // Settings influencing the collection URL.
+        this.initial_url_params = options.params;
         this.filters = this.collection.default_filters;
+        if (this.filters) {
+            // TODO Use <https://lodash.com/docs#cloneDeep> for the deep copy.
+            this.filters = $.extend(true, {}, this.filters);
+        }
         this.updateCollectionUrl();
 
         this.id = options.id;
@@ -108,20 +113,15 @@ Views.list = Backbone.View.extend({
     updateCollectionUrl: function() {
         /* Make the collection's URL aware of custom settings. */
 
-        var url_params = this.url_params || [];
+        var that = this;
+        this.url_params = this.initial_url_params || [];
         if (this.filters) {
             _.each(this.filters, function(filter) {
                 var field = filter[0], operator = filter[1], value = filter[2];
-                url_params.push(field + ':' + operator + '='
+                that.url_params.push(field + ':' + operator + '='
                     + encodeURIComponent(JSON.stringify(value)));
-            })
+            });
         }
-
-        var url = this.collection.url;
-        if (url_params) {
-            url += '?' + url_params.join('&');
-        }
-        this.collection.url = url;
     },
 
     addRecord: function(ev) {

@@ -93,7 +93,7 @@ function select2ify(field, collection_name, text_field, query_string) {
      * @param text_field The field to use to display the name of records.
      */
 
-    var url = collections[collection_name].url;
+    var url = collections[collection_name].url();
 
     $('input[name="' + field + '"]').select2({
         ajax: {
