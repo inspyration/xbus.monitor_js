@@ -117,7 +117,7 @@ Views.list = Backbone.View.extend({
             })
         }
 
-        var url = this.collection.model.prototype.urlRoot;
+        var url = this.collection.url;
         if (url_params) {
             url += '?' + url_params.join('&');
         }

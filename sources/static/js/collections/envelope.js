@@ -14,16 +14,9 @@ Models.envelope = Backbone.RelationalModel.extend({
     urlRoot: API_PREFIX + 'envelope'
 });
 
-Collections.envelope = Backbone.PageableCollection.extend({
+registerCollection({
     default_filters: {
         'state_filter': ['state', 'in', ['emit', 'exec', 'fail']]
     },
-    model: Models.envelope,
-    name: 'envelope',
-    state: {
-        firstPage: 0
-    },
-    url: API_PREFIX + 'envelope'
-});
-
-collections.envelope = new Collections.envelope();
+    name: 'envelope'
+})

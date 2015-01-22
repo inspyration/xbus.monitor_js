@@ -15,6 +15,14 @@ var binary_form_data = null;
 // Used to get back to the previous page after logging in.
 var login_referrer = null;
 
+var Models = {}; // model classes.
+var Collections = {}; // collection classes.
+var collections = {}; // collection instances (which contain model instances).
+var router = null; // backbone.js router; can be used to navigate across pages.
+var Templates = {}; // Template functions, ready to be called with the right
+// parameters.
+var Views = {}; // view classes.
+
 function createRelModel(collection, id, rel, rel_collection) {
     /* Helper for collections related to other collections. */
 
@@ -91,6 +99,21 @@ function openLoginForm() {
     router.navigate('login', {
         trigger: true
     });
+}
+
+function registerCollection(options) {
+    /* Register a new backbone collection type with pre-filled parameters. */
+
+    var name = options.name;
+
+    options['model'] = Models[name];
+    options['state'] = {
+        firstPage: 0
+    }
+    options['url'] = API_PREFIX + name
+
+    Collections[name] = Backbone.PageableCollection.extend(options);
+    collections[name] = new Collections[name]();
 }
 
 function registerCustomSerializers() {
@@ -230,14 +253,6 @@ function updateLoginInfo() {
 // options.url = 'http://backbonejs-beginner.herokuapp.com' + options.url;
 // options.url = 'http://localhost:6543' + options.url;
 // });
-
-var Models = {}; // model classes.
-var Collections = {}; // collection classes.
-var collections = {}; // collection instances (which contain model instances).
-var router = null; // backbone.js router; can be used to navigate across pages.
-var Templates = {}; // Template functions, ready to be called with the right
-// parameters.
-var Views = {}; // view classes.
 
 var Router = Backbone.Router
     .extend({
