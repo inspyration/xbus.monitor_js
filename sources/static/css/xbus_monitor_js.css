@@ -43,20 +43,12 @@ Taken from Deform <https://github.com/Pylons/deform/blob/master/deform/templates
 
 /* Pagination */
 
-.pagination {
-    font-size: 20px;
+.pagination button {
+    font-size: 18px;
     font-weight: 600;
+    padding: 2px 10px 2px 10px;
 }
 
-.pagination a {
-    background: #E0E0E0;
-    padding: 8px 14px 8px 14px;
-}
-
-.pagination a.active {
-    border: 3px solid #000000;
-}
-
-.pagination a + a {
-    margin-left: 10px;
+.pagination button + button {
+    margin-left: 6px;
 }
