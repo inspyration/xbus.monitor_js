@@ -86,16 +86,18 @@ function prepareForm(form_selector, editing) {
     }
 }
 
-function select2ify(field, collection_name, text_field, query_string) {
+function select2ify(field, collection_name, text_field, options) {
     /*
      * Apply Select2 to an input; link it with a collection.
      * 
      * @param text_field The field to use to display the name of records.
+     * 
+     * @param options Additional options to send to the Select2 widget.
      */
 
     var url = collections[collection_name].url();
 
-    $('input[name="' + field + '"]').select2({
+    $('input[name="' + field + '"]').select2(_.extend({
         ajax: {
             dataType: 'json',
             results: function(data, page) {
@@ -105,7 +107,7 @@ function select2ify(field, collection_name, text_field, query_string) {
                     })
                 };
             },
-            url: query_string !== undefined ? url + '?' + query_string : url
+            url: options.query_string ? url + '?' + options.query_string : url
         },
         containerCssClass: 'form-control',
         initSelection: function(element, callback) {
@@ -119,7 +121,7 @@ function select2ify(field, collection_name, text_field, query_string) {
                 });
             }
         },
-    });
+    }, options ? options : {}));
 }
 
 function select2ifyFilter(field) {

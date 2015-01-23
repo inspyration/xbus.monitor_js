@@ -1,0 +1,64 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Xbus</a></li>
+            <li><a href="#/<%= name %>">Columns</a></li>
+            <% if(rel !== undefined) { %>
+                <li><a href="#/<%= name %>/<%= id %>">View</a></li>
+                <li><a href="#/<%= name %>/<%= id %>/<%= rel %>"><%= rel %></a></li>
+            <% } %>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <i class="fa fa-list"></i> <span>Columns</span>
+                </div>
+                <div class="box-icons">
+                    <a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+                    </a> <a class="expand-link"> <i class="fa fa-expand"></i>
+                    </a> <a class="close-link"> <i class="fa fa-times"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Display Name</th>
+                            <th>Key</th>
+                            <th>Protected</th>
+                            <th>Required</th>
+                            <th colspan="3"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% _.each(models, function(model) { %>
+                        <tr>
+                            <td><%= model.escape('type_name') %></td>
+                            <td><%= model.escape('display_name') %></td>
+                            <td><%= model.escape('is_external_key') %></td>
+                            <td><%= model.escape('is_protected') %></td>
+                            <td><%= model.escape('is_required') %></td>
+                            <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
+                            <td><a href="#/<%= rel_name %>/<%= model.id %>/edit">Edit</a></td>
+                            <td><a href="#/<%= rel_name %>" class="delete" value="<%= model.id %>">Delete</a></td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+                <% if(rel !== undefined) { %>
+                    <div class="form-group">
+                        <a href="#/<%= name %>/<%= id %>/<%= rel %>/create">Create</a>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>

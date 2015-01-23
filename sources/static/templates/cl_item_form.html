@@ -1,0 +1,129 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Xbus</a></li>
+            <li><a href="#/<%= name %>">Clearing Items</a></li>
+            <li><a href="#/<%= name %>/<%= model ? model.id : '' %>/clear">Clear</a></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <span><%= model ? (editing ? 'Edit' : 'View') : 'New' %> Clearing Item</span>
+                </div>
+                <div class="box-icons">
+                    <a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+                    </a> <a class="expand-link"> <i class="fa fa-expand"></i>
+                    </a> <a class="close-link"> <i class="fa fa-times"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content">
+                <fieldset class="form-inline">
+                    <div class="form-group">
+                        <label>Type</label>
+                        <input name="type_id" type="hidden" readonly="readonly"
+                            value="<%= model ? model.escape('type_id') : '' %>"
+                            class="form-control" / >
+                    </div>
+                    <div class="form-group">
+                        <label>Event ID</label>
+                        <input name="event_id" type="text" readonly="readonly"
+                            value="<%= model ? model.escape('event_id') : '' %>"
+                            class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Event Type</label>
+                        <input name="event_type_id" type="text" readonly="readonly"
+                               value="<%= model ? model.escape('event_type_id') : '' %>"
+                               class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Reception Date</label>
+                        <input name="recv_date" type="date" readonly="readonly"
+                            value="<%= model ? model.escape('recv_date') : '' %>"
+                            class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Clearing Date</label>
+                        <input name="sent_date" type="date" readonly="readonly"
+                            value="<%= model ? model.escape('sent_date') : '' %>"
+                            class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>State</label>
+                        <select name="state" disabled="true">
+                            <option value="new" <%= model && model.escape('state') == "new" ? 'selected' : '' %>>Latest uncleared data</option>
+                            <option value="old" <%= model && model.escape('state') == "old" ? 'selected' : '' %>>Earlier uncleared data</option>
+                            <option value="cleared" <%= model && model.escape('state') == "cleared" ? 'selected' : '' %>>Cleared data</option>
+                        </select>
+                    </div>
+                </fieldset>
+                <form class="form-inline record-form" role="form">
+                    <% if(model === undefined) {} else if(model.escape('state') == "cleared") { %>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Field name</th>
+                                    <th>Target system value</th>
+                                    <th>Incoming value</th>
+                                    <th>Selected value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% _.each(model.get('display'), function(display, col) { %>
+                                <tr>
+                                    <td><%= _.escape(display) %></td>
+                                    <td><%= model.get('dest_data_names')[col] !== undefined ? _.escape(model.get('dest_data_names')[col]) : model.get('dest_data')[col] !== undefined ? _.escape(model.get('dest_data')[col]) : '<em>No data</em>' %></td>
+                                    <td><%= model.get('source_data_names')[col] !== undefined ? _.escape(model.get('source_data_names')[col]) : model.get('source_data')[col] !== undefined ? _.escape(model.get('source_data')[col]) : '<em>No data</em>' %></td>
+                                    <td><%= model.get('out_data_names')[col] !== undefined ? _.escape(model.get('out_data_names')[col]) : model.get('out_data')[col] !== undefined ? _.escape(model.get('out_data')[col]) : '<em>No data</em>' %></td>
+                                </tr>
+                                <% }, model); %>
+                            </tbody>
+                        </table>
+                    <% } else { %>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Field name</th>
+                                    <th>Target system value</th>
+                                    <th>Incoming value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% _.each(clear_data, function(data, col) { %>
+                                <tr>
+                                    <td><%= data[2] %></td>
+                                    <td>
+                                        <input type="radio" name="<%= col %>" value="<%= data[3] %>" <%= data[0] ? "disabled" : '' %> <%= data[1] || data[5] == null ? 'checked' : '' %> />
+                                        <%= data[4] !== null ? data[4] : data[3] !== null ? data[3] : '<em>No data</em>' %>
+                                    </td>
+                                    <td>
+                                        <input type="radio" name="<%= col %>" value="<%= data[5] %>" <%= data[0] || data[5] == null ? "disabled" : '' %> <%= data[1] || data[5] == null ? '' : 'checked' %> />
+                                        <%= data[6] !== null ? data[6] : data[5] !== null ? data[5] : '<em>No data</em>' %>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                        <button type="submit" class="btn btn-primary">Clear</button>
+                    <% } %>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // <![CDATA[
+
+    select2ify('type_id', 'cl_item_type', 'display_name');
+    select2ify('event_type_id', 'event_type', 'name');
+
+    // ]]>
+</script>

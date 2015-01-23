@@ -1,0 +1,188 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Xbus</a></li>
+            <li><a href="#/<%= name %>">Columns</a></li>
+            <% if(model) { %>
+                <% if(editing) { %>
+                    <li><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></li>
+                <% } else { %>
+                    <li><a href="#/<%= name %>/<%= model.id %>">View</a></li>
+                <% } %>
+            <% } else { %>
+                <li><a href="#/<%= name %>/create">Create</a></li>
+            <% }%>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <span><%= model ? (editing ? 'Edit' : 'View') : 'New' %> Column</span>
+                </div>
+                <div class="box-icons">
+                    <a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+                    </a> <a class="expand-link"> <i class="fa fa-expand"></i>
+                    </a> <a class="close-link"> <i class="fa fa-times"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content">
+                <form class="form-inline record-form" role="form">
+                    <fieldset>
+                        <div class="form-group">
+                            <label>Display Name</label>
+                            <input name="display_name" type="text"
+                                value="<%= model ? model.escape('display_name') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Type</label>
+                            <input name="type_id" type="hidden"
+                                value="<%= model ? model.escape('type_id') : '' %>"
+                                class="form-control"/ >
+                        </div>
+                        <div class="form-group">
+                            <label>Join</label>
+                            <input name="join_id" type="hidden"
+                                   value="<%= model ? model.escape('join_id') : '' %>"
+                                   class="form-control"/ >
+                        </div>
+                        <div class="form-group">
+                            <label>Attribute Name</label>
+                            <input name="attribute_name" type="text"
+                                   value="<%= model ? model.escape('attribute_name') : '' %>"
+                                   class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Field Name</label>
+                            <input name="field_name" type="text"
+                                value="<%= model ? model.escape('field_name') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Column Name</label>
+                            <input name="column_name" type="text"
+                                value="<%= model ? model.escape('column_name') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Data Type</label>
+                            <select name="data_type">
+                                <option value="ANY" <%= model && model.escape('data_type') == "ANY" ? 'selected' : '' %>>Any</option>
+                                <option value="M2O" <%= model && model.escape('data_type') == "M2O" ? 'selected' : '' %>>Many to One</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Related Item Type</label>
+                            <input name="related_type_id" type="hidden"
+                                   value="<%= model ? model.escape('related_type_id') : '' %>"
+                                   class="form-control"/ >
+                        </div>
+                        <div class="form-group">
+                            <label>Key</label>
+                            <input name="is_external_key" type="checkbox"
+                                <%= (model && model.get('is_external_key')) ? 'checked="checked"' : '' %>
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Clearable</label>
+                            <input name="is_clearable" type="checkbox"
+                                <%= (!model || model.get('is_clearable')) ? 'checked="checked"' : '' %>
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Protected</label>
+                            <input name="is_protected" type="checkbox"
+                                <%= (model && model.get('is_protected')) ? 'checked="checked"' : '' %>
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Required</label>
+                            <input name="is_required" type="checkbox"
+                                <%= (model && model.get('is_required')) ? 'checked="checked"' : '' %>
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Reject by default</label>
+                            <input name="is_dest_default" type="checkbox"
+                            <%= (model && model.get('is_dest_default')) ? 'checked="checked"' : '' %>
+                            class="form-control" />
+                        </div>
+                    </fieldset>
+                    <% if(editing) { %>
+                        <hr />
+                        <button type="submit" class="btn btn-primary"><%= model ? 'Update' : 'Create' %></button>
+                        <% if(model) { %>
+                            <input type="hidden" name="id" value="<%= model.id %>" />
+                            <button class="btn btn-danger delete">Delete</button>
+                        <% }; %>
+                    <% }; %>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // <![CDATA[
+
+    select2ify('type_id', 'cl_item_type', 'display_name');
+    select2ify('related_type_id', 'cl_item_type', 'display_name');
+    select2ify('join_id', 'cl_item_join', 'display_name', {
+        'placeholder': 'Primary table',
+        'allowClear': true
+    });
+
+    prepareForm('.record-form', <%= editing %>);
+
+    $('input[name="is_external_key"]').change(function() {
+
+        var is_clearable = $('input[name="is_clearable"]');
+        var is_protected = $('input[name="is_protected"]');
+        var is_required = $('input[name="is_required"]');
+        var is_dest_default = $('input[name="is_dest_default"]');
+        var column_name = $('input[name="column_name"]');
+        var join_id = $('input[name="join_id"]');
+
+        is_clearable.prop('readonly', this.checked);
+        is_protected.prop('readonly', this.checked);
+        is_dest_default.prop('readonly', this.checked);
+        is_required.prop('readonly', this.checked);
+        column_name.prop('disabled', false);
+        join_id.prop('disabled', false);
+
+        is_clearable.prop('checked', !this.checked);
+        if (this.checked) {
+            is_protected.prop('checked', false);
+            is_dest_default.prop('checked', false);
+            is_required.prop('checked', true);
+        }
+    });
+
+    $('input[name="is_clearable"]').change(function() {
+
+        var is_external_key = $('input[name="is_external_key"]');
+        var is_protected = $('input[name="is_protected"]');
+        var is_dest_default = $('input[name="is_dest_default"]');
+        var column_name = $('input[name="column_name"]');
+        var join_id = $('input[name="join_id"]');
+
+        is_protected.prop('readonly', !this.checked);
+        is_dest_default.prop('readonly', !this.checked);
+        column_name.prop('disabled', !this.checked
+            && !is_external_key.prop('checked'));
+        join_id.prop('disabled', !this.checked
+            && !is_external_key.prop('checked'));
+
+        if (!this.checked) {
+            is_protected.prop('checked', false)
+        }
+    });
+
+    // ]]>
+</script>

@@ -1,0 +1,134 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Xbus</a></li>
+            <li><a href="#/<%= name %>">Clearing Item Types</a></li>
+            <% if(model) { %>
+                <% if(editing) { %>
+                    <li><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></li>
+                <% } else { %>
+                    <li><a href="#/<%= name %>/<%= model.id %>">View</a></li>
+                <% } %>
+            <% } else { %>
+                <li><a href="#/<%= name %>/create">Create</a></li>
+            <% }%>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <span><%= model ? (editing ? 'Edit' : 'View') : 'New' %> Clearing Item Type</span>
+                </div>
+                <div class="box-icons">
+                    <a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+                    </a> <a class="expand-link"> <i class="fa fa-expand"></i>
+                    </a> <a class="close-link"> <i class="fa fa-times"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content">
+                <form class="form-inline record-form" role="form">
+                    <fieldset>
+                        <div class="form-group">
+                            <label>Display Name</label>
+                            <input name="display_name" type="text"
+                                value="<%= model ? model.escape('display_name') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Object Name</label>
+                            <input name="object_name" type="text"
+                                value="<%= model ? model.escape('object_name') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Model Name</label>
+                            <input name="model_name" type="text"
+                                value="<%= model ? model.escape('model_name') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Primary Table Name</label>
+                            <input name="primary_table_name" type="text"
+                                value="<%= model ? model.escape('primary_table_name') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>ID Column Name</label>
+                            <input name="id_column_name" type="text"
+                                value="<%= model ? model.escape('id_column_name') : 'id' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Operation Type</label>
+                            <select name="optype">
+                                <option value="IGNORE" <%= model && model.escape('optype') == "IGNORE" ? 'selected' : '' %>>Ignore</option>
+                                <option value="SELECT" <%= model && model.escape('optype') == "SELECT" ? 'selected' : '' %>>Select</option>
+                                <option value="WRITE" <%= model && model.escape('optype') == "WRITE" ? 'selected' : '' %>>Update</option>
+                                <option value="CREATE" <%= model && model.escape('optype') == "CREATE" ? 'selected' : '' %>>Create</option>
+                                <option value="S_CREATE" <%= model && model.escape('optype') == "S_CREATE" ? 'selected' : '' %>>Select or Create</option>
+                                <option value="W_CREATE" <%= model && model.escape('optype') == "W_CREATE" ? 'selected' : '' %>>Update or Create</option>
+                                <option value="DELETE" <%= model && model.escape('optype') == "DELETE" ? 'selected' : '' %>>Delete</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Priority</label>
+                            <input name="priority" type="text"
+                                value="<%= model ? model.escape('priority') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="description">
+                                <%= model ? model.escape('description') : '' %>
+                            </textarea>
+                        </div>
+                    </fieldset>
+                    <% if(editing) { %>
+                        <hr />
+                        <button type="submit" class="btn btn-primary"><%= model ? 'Update' : 'Create' %></button>
+                        <% if(model) { %>
+                            <input type="hidden" name="id" value="<%= model.id %>" />
+                            <button class="btn btn-danger delete">Delete</button>
+                        <% }; %>
+                    <% }; %>
+                </form>
+                <% if(model) { %>
+                    <div>
+                        <a href="#/<%= name %>/<%= model.id %>/items">
+                                View All Items
+                        </a>
+                    </div>
+                    <div>
+                        <a href="#/<%= name %>/<%= model.id %>/items?state=new">
+                                View Uncleared Items
+                        </a>
+                    </div>
+                    <div>
+                        <a href="#/<%= name %>/<%= model.id %>/joins">
+                                View/Edit Joins
+                        </a>
+                    </div>
+                    <div>
+                        <a href="#/<%= name %>/<%= model.id %>/columns">
+                                View/Edit Columns
+                        </a>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // <![CDATA[
+
+    prepareForm('.record-form', <%= editing %>);
+
+    // ]]>
+</script>

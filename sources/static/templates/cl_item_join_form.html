@@ -1,0 +1,98 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Xbus</a></li>
+            <li><a href="#/<%= name %>">Clearing Joins</a></li>
+            <% if(model) { %>
+                <% if(editing) { %>
+                    <li><a href="#/<%= name %>/<%= model.id %>/edit">Edit</a></li>
+                <% } else { %>
+                    <li><a href="#/<%= name %>/<%= model.id %>">View</a></li>
+                <% } %>
+            <% } else { %>
+                <li><a href="#/<%= name %>/create">Create</a></li>
+            <% }%>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <span><%= model ? (editing ? 'Edit' : 'View') : 'New'%> Clearing Join</span>
+                </div>
+                <div class="box-icons">
+                    <a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+                    </a> <a class="expand-link"> <i class="fa fa-expand"></i>
+                    </a> <a class="close-link"> <i class="fa fa-times"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content">
+                <form class="form-inline record-form" role="form">
+                    <fieldset>
+                        <div class="form-group">
+                            <label>Display Name</label>
+                            <input name="display_name" type="text"
+                                value="<%= model ? model.escape('display_name') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Type</label>
+                            <input name="type_id" type="hidden"
+                                value="<%= model ? model.escape('type_id') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Parent</label>
+                            <input name="parent_id" type="hidden"
+                                value="<%= model ? model.escape('parent_id') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Left Column Name</label>
+                            <input name="left_column_name" type="text"
+                                value="<%= model ? model.escape('left_column_name') : '' %>"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Right Table Name</label>
+                            <input name="right_table_name" type="text"
+                                   value="<%= model ? model.escape('right_table_name') : '' %>"
+                                   class="form-control" />
+                        <div class="form-group">
+                            <label>Right Column Name</label>
+                            <input name="right_column_name" type="text"
+                                   value="<%= model ? model.escape('right_column_name') : '' %>"
+                                   class="form-control" />
+                    </fieldset>
+                    <% if(editing) { %>
+                        <hr />
+                        <button type="submit" class="btn btn-primary"><%= model ? 'Update' : 'Create' %></button>
+                        <% if(model) { %>
+                            <input type="hidden" name="id" value="<%= model.id %>" />
+                            <button class="btn btn-danger delete">Delete</button>
+                        <% }; %>
+                    <% }; %>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // <![CDATA[
+
+    select2ify('type_id', 'cl_item_type', 'display_name');
+    select2ify('parent_id', 'cl_item_join', 'display_name', {
+        'placeholder': 'Primary table',
+        'allowClear': true
+    });
+
+    prepareForm('.record-form', <%= editing %>);
+
+    // ]]>
+</script>

@@ -271,6 +271,7 @@ var Router = Backbone.Router
             ':collection(?:params)': 'list',
             ':collection/create(?:params)': 'create',
             ':collection/:id': 'view',
+            ':collection/:id/clear_data': 'clear_data',
             ':collection/:id/edit': 'edit',
             ':collection/:id/:rel(?:params)': 'rel_list',
             ':collection/:id/:rel/create': 'rel_create',
@@ -351,6 +352,18 @@ var Router = Backbone.Router
                 });
             });
             setMenuLink('#/' + collection + '/create');
+        },
+
+        'clear_data': function(collection, id) {
+            console.log('routing to record clear_data view', collection, id);
+            setMainView(function() {
+                return new Views.clear_form({
+                    collection: collections[collection],
+                    id: id,
+                    template: Templates[collection + '_form']
+                });
+            });
+            setMenuLink('#/' + collection);
         },
 
         'edit': function(collection, id) {

@@ -88,7 +88,7 @@
     // <![CDATA[
 
     <% if (rel !== undefined) { %>
-        select2ify('new_rel_id', 'event_node', 'id', '<%= 'id:ne=' + id %>');
+        select2ify('new_rel_id', 'event_node', 'id', {query_string: '<%= 'id:ne=' + id %>'});
     <% } %>
 
     // ]]>
