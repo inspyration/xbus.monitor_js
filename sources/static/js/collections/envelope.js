@@ -25,4 +25,4 @@ registerCollection({
         'state_filter': ['state', 'in', ['emit', 'exec', 'fail']]
     },
     name: 'envelope'
-})
+});

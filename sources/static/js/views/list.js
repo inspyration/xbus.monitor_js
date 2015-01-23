@@ -10,8 +10,13 @@ Views.list = Backbone.View.extend({
 
         var that = this;
 
+        this.collection.view = this;
+
         // Settings influencing the collection URL.
-        this.initial_url_params = options.params;
+        // Use URI.js to parse default parameters.
+        // <http://medialize.github.io/URI.js/>
+        this.initial_url_params = options.params ? URI
+            .parseQuery(options.params) : {};
         this.filters = this.collection.default_filters;
         if (this.filters) {
             // TODO Use <https://lodash.com/docs#cloneDeep> for the deep copy.
@@ -84,6 +89,11 @@ Views.list = Backbone.View.extend({
         }
     },
 
+    removeReferences: function() {
+        /* Make sure this view is no longer linked to its collection. */
+        this.collection.view = null;
+    },
+
     render: function() {
         console.log('collection view render');
         this.$el.html(this.template({
@@ -114,12 +124,13 @@ Views.list = Backbone.View.extend({
         /* Make the collection's URL aware of custom settings. */
 
         var that = this;
-        this.url_params = this.initial_url_params || [];
+        // TODO Use <https://lodash.com/docs#cloneDeep> for the deep copy.
+        this.url_params = $.extend(true, {}, this.initial_url_params);
         if (this.filters) {
             _.each(this.filters, function(filter) {
                 var field = filter[0], operator = filter[1], value = filter[2];
-                that.url_params.push(field + ':' + operator + '='
-                    + encodeURIComponent(JSON.stringify(value)));
+                value = JSON.stringify(value);
+                that.url_params[field + ':' + operator] = value;
             });
         }
     },

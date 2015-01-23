@@ -97,6 +97,10 @@ function select2ify(field, collection_name, text_field, options) {
 
     var url = collections[collection_name].url();
 
+    if (!options) {
+        options = {};
+    }
+
     $('input[name="' + field + '"]').select2(_.extend({
         ajax: {
             dataType: 'json',
@@ -121,7 +125,7 @@ function select2ify(field, collection_name, text_field, options) {
                 });
             }
         },
-    }, options ? options : {}));
+    }, options));
 }
 
 function select2ifyFilter(field) {

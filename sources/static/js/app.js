@@ -47,6 +47,9 @@ function disableView(view) {
 
     view.stopListening();
     view.undelegateEvents();
+    if (view.removeReferences) {
+        view.removeReferences();
+    }
 }
 
 function login() {
@@ -112,10 +115,14 @@ function registerCollection(options) {
     }
     options['url'] = function() {
         /* Apply custom URL parameters provided by the view, when needed. */
-        var url = API_PREFIX + name
-        var url_params = main_view ? main_view.url_params : null;
-        if (url_params) {
-            url += '?' + url_params.join('&')
+        var url = API_PREFIX + name;
+        var collection = collections[name];
+        var view = collection.view;
+        var url_params = view ? view.url_params : null;
+        if (url_params && _.size(url_params) > 0) {
+            // Use URI.js to build the query string.
+            // <http://medialize.github.io/URI.js/>
+            url += '?' + URI.buildQuery(url_params);
         }
         return url;
     }
@@ -312,12 +319,7 @@ var Router = Backbone.Router
         },
 
         'list': function(collection, params) {
-            if (params) {
-                console.log('routing to list view', collection, 'with params',
-                    params);
-            } else {
-                console.log('routing to list view', collection);
-            }
+            console.log('routing to list view', collection, params);
             setMainView(function() {
                 return new Views.list({
                     collection: collections[collection],
