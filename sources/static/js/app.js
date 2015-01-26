@@ -39,6 +39,12 @@ function closeDataClearing() {
     });
 }
 
+function colTemplate(collection, view_type) {
+    /* Where collection templates are located. */
+
+    return 'collection_' + view_type + 's/' + collection;
+}
+
 function createRelModel(collection, id, rel, rel_collection) {
     /* Helper for collections related to other collections. */
 
@@ -354,7 +360,7 @@ var Router = Backbone.Router
             setMainView(function() {
                 return new Views.list({
                     collection: collections[collection],
-                    template: Templates[collection + '_list']
+                    template: Templates[colTemplate(collection, 'list')]
                 });
             });
             setMenuLink('#/');
@@ -385,7 +391,7 @@ var Router = Backbone.Router
             setMainView(function() {
                 return new Views.list({
                     collection: collections[collection],
-                    template: Templates[collection + '_list'],
+                    template: Templates[colTemplate(collection, 'list')],
                     params: params
                 });
             });
@@ -399,7 +405,7 @@ var Router = Backbone.Router
                     collection: collections[collection],
                     editing: false,
                     id: id,
-                    template: Templates[collection + '_form']
+                    template: Templates[colTemplate(collection, 'form')]
                 });
             });
             setMenuLink('#/' + collection);
@@ -412,7 +418,7 @@ var Router = Backbone.Router
                     collection: collections[collection],
                     editing: true,
                     params: params,
-                    template: Templates[collection + '_form']
+                    template: Templates[colTemplate(collection, 'form')]
                 });
             });
             setMenuLink('#/' + collection + '/create');
@@ -424,7 +430,7 @@ var Router = Backbone.Router
                 return new Views.clear_form({
                     collection: collections[collection],
                     id: id,
-                    template: Templates[collection + '_form']
+                    template: Templates[colTemplate(collection, 'form')]
                 });
             });
             setMenuLink('#/' + collection);
@@ -437,7 +443,7 @@ var Router = Backbone.Router
                     collection: collections[collection],
                     editing: true,
                     id: id,
-                    template: Templates[collection + '_form']
+                    template: Templates[colTemplate(collection, 'form')]
                 });
             });
             setMenuLink('#/' + collection + (id ? '' : '/create'));
@@ -462,7 +468,7 @@ var Router = Backbone.Router
                         rel_collection),
                     id: id,
                     rel: rel,
-                    template: Templates[rel_collection + '_list'],
+                    template: Templates[colTemplate(collection, 'list')],
                     params: params
                 });
             });
@@ -483,7 +489,7 @@ var Router = Backbone.Router
                         rel_collection),
                     id: id,
                     rel: rel,
-                    template: Templates[rel_collection + '_form'],
+                    template: Templates[colTemplate(collection, 'form')],
                     editing: true
                 });
             });
@@ -499,7 +505,7 @@ $(function() {
 
     $.each(Collections, function(collection) {
         _.each(['form', 'list'], function(view_type) {
-            template_views.push(collection + '_' + view_type);
+            template_views.push(colTemplate(collection, view_type));
         });
     });
 
