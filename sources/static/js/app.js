@@ -12,9 +12,13 @@ var LOGOUT_URL = '/logout';
 // Used to propagate binary data across callbacks at form validation.
 var binary_form_data = null;
 
+// ID of the consumer the user has opened the data clearing interface of.
+var clearing_consumer = null;
+
 // Used to get back to the previous page after logging in.
 var login_referrer = null;
 
+// Usual backbone elements.
 var Models = {}; // model classes.
 var Collections = {}; // collection classes.
 var collections = {}; // collection instances (which contain model instances).
@@ -22,6 +26,18 @@ var router = null; // backbone.js router; can be used to navigate across pages.
 var Templates = {}; // Template functions, ready to be called with the right
 // parameters.
 var Views = {}; // view classes.
+
+function closeDataClearing() {
+    /* Close the data clearing interface and get back to the consumer list. */
+
+    clearing_consumer = null;
+
+    $('#data_clearing_menu').hide();
+
+    router.navigate('consumer', {
+        trigger: true
+    });
+}
 
 function createRelModel(collection, id, rel, rel_collection) {
     /* Helper for collections related to other collections. */
@@ -92,6 +108,18 @@ function logout() {
     });
 }
 
+function openDataClearing(consumer_id) {
+    /* Initiate data clearing for the specified Xbus consumer. */
+
+    clearing_consumer = consumer_id;
+
+    $('#data_clearing_menu').show();
+
+    router.navigate('cl_item', {
+        trigger: true
+    });
+}
+
 function openLoginForm() {
     /* Show a login form then redirect back to the current page. */
 
@@ -102,6 +130,26 @@ function openLoginForm() {
     router.navigate('login', {
         trigger: true
     });
+}
+
+function registerAjaxHandler() {
+    /*
+     * Override the default Backbone.ajax function to include the consumer ID
+     * when data clearing is in effect.
+     */
+
+    Backbone.ajax = function() {
+        var parameters = Array.prototype.slice.call(arguments, 0);
+
+        if (clearing_consumer) {
+            if (!parameters[0].data) {
+                parameters[0].data = {};
+            }
+            parameters[0].data.cl_consumer = clearing_consumer;
+        }
+
+        return Backbone.$.ajax.apply(Backbone.$, parameters);
+    }
 }
 
 function registerCollection(collection_options, model_options) {
@@ -465,6 +513,7 @@ $(function() {
     });
 
     // In the meantime, do other setup work.
+    registerAjaxHandler();
     registerCustomSerializers();
     registerErrorHandlers();
     updateLoginInfo();

@@ -39,7 +39,8 @@
                         <tr title="<%= model.escape('id') %>">
                             <td><%= model.escape('name') %></td>
                             <td><% if (model.get('clearing')) { %>
-                                <a href="#/cl_item?cl_consumer=<%= encodeURIComponent(model.id) %>">
+                                <a href="#"
+                                    onclick="openDataClearing('<%= model.id %>'); return false;">
                                     Open the data clearing interface
                                 </a>
                             <% } else { %>
