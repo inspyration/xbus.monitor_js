@@ -1,4 +1,6 @@
-Models.event = Backbone.RelationalModel.extend({
+registerCollection({
+    name: 'event'
+}, {
     relations: [{
         includeInJSON: Backbone.Model.prototype.idAttribute,
         key: 'emitter_id',
@@ -25,10 +27,5 @@ Models.event = Backbone.RelationalModel.extend({
         key: 'type_id',
         relatedModel: 'Models.event_type',
         type: Backbone.HasOne
-    }],
-    urlRoot: API_PREFIX + 'event'
-});
-
-registerCollection({
-    name: 'event'
+    }]
 });

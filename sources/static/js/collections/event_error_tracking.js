@@ -1,4 +1,6 @@
-Models.event_error_tracking = Backbone.RelationalModel.extend({
+registerCollection({
+    name: 'event_error_tracking'
+}, {
     relations: [{
         includeInJSON: Backbone.Model.prototype.idAttribute,
         key: 'event_error_id',
@@ -9,10 +11,5 @@ Models.event_error_tracking = Backbone.RelationalModel.extend({
         key: 'user_id',
         relatedModel: 'Models.user',
         type: Backbone.HasOne
-    }],
-    urlRoot: API_PREFIX + 'event_error_tracking'
-});
-
-registerCollection({
-    name: 'event_error_tracking'
+    }]
 });

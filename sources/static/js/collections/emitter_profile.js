@@ -1,7 +1,3 @@
-Models.emitter_profile = Backbone.RelationalModel.extend({
-    urlRoot: API_PREFIX + 'emitter_profile'
-});
-
 registerCollection({
     name: 'emitter_profile',
     relationships: {

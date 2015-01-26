@@ -1,4 +1,9 @@
-Models.envelope = Backbone.RelationalModel.extend({
+registerCollection({
+    default_filters: {
+        'state_filter': ['state', 'in', ['emit', 'exec', 'fail']]
+    },
+    name: 'envelope'
+}, {
     relations: [{
         includeInJSON: Backbone.Model.prototype.idAttribute,
         key: 'emitter_id',
@@ -16,13 +21,5 @@ Models.envelope = Backbone.RelationalModel.extend({
         key: 'errors',
         relatedModel: 'Models.event_error',
         type: Backbone.HasMany
-    }],
-    urlRoot: API_PREFIX + 'envelope'
-});
-
-registerCollection({
-    default_filters: {
-        'state_filter': ['state', 'in', ['emit', 'exec', 'fail']]
-    },
-    name: 'envelope'
+    }]
 });

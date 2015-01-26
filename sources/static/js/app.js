@@ -104,16 +104,29 @@ function openLoginForm() {
     });
 }
 
-function registerCollection(options) {
-    /* Register a new backbone collection type with pre-filled parameters. */
+function registerCollection(collection_options, model_options) {
+    /*
+     * Register new backbone collection and model types with pre-filled
+     * parameters.
+     */
 
-    var name = options.name;
+    var name = collection_options.name;
 
-    options['model'] = Models[name];
-    options['state'] = {
+    // Model options.
+    if (!model_options) {
+        model_options = {};
+    }
+    model_options['urlRoot'] = API_PREFIX + name;
+
+    // Register the model type.
+    Models[name] = Backbone.RelationalModel.extend(model_options);
+
+    // Collection options.
+    collection_options['model'] = Models[name];
+    collection_options['state'] = {
         firstPage: 0
     }
-    options['url'] = function() {
+    collection_options['url'] = function() {
         /* Apply custom URL parameters provided by the view, when needed. */
         var url = API_PREFIX + name;
         var collection = collections[name];
@@ -127,7 +140,8 @@ function registerCollection(options) {
         return url;
     }
 
-    Collections[name] = Backbone.PageableCollection.extend(options);
+    // Register the collection type and an instance of it.
+    Collections[name] = Backbone.PageableCollection.extend(collection_options);
     collections[name] = new Collections[name]();
 }
 
