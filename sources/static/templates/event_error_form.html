@@ -47,7 +47,7 @@
                                     value="<%= model.escape('state') %>"
                                     class="form-control" />
                             </div>
-                            <% if (model.getRelation('responsible_id').keyContents) { %>
+                            <% if (model.getRelation('responsible_id')) { %>
                                 <div class="form-group">
                                     <label>Responsible</label>
                                     <input name="responsible_id" type="hidden"
