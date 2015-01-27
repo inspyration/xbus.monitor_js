@@ -111,6 +111,7 @@ function select2ify(field, collection_name, text_field, options) {
                     })
                 };
             },
+            transport: Backbone.ajax,
             url: options.query_string ? url + '?' + options.query_string : url
         },
         containerCssClass: 'form-control',
@@ -118,7 +119,7 @@ function select2ify(field, collection_name, text_field, options) {
             var id = $(element).val();
             if (id !== '') {
                 // Request information about the default selection.
-                $.ajax(url + '/' + id, {
+                Backbone.ajax(url + '/' + id, {
                     dataType: 'json'
                 }).done(function(data) {
                     callback(formatDataForSelect2(data, text_field));
