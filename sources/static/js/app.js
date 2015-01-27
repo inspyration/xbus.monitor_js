@@ -32,9 +32,10 @@ function closeDataClearing() {
 
     clearing_consumer = null;
 
-    $('#data_clearing_menu').hide();
+    $('#data_clearing_menu > ul > li').not('#data_clearing_menu_consumers')
+        .hide();
 
-    router.navigate('consumer', {
+    router.navigate('consumer?clearing', {
         trigger: true
     });
 }
@@ -119,7 +120,8 @@ function openDataClearing(consumer_id) {
 
     clearing_consumer = consumer_id;
 
-    $('#data_clearing_menu').show();
+    $('#data_clearing_menu > ul > li').not('#data_clearing_menu_consumers')
+        .show();
 
     router.navigate('cl_item', {
         trigger: true

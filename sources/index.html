@@ -265,22 +265,27 @@
 
                         </ul></li>
 
-                    <li id="data_clearing_menu" class="dropdown" style="display: none;"><a
-                        href="#" class="dropdown-toggle"> <i class="fa fa-bar-chart-o"></i> <span
+                    <li id="data_clearing_menu" class="dropdown"><a href="#"
+                        class="dropdown-toggle"> <i class="fa fa-adjust"></i> <span
                             class="hidden-xs">Data clearing</span>
                     </a>
                         <ul class="dropdown-menu">
 
-                            <li><a href="#/cl_item"> <i class="fa fa-list"></i> All items
+                            <li id="data_clearing_menu_consumers"><a href="#/consumer?clearing">
+                                    <i class="fa fa-list"></i> Consumer list
                             </a></li>
 
-                            <li><a href="#/cl_item?state=new"> <i class="fa fa-list"></i>
-                                    Uncleared items
+                            <li style="display: none;"><a href="#/cl_item"> <i
+                                    class="fa fa-list"></i> All items
                             </a></li>
 
-                            <li class="dropdown"><a href="#" class="dropdown-toggle"> <i
-                                    class="fa fa-angle-right"></i> <span class="hidden-xs">Item
-                                        types</span>
+                            <li style="display: none;"><a href="#/cl_item?state=new"> <i
+                                    class="fa fa-list"></i> Uncleared items
+                            </a></li>
+
+                            <li class="dropdown" style="display: none;"><a href="#"
+                                class="dropdown-toggle"> <i class="fa fa-angle-right"></i> <span
+                                    class="hidden-xs">Item types</span>
                             </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#/cl_item_type"> <i class="fa fa-list"></i>
@@ -291,8 +296,9 @@
                                     </a></li>
                                 </ul></li>
 
-                            <li class="dropdown"><a href="#" class="dropdown-toggle"> <i
-                                    class="fa fa-angle-right"></i> <span class="hidden-xs">Joins</span>
+                            <li class="dropdown" style="display: none;"><a href="#"
+                                class="dropdown-toggle"> <i class="fa fa-angle-right"></i> <span
+                                    class="hidden-xs">Joins</span>
                             </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#/cl_item_join"> <i class="fa fa-list"></i>
@@ -303,8 +309,9 @@
                                     </a></li>
                                 </ul></li>
 
-                            <li class="dropdown"><a href="#" class="dropdown-toggle"> <i
-                                    class="fa fa-angle-right"></i> <span class="hidden-xs">Columns</span>
+                            <li class="dropdown" style="display: none;"><a href="#"
+                                class="dropdown-toggle"> <i class="fa fa-angle-right"></i> <span
+                                    class="hidden-xs">Columns</span>
                             </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#/cl_item_column"> <i class="fa fa-list"></i>
@@ -315,7 +322,8 @@
                                     </a></li>
                                 </ul></li>
 
-                            <li><a href="#" onclick="closeDataClearing(); return false;"> <i
+                            <li style="display: none;"><a href="#"
+                                onclick="closeDataClearing(); return false;"> <i
                                     class="fa fa-power-off"></i> Close data clearing
                             </a></li>
 
