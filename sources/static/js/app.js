@@ -397,7 +397,7 @@ var Router = Backbone.Router
                     params: params
                 });
             });
-            setMenuLink('#/' + collection);
+            setMenuLink('#/' + collection + (params ? '?' + params : ''));
         },
 
         'view': function(collection, id) {
@@ -474,7 +474,7 @@ var Router = Backbone.Router
                     params: params
                 });
             });
-            setMenuLink('#/' + collection);
+            setMenuLink('#/' + collection + (params ? '?' + params : ''));
         },
 
         'rel_create': function(collection, id, rel) {
