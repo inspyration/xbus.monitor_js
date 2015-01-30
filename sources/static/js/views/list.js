@@ -100,7 +100,7 @@ Views.list = Backbone.View.extend({
             filters: this.filters,
             models: this.collection.models,
             name: this.collection.name,
-            pagination: this.render_pagination(),
+            pagination: this.renderPagination(),
             rel_name: this.rel ? this.collection.rel_name
                 : this.collection.name,
             id: this.id,
@@ -109,14 +109,68 @@ Views.list = Backbone.View.extend({
         return this;
     },
 
-    render_pagination: function() {
+    renderPagination: function() {
         /*
          * Fill the "pagination" template to add pagination controls below the
          * list.
+         * 
+         * Logarithmic pagination - from <http://stackoverflow.com/a/14193775>.
          */
 
+        var page = this.collection.state.currentPage;
+        var last_page = this.collection.state.totalPages;
+        var LINKS_PER_STEP = 3;
+        var page_begin = 1;
+        var page_end = page;
+        var last_page_begin = 1;
+        var last_page_end = page;
+        var c1 = LINKS_PER_STEP + 1;
+        var c2 = LINKS_PER_STEP + 1;
+        var step = 1;
+        var page_indexes = [];
+        var page_indexes_begin = [];
+        var page_indexes_end = [];
+
+        while (true) {
+            if (c1 >= c2) {
+                page_indexes_begin.push(page_begin); // Append.
+                last_page_begin = page_begin;
+                page_begin += step;
+                c1--;
+            } else {
+                page_indexes_end.splice(0, 0, page_end); // Prepend.
+                last_page_end = page_end;
+                page_end -= step;
+                c2--;
+            }
+            if (c2 === 0) {
+                step *= 10;
+                page_begin += step - 1; // Round up to nearest step.
+                page_begin -= (page_begin % step);
+                page_end -= (page_end % step); // Round down to nearest step.
+                c1 = LINKS_PER_STEP;
+                c2 = LINKS_PER_STEP;
+            }
+            if (page_begin > page_end) {
+                page_indexes = page_indexes.concat(page_indexes_begin);
+                page_indexes = page_indexes.concat(page_indexes_end);
+                if ((last_page_end > page) || (page >= last_page))
+                    break;
+                last_page_begin = page;
+                last_page_end = last_page;
+                page_begin = page + 1;
+                page_end = last_page;
+                c1 = LINKS_PER_STEP;
+                c2 = LINKS_PER_STEP + 1;
+                page_indexes_begin = [];
+                page_indexes_end = [];
+                step = 1;
+            }
+        }
+
         return Templates['pagination']({
-            collection: this.collection
+            collection: this.collection,
+            page_indexes: page_indexes
         });
     },
 

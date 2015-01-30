@@ -56,9 +56,6 @@ function createRelModel(collection, id, rel, rel_collection) {
         model: rel_model,
         name: collection,
         rel_name: rel_collection,
-        state: {
-            firstPage: 0
-        },
         url: API_PREFIX + url
     });
     return new rel_collection_class();
@@ -191,9 +188,6 @@ function registerCollection(collection_options, model_options) {
 
     // Collection options.
     collection_options['model'] = Models[name];
-    collection_options['state'] = {
-        firstPage: 0
-    }
     collection_options['url'] = function() {
         /* Apply custom URL parameters provided by the view, when needed. */
         var url = API_PREFIX + name;

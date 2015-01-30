@@ -8,13 +8,13 @@
     <% } %>
     onclick="switchToPrevPage()">&lt;</button>
 
-<% for (var page_index = 0; page_index < collection.state.totalPages; ++page_index) { %>
+<% _.each(page_indexes, function(page_index) { %>
     <button type="button" class="btn btn-default
         <% if (page_index === collection.state.currentPage) { %>
             active
         <% } %>
         " onclick="switchPage(<%= page_index %>)"><%= page_index %></button>
-<% } %>
+<% }); %>
 
 <button type="button" class="btn btn-default"
     <% if (!collection.hasNextPage()) { %>
