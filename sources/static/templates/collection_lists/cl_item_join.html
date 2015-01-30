@@ -27,6 +27,7 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
+                <%= pagination %>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -49,6 +50,7 @@
                         <% }); %>
                     </tbody>
                 </table>
+                <%= pagination %>
                 <% if(rel !== undefined) { %>
                     <div class="form-group">
                         <a href="#/<%= name %>/<%= id %>/<%= rel %>/create">Create</a>
