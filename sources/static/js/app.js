@@ -32,8 +32,7 @@ function closeDataClearing() {
 
     clearing_consumer = null;
 
-    $('#data_clearing_menu > ul > li').not('#data_clearing_menu_consumers')
-        .hide();
+    dataClearingDynSelector().hide();
 
     router.navigate('consumer?clearing', {
         trigger: true
@@ -60,6 +59,17 @@ function createRelModel(collection, id, rel, rel_collection) {
         url: API_PREFIX + url
     });
     return new rel_collection_class();
+}
+
+function dataClearingDynSelector() {
+    /*
+     * Build a jQuery selector that refers to dynamic menu items of the "data
+     * clearing" menu.
+     */
+
+    // All list items in the menu except the one that opens the consumer list.
+    return $('#data_clearing_menu > ul > li').not(
+        '#data_clearing_menu_consumers');
 }
 
 function disableView(view) {
@@ -120,8 +130,7 @@ function openDataClearing(consumer_id) {
 
     clearing_consumer = consumer_id;
 
-    $('#data_clearing_menu > ul > li').not('#data_clearing_menu_consumers')
-        .show();
+    dataClearingDynSelector().show();
 
     router.navigate('cl_item', {
         trigger: true
