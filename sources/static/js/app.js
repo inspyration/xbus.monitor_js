@@ -52,10 +52,13 @@ function createRelModel(collection, id, rel, rel_collection) {
     var rel_model = Backbone.Model.extend({
         urlRoot: API_PREFIX + url
     });
-    var rel_collection_class = Backbone.Collection.extend({
+    var rel_collection_class = Backbone.PageableCollection.extend({
         model: rel_model,
         name: collection,
         rel_name: rel_collection,
+        state: {
+            firstPage: 0
+        },
         url: API_PREFIX + url
     });
     return new rel_collection_class();
