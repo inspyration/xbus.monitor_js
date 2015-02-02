@@ -29,55 +29,46 @@ Views.clear_form = Backbone.View
                 return this;
             }
             console.log('clear_form render', this.id);
-            var clear_data = {}
+            var clear_data = {};
             if (this.model !== undefined) {
                 if (!this.model.get('sent_date')) {
-                    var dest_data = this.model.get('dest_data')
-                    var dest_data_names = this.model.get('dest_data_names')
-                    var current_data = this.model.get('current_data')
+                    var dest_data = this.model.get('dest_data');
+                    var dest_data_names = this.model.get('dest_data_names');
+                    var current_data = this.model.get('current_data');
                     var current_data_names = this.model
-                        .get('current_data_names')
-                    var source_data = this.model.get('source_data')
-                    var source_data_names = this.model.get('source_data_names')
-                    var display = this.model.get('display')
+                        .get('current_data_names');
+                    var source_data = this.model.get('source_data');
+                    var source_data_names = this.model.get('source_data_names');
+                    var display = this.model.get('display');
                     var dest_default_fields = this.model
-                        .get('dest_default_fields')
-                    var key_fields = this.model.get('key_fields')
-                    for ( var k in display) {
-                        var k_dest_data = dest_data[k] !== undefined ? _
-                            .escape(dest_data[k]) : null
-                        var k_dest_name = dest_data_names[k] !== undefined ? _
-                            .escape(dest_data_names[k]) : null
-                        var k_current_data = current_data[k] !== undefined ? _
-                            .escape(current_data[k]) : null
-                        var k_current_name = current_data_names[k] !== undefined ? _
-                            .escape(current_data_names[k])
-                            : null
-                        var k_source_data = source_data[k] !== undefined ? _
-                            .escape(source_data[k]) : null
-                        var k_source_name = source_data_names[k] !== undefined ? _
-                            .escape(source_data_names[k])
-                            : null
+                        .get('dest_default_fields');
+                    var key_fields = this.model.get('key_fields');
+                    _.each(display, function(k) {
+                        function getKData(array) {
+                            var ret = array[k];
+                            return (ret !== undefined) ? _.escape(ret) : null;
+                        }
                         clear_data[_.escape(k)] = [false, false,
-                            _.escape(display[k]), k_current_data,
-                            k_current_name, k_source_data, k_source_name,
-                            k_dest_data, k_dest_name]
-                    }
-                    for (var i = 0; i < key_fields.length; i++) {
-                        var k = key_fields[i]
-                        clear_data[_.escape(k)][0] = true
-                    }
-                    for (var i = 0; i < dest_default_fields.length; i++) {
-                        var k = dest_default_fields[i]
-                        clear_data[_.escape(k)][1] = true
-                    }
+                            _.escape(display[k]), getKData(current_data),
+                            getKData(current_data_names),
+                            getKData(source_data), getKData(source_data_names),
+                            getKData(dest_data), getKData(dest_data_names)];
+                    });
+                    _.each(key_fields, function(i) {
+                        var k = key_fields[i];
+                        clear_data[_.escape(k)][0] = true;
+                    });
+                    _.each(dest_default_fields, function(i) {
+                        var k = dest_default_fields[i];
+                        clear_data[_.escape(k)][1] = true;
+                    });
                 }
             }
             this.$el.html(this.template({
+                clear_data: clear_data,
                 editing: false,
                 model: this.model,
-                name: this.collection.name,
-                clear_data: clear_data
+                name: this.collection.name
             }));
             return this;
         },
