@@ -119,8 +119,9 @@ function select2ify(field, collection_name, text_field, options) {
             var id = $(element).val();
             if (id !== '') {
                 // Request information about the default selection.
-                Backbone.ajax(url + '/' + id, {
-                    dataType: 'json'
+                Backbone.ajax({
+                    dataType: 'json',
+                    url: url + '/' + id
                 }).done(function(data) {
                     callback(formatDataForSelect2(data, text_field));
                 });
