@@ -479,7 +479,7 @@ var Router = Backbone.Router
                         rel_collection),
                     id: id,
                     rel: rel,
-                    template: Templates[colTemplate(collection, 'list')],
+                    template: Templates[colTemplate(rel_collection, 'list')],
                     params: params
                 });
             });
@@ -500,7 +500,7 @@ var Router = Backbone.Router
                         rel_collection),
                     id: id,
                     rel: rel,
-                    template: Templates[colTemplate(collection, 'form')],
+                    template: Templates[colTemplate(rel_collection, 'form')],
                     editing: true
                 });
             });
