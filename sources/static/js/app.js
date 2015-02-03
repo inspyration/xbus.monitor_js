@@ -159,10 +159,13 @@ function registerAjaxHandler() {
         var parameters = Array.prototype.slice.call(arguments, 0);
 
         if (clearing_consumer) {
-            if (!parameters[0].data) {
-                parameters[0].data = {};
-            }
-            parameters[0].data.cl_consumer = clearing_consumer;
+            // Use URI.js to parse the URL and add a parameter.
+            // <http://medialize.github.io/URI.js/>
+            var uri = new URI(parameters[0].url);
+            uri.addSearch({
+                'cl_consumer': clearing_consumer
+            });
+            parameters[0].url = uri.toString();
         }
 
         return Backbone.$.ajax.apply(Backbone.$, parameters);
