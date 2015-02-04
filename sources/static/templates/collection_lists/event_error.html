@@ -23,37 +23,41 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <%= pagination %>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Envelope</th>
-                            <th>Role</th>
-                            <th>State</th>
-                            <th>Items</th>
-                            <th>Message</th>
-                            <th>Error date</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% _.each(models, function(model) { %>
-                        <tr <%=
-                            model.get('state') === 'corrected' ? 'class="success"' :
-                            model.get('state') === 'won_t_fix' ? 'class="danger"' :
-                        '' %>>
-                            <td><%= model.get('envelope_id') && model.get('envelope_id').escape('id') %></td>
-                            <td><%= model.escape('state') %></td>
-                            <td><%= model.get('role_id') && model.get('role_id').escape('login') %></td>
-                            <td><%= model.escape('items') %></td>
-                            <td><%= model.escape('message') %></td>
-                            <td><%= model.escape('error_date') %></td>
-                            <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
-                        </tr>
-                        <% }); %>
-                    </tbody>
-                </table>
-                <%= pagination %>
+                <% if (_.size(models) > 0) { %>
+                    <%= pagination %>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Envelope</th>
+                                <th>Role</th>
+                                <th>State</th>
+                                <th>Items</th>
+                                <th>Message</th>
+                                <th>Error date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% _.each(models, function(model) { %>
+                            <tr <%=
+                                model.get('state') === 'corrected' ? 'class="success"' :
+                                model.get('state') === 'won_t_fix' ? 'class="danger"' :
+                            '' %>>
+                                <td><%= model.get('envelope_id') && model.get('envelope_id').escape('id') %></td>
+                                <td><%= model.escape('state') %></td>
+                                <td><%= model.get('role_id') && model.get('role_id').escape('login') %></td>
+                                <td><%= model.escape('items') %></td>
+                                <td><%= model.escape('message') %></td>
+                                <td><%= model.escape('error_date') %></td>
+                                <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                    <%= pagination %>
+                <% } else { %>
+                    <p>No element found.</p>
+                <% } %>
             </div>
         </div>
     </div>

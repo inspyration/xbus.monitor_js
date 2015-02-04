@@ -27,36 +27,40 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <%= pagination %>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>State</th>
-                            <th>Batch</th>
-                            <th>Reception Date</th>
-                            <th>Clearing Date</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% _.each(models, function(model) { %>
-                        <tr>
-                            <td><%= model.escape('type_name') %></td>
-                            <td><%= model.escape('state') %></td>
-                            <td><a href="#/<%= rel_name %>?batch=<%= model.escape('batch') %>"><%= model.escape('batch') %></a></td>
-                            <td><%= model.escape('recv_date') %></td>
-                            <td><%= model.escape('sent_date') %></td>
-                            <% if(model.escape('state') == 'cleared') { %>
-                                <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
-                            <% } else { %>
-                                <td><a href="#/<%= rel_name %>/<%= model.id %>/clear_data">Clear</a></td>
-                            <% } %>
-                        </tr>
-                        <% }); %>
-                    </tbody>
-                </table>
-                <%= pagination %>
+                <% if (_.size(models) > 0) { %>
+                    <%= pagination %>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>State</th>
+                                <th>Batch</th>
+                                <th>Reception Date</th>
+                                <th>Clearing Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% _.each(models, function(model) { %>
+                            <tr>
+                                <td><%= model.escape('type_name') %></td>
+                                <td><%= model.escape('state') %></td>
+                                <td><a href="#/<%= rel_name %>?batch=<%= model.escape('batch') %>"><%= model.escape('batch') %></a></td>
+                                <td><%= model.escape('recv_date') %></td>
+                                <td><%= model.escape('sent_date') %></td>
+                                <% if(model.escape('state') == 'cleared') { %>
+                                    <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
+                                <% } else { %>
+                                    <td><a href="#/<%= rel_name %>/<%= model.id %>/clear_data">Clear</a></td>
+                                <% } %>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                    <%= pagination %>
+                <% } else { %>
+                    <p>No element found.</p>
+                <% } %>
             </div>
         </div>
     </div>

@@ -40,36 +40,43 @@
                     </select>
                 </div>
 
-                <%= pagination %>
+                <% if (_.size(models) > 0) { %>
 
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Emitter</th>
-                            <th>State</th>
-                            <th>Posted date</th>
-                            <th>Done date</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% _.each(models, function(model) { %>
-                        <tr title="Envelope ID: <%= model.escape('id') %>" <%=
-                            model.get('state') === 'done' ? 'class="success"' :
-                            model.get('state') === 'fail' ? 'class="danger"' :
-                        '' %>>
-                            <td><%= model.get('emitter_id') && model.get('emitter_id').escape('login') %></td>
-                            <td><%= model.escape('state') %></td>
-                            <td><%= model.escape('posted_date') %></td>
-                            <td><%= model.escape('done_date') %></td>
-                            <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
-                            <td><a href="#/<%= rel_name %>/<%= model.id %>/edit">Edit</a></td>
-                        </tr>
-                        <% }); %>
-                    </tbody>
-                </table>
-                <%= pagination %>
+                    <%= pagination %>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Emitter</th>
+                                <th>State</th>
+                                <th>Posted date</th>
+                                <th>Done date</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% _.each(models, function(model) { %>
+                            <tr title="Envelope ID: <%= model.escape('id') %>" <%=
+                                model.get('state') === 'done' ? 'class="success"' :
+                                model.get('state') === 'fail' ? 'class="danger"' :
+                            '' %>>
+                                <td><%= model.get('emitter_id') && model.get('emitter_id').escape('login') %></td>
+                                <td><%= model.escape('state') %></td>
+                                <td><%= model.escape('posted_date') %></td>
+                                <td><%= model.escape('done_date') %></td>
+                                <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
+                                <td><a href="#/<%= rel_name %>/<%= model.id %>/edit">Edit</a></td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+
+                    <%= pagination %>
+
+                <% } else { %>
+                    <p>No element found.</p>
+                <% } %>
             </div>
         </div>
     </div>

@@ -23,24 +23,28 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <%= pagination %>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% _.each(models, function(model) { %>
-                        <tr>
-                            <td><%= model.escape('name') %></td>
-                            <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
-                            <td><a href="#/<%= rel_name %>/<%= model.id %>/edit">Edit</a></td>
-                        </tr>
-                        <% }); %>
-                    </tbody>
-                </table>
-                <%= pagination %>
+                <% if (_.size(models) > 0) { %>
+                    <%= pagination %>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% _.each(models, function(model) { %>
+                            <tr>
+                                <td><%= model.escape('name') %></td>
+                                <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
+                                <td><a href="#/<%= rel_name %>/<%= model.id %>/edit">Edit</a></td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                    <%= pagination %>
+                <% } else { %>
+                    <p>No element found.</p>
+                <% } %>
             </div>
         </div>
     </div>

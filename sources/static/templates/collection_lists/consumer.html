@@ -24,33 +24,37 @@
             </div>
 
             <div class="box-content">
-                <%= pagination %>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Data clearing</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% _.each(models, function(model) { %>
-                        <tr title="<%= model.escape('id') %>">
-                            <td><%= model.escape('name') %></td>
-                            <td><% if (model.get('clearing')) { %>
-                                <a href="#"
-                                    onclick="openDataClearing('<%= model.id %>'); return false;">
-                                    Open the data clearing interface
-                                </a>
-                            <% } else { %>
-                                No data clearing
-                            <% } %></td>
-                        </tr>
-                        <% }); %>
-                    </tbody>
-                </table>
-                <%= pagination %>
+                <% if (_.size(models) > 0) { %>
+                    <%= pagination %>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Data clearing</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% _.each(models, function(model) { %>
+                            <tr title="<%= model.escape('id') %>">
+                                <td><%= model.escape('name') %></td>
+                                <td><% if (model.get('clearing')) { %>
+                                    <a href="#"
+                                        onclick="openDataClearing('<%= model.id %>'); return false;">
+                                        Open the data clearing interface
+                                    </a>
+                                <% } else { %>
+                                    No data clearing
+                                <% } %></td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                    <%= pagination %>
+                <% } else { %>
+                    <p>No element found.</p>
+                <% } %>
             </div>
         </div>
     </div>

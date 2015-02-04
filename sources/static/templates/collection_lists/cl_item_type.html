@@ -23,35 +23,40 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <%= pagination %>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Display Name</th>
-                            <th>Object Name</th>
-                            <th colspan="2">Items</th>
-                            <th colspan="3"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% _.each(models, function(model) { %>
-                        <tr>
-                            <td><%= model.escape('display_name') %></td>
-                            <td><%= model.escape('object_name') %></td>
-                            <td><a href="#/cl_item?type_id=<%= model.id %>">All</a></td>
-                            <td><a href="#/cl_item?type_id=<%= model.id %>;sent_date:is=false">Uncleared</a></td>
-                            <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
-                            <td><a href="#/<%= rel_name %>/<%= model.id %>/edit">Edit</a></td>
-                            <% if(rel !== undefined) { %>
-                            <td><a href="#/<%= name %>/<%= id %>/<%= rel %>" class="delete" value="<%= model.id %>">Remove</a></td>
-                            <% } else { %>
-                            <td><a href="#/<%= name %>" class="delete" value="<%= model.id %>">Delete</a></td>
-                            <% } %>
-                        </tr>
-                        <% }); %>
-                    </tbody>
-                </table>
-                <%= pagination %>
+                <% if (_.size(models) > 0) { %>
+                    <%= pagination %>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Display Name</th>
+                                <th>Object Name</th>
+                                <th colspan="2">Items</th>
+                                <th colspan="3"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% _.each(models, function(model) { %>
+                            <tr>
+                                <td><%= model.escape('display_name') %></td>
+                                <td><%= model.escape('object_name') %></td>
+                                <td><a href="#/cl_item?type_id=<%= model.id %>">All</a></td>
+                                <td><a href="#/cl_item?type_id=<%= model.id %>;sent_date:is=false">Uncleared</a></td>
+                                <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
+                                <td><a href="#/<%= rel_name %>/<%= model.id %>/edit">Edit</a></td>
+                                <% if(rel !== undefined) { %>
+                                <td><a href="#/<%= name %>/<%= id %>/<%= rel %>" class="delete" value="<%= model.id %>">Remove</a></td>
+                                <% } else { %>
+                                <td><a href="#/<%= name %>" class="delete" value="<%= model.id %>">Delete</a></td>
+                                <% } %>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                    <%= pagination %>
+                <% } else { %>
+                    <p>No element found.</p>
+                <% } %>
+
                 <% if(rel !== undefined) { %>
                 <form class="form-inline add-select" role="form">
                     <div class="form-group">

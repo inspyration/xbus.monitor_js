@@ -23,31 +23,35 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <%= pagination %>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Login</th>
-                            <th>Profile</th>
-                            <th>Last emitted</th>
-                            <th colspan="3"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% _.each(models, function(model) { %>
-                        <tr>
-                            <td><%= model.escape('login') %></td>
-                            <td><%= model.get('profile_id') && model.get('profile_id').escape('name') %></td>
-                            <td data-profile_id="<%= model.escape('profile_id') %>"></td>
-                            <td><%= model.escape('last_emit') %></td>
-                            <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
-                            <td><a href="#/<%= rel_name %>/<%= model.id %>/edit">Edit</a></td>
-                            <td><a href="#/<%= rel_name %>" class="delete" value="<%= model.id %>">Delete</a></td>
-                        </tr>
-                        <% }); %>
-                    </tbody>
-                </table>
-                <%= pagination %>
+                <% if (_.size(models) > 0) { %>
+                    <%= pagination %>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Login</th>
+                                <th>Profile</th>
+                                <th>Last emitted</th>
+                                <th colspan="3"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% _.each(models, function(model) { %>
+                            <tr>
+                                <td><%= model.escape('login') %></td>
+                                <td><%= model.get('profile_id') && model.get('profile_id').escape('name') %></td>
+                                <td data-profile_id="<%= model.escape('profile_id') %>"></td>
+                                <td><%= model.escape('last_emit') %></td>
+                                <td><a href="#/<%= rel_name %>/<%= model.id %>">View</a></td>
+                                <td><a href="#/<%= rel_name %>/<%= model.id %>/edit">Edit</a></td>
+                                <td><a href="#/<%= rel_name %>" class="delete" value="<%= model.id %>">Delete</a></td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                    <%= pagination %>
+                <% } else { %>
+                    <p>No element found.</p>
+                <% } %>
             </div>
         </div>
     </div>
