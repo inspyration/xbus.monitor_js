@@ -220,15 +220,23 @@ function applyFilter(el, field) {
     /* Update the filter the view is using and reload its contents. */
 
     var node = $(el);
-    switch (el.tagName) {
-    case 'SELECT':
-        var operator = el.multiple ? 'in' : 'eq';
-        main_view.filters[el.name] = [field, operator, node.val()];
-        break;
-    default:
-        alert(el.tagName + ' controls are not supported yet.');
-        break;
+    var value = node.val();
+
+    var filter = [];
+
+    if (value !== null) {
+        switch (el.tagName) {
+        case 'SELECT':
+            var operator = el.multiple ? 'in' : 'eq';
+            filter = [field, operator, value];
+            break;
+        default:
+            alert(el.tagName + ' controls are not supported yet.');
+            break;
+        }
     }
+
+    main_view.filters[el.name] = filter;
 
     main_view.updateCollectionUrl();
     main_view.collection.fetch();
